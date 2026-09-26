@@ -1,0 +1,48 @@
+{
+  "name": "corsair-ui",
+  "private": true,
+  "description": "Copy-and-own UI components, hooks and utilities, distributed as a shadcn-compatible registry.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "registry:validate": "shadcn registry validate ./registry.json",
+    "registry:build": "shadcn build ./registry.json --output ./dist/r",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check:tailwind": "node scripts/check-tailwind-compat.ts",
+    "verify:fixtures": "node scripts/verify-fixtures.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@types/node": "22.20.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "clsx": "2.1.1",
+    "eslint": "9.39.5",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.12.0",
+    "jsdom": "30.1.1",
+    "prettier": "3.9.9",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "shadcn": "4.21.0",
+    "tailwind-merge": "3.7.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.70.1",
+    "vite": "8.3.1",
+    "vitest": "5.0.2"
+  }
+}

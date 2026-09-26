@@ -1,0 +1,18 @@
+# dependencies
+node_modules/
+
+# build output (`pnpm registry:build` writes the registry JSON to dist/r)
+dist/
+*.tsbuildinfo
+
+# tests and local scratch
+coverage/
+.tmp/
+
+# env
+.env
+.env*.local
+
+# os / editors
+.DS_Store
+*.log
