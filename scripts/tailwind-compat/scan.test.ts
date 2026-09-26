@@ -23,6 +23,22 @@ describe("scanSource", () => {
     expect(findings[1]?.column).toBe(36);
   });
 
+  it("reads class attributes in JSX but not other props", () => {
+    const source = [
+      "export const a = (",
+      '  <Button variant="outline" type="button" className="ring" containerClassName="shadow-sm">',
+      '    <Icon className={cn("outline")} />',
+      "  </Button>",
+      ");",
+    ].join("\n");
+
+    expect(scanSource(source, "a.tsx").map((finding) => finding.token)).toEqual([
+      "ring",
+      "shadow-sm",
+      "outline",
+    ]);
+  });
+
   it("skips module specifiers and directives", () => {
     const source = ['"use client";', 'import ring from "ring";', 'export * from "shadow";'].join(
       "\n"
