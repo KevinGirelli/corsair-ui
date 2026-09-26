@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "use-media-query",
+      "type": "registry:hook",
+      "title": "useMediaQuery",
+      "description": "Subscribes to a CSS media query. SSR-safe: renders a fallback on the server and hydrates without a mismatch.",
+      "files": [
+        {
+          "path": "use-media-query.ts",
+          "type": "registry:hook"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "corsair",
+  "homepage": "https://corsairui.dev",
+  "include": ["registry/default/lib/registry.json", "registry/default/hooks/registry.json"]
+}
