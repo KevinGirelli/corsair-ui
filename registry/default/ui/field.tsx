@@ -52,7 +52,9 @@ const fieldVariants = cva("group data-[invalid=true]:text-destructive flex w-ful
   variants: {
     orientation: {
       vertical: "flex-col [&>*]:w-full [&>.sr-only]:w-auto",
-      horizontal: "flex-row items-center [&>[data-slot=field-label]]:flex-auto",
+      // The label may sit inside FieldContent, out of reach of `peer-enabled`.
+      horizontal:
+        "flex-row items-center [&:has(>.peer:enabled)_[data-slot=field-label]]:cursor-pointer [&>[data-slot=field-label]]:flex-auto",
     },
   },
   defaultVariants: {

@@ -12,7 +12,7 @@ function Checkbox({ className, ...props }: ComponentProps<typeof CheckboxPrimiti
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       className={cn(
-        "peer group border-input bg-field text-primary-foreground size-4 shrink-0 rounded-[4px] border",
+        "peer group border-input bg-field text-primary-foreground size-4 shrink-0 cursor-pointer rounded-[4px] border",
         "transition-[color,background-color,box-shadow] outline-none motion-reduce:transition-none",
         "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
         "aria-[invalid=true]:border-destructive aria-[invalid=true]:ring-destructive/20",

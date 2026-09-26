@@ -91,4 +91,56 @@ describe("Select", () => {
     expect(onValueChange).toHaveBeenCalledWith("store");
     expect(trigger.textContent).toContain("Online store");
   });
+
+  it("turns the chevron up while open and back down when closed", async () => {
+    render(
+      <Select>
+        <SelectTrigger aria-label="Project type">
+          <SelectValue placeholder="Choose a type" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="portfolio">Portfolio</SelectItem>
+        </SelectContent>
+      </Select>
+    );
+    const trigger = screen.getByRole("combobox", { name: "Project type" });
+    // The rotation is keyed on the trigger's state and the icon's slot.
+    expect(trigger.className).toContain("[&[data-state=open]>[data-slot=select-icon]]:rotate-180");
+    expect(trigger.querySelector(":scope > [data-slot=select-icon]")).not.toBeNull();
+    expect(trigger.dataset.state).toBe("closed");
+
+    await userEvent.click(trigger);
+    expect(trigger.dataset.state).toBe("open");
+
+    await userEvent.keyboard("{Escape}");
+    expect(trigger.dataset.state).toBe("closed");
+  });
+});
+
+describe("pointer cursor", () => {
+  it("is set on every control you can click", () => {
+    render(
+      <>
+        <Checkbox aria-label="Checkbox" />
+        <RadioGroup aria-label="Radio">
+          <RadioGroupItem value="a" aria-label="Radio item" />
+        </RadioGroup>
+        <Switch aria-label="Switch" />
+        <Select>
+          <SelectTrigger aria-label="Select">
+            <SelectValue />
+          </SelectTrigger>
+        </Select>
+      </>
+    );
+    for (const control of [
+      screen.getByRole("checkbox"),
+      screen.getByRole("radio"),
+      screen.getByRole("switch"),
+      screen.getByRole("combobox"),
+    ]) {
+      expect(control.className).toContain("cursor-pointer");
+      expect(control.className).toContain("disabled:cursor-not-allowed");
+    }
+  });
 });

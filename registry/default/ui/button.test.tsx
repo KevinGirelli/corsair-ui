@@ -12,6 +12,8 @@ describe("Button", () => {
     expect(button).toHaveProperty("dataset.variant", "default");
     expect(button).toHaveProperty("dataset.size", "default");
     expect(button.className).toContain("bg-primary");
+    // Tailwind 4's preflight no longer gives buttons a pointer cursor.
+    expect(button.className).toContain("cursor-pointer");
   });
 
   it("applies the requested variant and lets className win conflicts", () => {
