@@ -29,7 +29,7 @@ function Checkbox({ className, ...props }: ComponentProps<typeof CheckboxPrimiti
         className={cn(
           "flex items-center justify-center text-current",
           "zoom-in-50 fade-in-0 zoom-out-50 fade-out-0 ease-out",
-          "data-[state=checked]:animate-in data-[state=indeterminate]:animate-in data-[state=unchecked]:animate-out motion-reduce:animate-none"
+          "motion-safe:data-[state=checked]:animate-in motion-safe:data-[state=indeterminate]:animate-in motion-safe:data-[state=unchecked]:animate-out"
         )}
       >
         <CheckIcon className="size-3.5 group-data-[state=indeterminate]:hidden" />

@@ -144,7 +144,7 @@ function FieldError({ className, children, errors, ...props }: FieldErrorProps) 
       className={cn(
         "text-destructive text-sm font-normal",
         // Errors show up in response to input, so ease them in instead of popping.
-        "animate-in fade-in-0 slide-in-from-top-1 ease-out motion-reduce:animate-none",
+        "fade-in-0 slide-in-from-top-1 motion-safe:animate-in ease-out",
         className
       )}
       {...props}

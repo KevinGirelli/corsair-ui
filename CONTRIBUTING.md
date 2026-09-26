@@ -63,7 +63,7 @@ Corsair items are generic building blocks. Anything specific to one product stay
 - **Style through tokens.** Use the theme's semantic colours, never hex values, and expose state through `data-*` / `aria-*` attributes so it can be restyled without editing the component. Tints come from opacity modifiers (`hover:bg-primary/90`, `ring-ring/50`), not extra tokens. Components do not list `theme` as a dependency: it is installed once, and re-installing it with every component would overwrite the consumer's brand colours.
 - **Same building blocks.** Radix primitives for behaviour, `class-variance-authority` for variants, `lucide-react` for icons, `cn` for class merging, and a `data-slot` attribute on every part.
 - **Accessible by default.** Registry code is linted with `eslint-plugin-jsx-a11y` in strict mode. Interactive components need keyboard support and visible focus.
-- **Motion is optional.** Anything that animates respects `prefers-reduced-motion`.
+- **Motion is optional.** Anything that animates respects `prefers-reduced-motion`. Put enter and exit animations behind `motion-safe:` (`motion-safe:data-[state=open]:animate-in`): `motion-reduce:animate-none` has lower specificity than a `data-[state=…]:` variant, so it does not stop them. Transitions can keep `motion-reduce:transition-none`. Leave animation durations at the library default, since `duration-*` sets the animation duration in Tailwind 3 but not in Tailwind 4.
 
 ## Tailwind 3 and 4
 

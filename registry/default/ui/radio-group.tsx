@@ -38,7 +38,7 @@ function RadioGroupItem({ className, ...props }: ComponentProps<typeof RadioGrou
         className={cn(
           "flex size-full items-center justify-center",
           "zoom-in-0 fade-in-0 zoom-out-0 fade-out-0 ease-out",
-          "data-[state=checked]:animate-in data-[state=unchecked]:animate-out motion-reduce:animate-none"
+          "motion-safe:data-[state=checked]:animate-in motion-safe:data-[state=unchecked]:animate-out"
         )}
       >
         <CircleIcon className="fill-primary stroke-primary size-2" />

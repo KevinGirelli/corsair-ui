@@ -130,11 +130,12 @@ describe("motion", () => {
 
     const dot = monthly.querySelector("[data-slot=radio-group-indicator]");
     expect(dot?.getAttribute("data-state")).toBe("checked");
+    // motion-safe: rather than motion-reduce:animate-none, which loses to the
+    // data-[state] variants on specificity and would not stop the animation.
     for (const name of [
-      "data-[state=checked]:animate-in",
-      "data-[state=unchecked]:animate-out",
+      "motion-safe:data-[state=checked]:animate-in",
+      "motion-safe:data-[state=unchecked]:animate-out",
       "zoom-in-0",
-      "motion-reduce:animate-none",
     ]) {
       expect(dot?.className).toContain(name);
     }
@@ -148,9 +149,8 @@ describe("motion", () => {
 
     await userEvent.click(checkbox);
     const mark = checkbox.querySelector("[data-slot=checkbox-indicator]");
-    expect(mark?.className).toContain("data-[state=checked]:animate-in");
-    expect(mark?.className).toContain("data-[state=indeterminate]:animate-in");
-    expect(mark?.className).toContain("motion-reduce:animate-none");
+    expect(mark?.className).toContain("motion-safe:data-[state=checked]:animate-in");
+    expect(mark?.className).toContain("motion-safe:data-[state=indeterminate]:animate-in");
   });
 });
 
