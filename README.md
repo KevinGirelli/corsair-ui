@@ -10,24 +10,29 @@ Early days: the foundation layer (theme, buttons, inputs, form layout, cards and
 
 Only the components, hooks and utilities, plus the tooling that keeps them honest. There is no website or demo app here; the documentation site is a separate project that consumes this registry like any other app would.
 
-The repository itself is the registry: `registry.json` at the root is read by the [shadcn CLI](https://ui.shadcn.com/docs/registry/github) straight from GitHub, so there is no server to run or package to publish.
+`registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair` namespace points to. There is no server to run or package to publish.
 
 ## Using an item
 
 In a project that already has a `components.json` (run `shadcn init` first if it does not; it also sets up the animation utilities overlays use):
 
 ```bash
+# once per project: add the @corsair namespace to components.json
+pnpm dlx shadcn@latest registry add "@corsair=https://kevingirelli.github.io/corsair-ui/r/{name}.json"
+
 # once per project: colours, radius and base styles
-pnpm dlx shadcn@latest add KevinGirelli/corsair-ui/theme
+pnpm dlx shadcn@latest add @corsair/theme
 
 # then any item; it is copied into your project as source code
-pnpm dlx shadcn@latest add KevinGirelli/corsair-ui/button KevinGirelli/corsair-ui/field
+pnpm dlx shadcn@latest add @corsair/button @corsair/field
 
 # see everything that is available
-pnpm dlx shadcn@latest list KevinGirelli/corsair-ui
+pnpm dlx shadcn@latest list @corsair
 ```
 
-Append a release to pin it, e.g. `KevinGirelli/corsair-ui/button#v0.2.0`. Dark mode follows the `dark` class on `<html>`; to brand it, override `--primary`, `--primary-foreground` and `--ring` in your CSS.
+`@corsair/<item>` always serves what is on `main`. To install a release instead, use the item's GitHub address with the tag, e.g. `KevinGirelli/corsair-ui/button#v0.2.0`; the Corsair items it depends on still come from `@corsair`.
+
+Dark mode follows the `dark` class on `<html>`; to brand it, override `--primary`, `--primary-foreground` and `--ring` in your CSS.
 
 Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, so it works whichever one your project uses.
 
@@ -65,6 +70,7 @@ pnpm lint               # ESLint, with strict accessibility rules for registry c
 pnpm typecheck
 pnpm check:tailwind     # classes must mean the same thing in Tailwind 3 and 4
 pnpm registry:validate  # registry.json and every item match the shadcn schema
+pnpm registry:build     # the JSON that gets published, in dist/registry/r
 pnpm verify:fixtures    # install every item into the fixtures and build them
 ```
 

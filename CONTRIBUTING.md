@@ -37,7 +37,7 @@ registry/default/
 ## Adding an item
 
 1. Put the source in the folder that matches what it is: `ui/` for primitives and form controls, `components/<area>/` for larger pieces, `hooks/`, or `lib/`.
-2. Add the item to that folder's `registry.json`: `name`, `type`, `title`, `description` and `files`. List npm packages in `dependencies` with a version range (`"motion@^12.0.0"`) and other Corsair items in `registryDependencies` by their full address (`"KevinGirelli/corsair-ui/utils"`); a bare `"utils"` would pull shadcn's item instead. `verify:fixtures` points these addresses at the local build, so new items are tested together before they reach `main`.
+2. Add the item to that folder's `registry.json`: `name`, `type`, `title`, `description` and `files`. List npm packages in `dependencies` with a version range (`"motion@^12.0.0"`) and other Corsair items in `registryDependencies` with the namespace (`"@corsair/utils"`); a bare `"utils"` would pull shadcn's item instead. `verify:fixtures` points the namespace at the local build, so new items are tested together before they reach `main`.
 3. Write tests next to the source (`*.test.ts` / `*.test.tsx`). They are never shipped: only the paths listed in `files` are.
 4. Run `pnpm registry:validate`, `pnpm check:tailwind` and `pnpm verify:fixtures` before opening the PR.
 
@@ -60,7 +60,7 @@ Corsair items are generic building blocks. Anything specific to one product stay
 - **No form library inside controls.** Signal invalid state with `aria-invalid`. Integration with a form library ships as its own item.
 - **Composition over configuration.** Prefer `Field` + `Label` + `Control` + `Message` parts to one component with a dozen props.
 - **No business logic.** No data fetching, SDK calls, hard-coded locale, currency or time zone, and no copy the consumer cannot change. User-facing strings come from props with English defaults.
-- **Style through tokens.** Use the theme's semantic colours, never hex values, and expose state through `data-*` / `aria-*` attributes so it can be restyled without editing the component. Tints come from opacity modifiers (`bg-destructive/15`, `ring-ring/50`), not extra tokens. Components do not list `theme` as a dependency: it is installed once, and re-installing it with every component would overwrite the consumer's brand colours.
+- **Style through tokens.** Use the theme's semantic colours, never hex values, and expose state through `data-*` / `aria-*` attributes so it can be restyled without editing the component. Tints come from opacity modifiers (`hover:bg-primary/90`, `ring-ring/50`), not extra tokens. Components do not list `theme` as a dependency: it is installed once, and re-installing it with every component would overwrite the consumer's brand colours.
 - **Same building blocks.** Radix primitives for behaviour, `class-variance-authority` for variants, `lucide-react` for icons, `cn` for class merging, and a `data-slot` attribute on every part.
 - **Accessible by default.** Registry code is linted with `eslint-plugin-jsx-a11y` in strict mode. Interactive components need keyboard support and visible focus.
 - **Motion is optional.** Anything that animates respects `prefers-reduced-motion`.
@@ -91,7 +91,7 @@ When an item needs CSS variables or keyframes, declare them for both versions in
 
 Many components follow the structure and API of [shadcn/ui](https://ui.shadcn.com) (MIT); see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md). Code adapted from another project keeps its license notice there.
 
-Releases are git tags (`v0.2.0`) with an entry in [CHANGELOG.md](./CHANGELOG.md). Consumers pin an item to a release with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
+Every merge to `main` that touches the registry is published to GitHub Pages by the "Publish registry" workflow, so `@corsair/<item>` always serves `main`. Releases are git tags (`v0.2.0`) with an entry in [CHANGELOG.md](./CHANGELOG.md); consumers can install a release with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
 ## Pull requests
 

@@ -1,6 +1,6 @@
 /**
  * Installs every registry item into throwaway copies of the fixture projects,
- * the same way someone using Corsair would (`shadcn add <item>`), then
+ * the same way someone using Corsair would (`shadcn add @corsair/<item>`), then
  * typechecks the installed code, compiles the project's CSS and checks that
  * the theme's utilities actually came out of it.
  *
@@ -31,8 +31,8 @@ const REGISTRY_OUTPUT = path.join(ROOT, "dist", "r");
 const FIXTURES_DIR = path.join(ROOT, "tests", "fixtures");
 const SHADCN = path.join(ROOT, "node_modules", ".bin", "shadcn");
 
-/** How items refer to each other in registry.json (a GitHub registry address). */
-const GITHUB_ADDRESS = /^KevinGirelli\/corsair-ui\/([\w-]+)(#.*)?$/;
+/** The namespace items are installed with, and use to refer to each other. */
+const NAMESPACE = "@corsair";
 
 /**
  * Classes that only exist when the theme item's colours and radii were wired
@@ -45,7 +45,8 @@ const EXPECTED_CLASSES = [
   "bg-field",
   "border-input",
   "text-muted-foreground",
-  "bg-destructive/15",
+  "hover:bg-primary/90",
+  "before:bg-success",
   "focus-visible:ring-ring/50",
   "data-[state=checked]:bg-primary",
   "rounded-md",
@@ -102,22 +103,16 @@ function serveRegistry(): Promise<{ server: Server; baseUrl: string }> {
 }
 
 /**
- * Items depend on each other through their GitHub address, which resolves to
- * what is on `main`. Point those dependencies at the local server instead, so
- * a new item and the items it needs are tested together before they merge.
+ * Points the namespace at the local server in the fixture's components.json,
+ * the same one-line setup a consumer does with the published URL. Items and
+ * the items they depend on (`@corsair/utils`) then all come from this build,
+ * so a new item is tested together with what it needs before it merges.
  */
-function useLocalDependencies(baseUrl: string) {
-  for (const file of readdirSync(REGISTRY_OUTPUT)) {
-    if (!file.endsWith(".json") || file === "registry.json") continue;
-    const target = path.join(REGISTRY_OUTPUT, file);
-    const item = JSON.parse(readFileSync(target, "utf8")) as { registryDependencies?: string[] };
-    if (!item.registryDependencies?.length) continue;
-    item.registryDependencies = item.registryDependencies.map((dependency) => {
-      const match = GITHUB_ADDRESS.exec(dependency);
-      return match ? `${baseUrl}/${match[1]}.json` : dependency;
-    });
-    writeFileSync(target, JSON.stringify(item, null, 2));
-  }
+function useLocalRegistry(workdir: string, baseUrl: string) {
+  const file = path.join(workdir, "components.json");
+  const config = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
+  config.registries = { [NAMESPACE]: `${baseUrl}/{name}.json` };
+  writeFileSync(file, `${JSON.stringify(config, null, 2)}\n`);
 }
 
 /** A class name as it appears in a compiled selector: `bg-destructive/15` → `.bg-destructive\/15`. */
@@ -151,7 +146,7 @@ function listFixtures() {
   return requested.length > 0 ? requested : available;
 }
 
-async function verifyFixture(fixture: string, itemUrls: string[]) {
+async function verifyFixture(fixture: string, items: string[], baseUrl: string) {
   // Outside the repository on purpose: the fixture must not see this repo's
   // node_modules, lockfile or tsconfig, just like a real consumer project.
   const workdir = mkdtempSync(path.join(os.tmpdir(), `corsair-${fixture}-`));
@@ -164,8 +159,9 @@ async function verifyFixture(fixture: string, itemUrls: string[]) {
   });
 
   try {
+    useLocalRegistry(workdir, baseUrl);
     await run("npm", ["install", "--no-audit", "--no-fund", "--loglevel=error"], workdir);
-    await run(SHADCN, ["add", ...itemUrls, "--yes", "--overwrite"], workdir);
+    await run(SHADCN, ["add", ...items, "--yes", "--overwrite"], workdir);
     await run("npm", ["run", "verify"], workdir);
     checkCompiledCss(workdir);
     if (!keep) rmSync(workdir, { recursive: true, force: true });
@@ -185,14 +181,13 @@ async function main() {
   };
   const fixtures = listFixtures();
   const { server, baseUrl } = await serveRegistry();
-  useLocalDependencies(baseUrl);
-  const itemUrls = catalog.items.map((item) => `${baseUrl}/${item.name}.json`);
+  const items = catalog.items.map((item) => `${NAMESPACE}/${item.name}`);
 
-  console.log(`\nServing ${itemUrls.length} registry item(s) at ${baseUrl}`);
+  console.log(`\nServing ${items.length} registry item(s) at ${baseUrl}`);
 
   const results: { fixture: string; ok: boolean }[] = [];
   for (const fixture of fixtures) {
-    results.push({ fixture, ok: await verifyFixture(fixture, itemUrls) });
+    results.push({ fixture, ok: await verifyFixture(fixture, items, baseUrl) });
   }
   server.close();
 
