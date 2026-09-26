@@ -11,9 +11,7 @@
         "class-variance-authority@^0.7.1",
         "lucide-react@^1.48.0"
       ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "button.tsx",
@@ -26,12 +24,8 @@
       "type": "registry:ui",
       "title": "Spinner",
       "description": "Animated status indicator for work in progress, announced as Loading.",
-      "dependencies": [
-        "lucide-react@^1.48.0"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "spinner.tsx",
@@ -44,13 +38,8 @@
       "type": "registry:ui",
       "title": "Badge",
       "description": "Short status or metadata label. Solid, secondary and outline styles, plus success, warning and destructive statuses shown as a coloured dot.",
-      "dependencies": [
-        "@radix-ui/react-slot@^1.3.3",
-        "class-variance-authority@^0.7.1"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["@radix-ui/react-slot@^1.3.3", "class-variance-authority@^0.7.1"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "badge.tsx",
@@ -63,12 +52,8 @@
       "type": "registry:ui",
       "title": "Label",
       "description": "Accessible name for a form control.",
-      "dependencies": [
-        "@radix-ui/react-label@^2.1.15"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["@radix-ui/react-label@^2.1.15"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "label.tsx",
@@ -81,9 +66,7 @@
       "type": "registry:ui",
       "title": "Input",
       "description": "Single-line text control. Its error state comes from aria-invalid, so any form library can drive it.",
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "input.tsx",
@@ -96,9 +79,7 @@
       "type": "registry:ui",
       "title": "Textarea",
       "description": "Multi-line text control with the same states as Input.",
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "textarea.tsx",
@@ -111,13 +92,8 @@
       "type": "registry:ui",
       "title": "Input Group",
       "description": "An input with icons, text or buttons attached on either side.",
-      "dependencies": [
-        "class-variance-authority@^0.7.1"
-      ],
-      "registryDependencies": [
-        "@corsair/utils",
-        "@corsair/input"
-      ],
+      "dependencies": ["class-variance-authority@^0.7.1"],
+      "registryDependencies": ["@corsair/utils", "@corsair/input"],
       "files": [
         {
           "path": "input-group.tsx",
@@ -130,13 +106,8 @@
       "type": "registry:ui",
       "title": "Field",
       "description": "Layout for a control with its label, description and error, plus fieldset and group helpers. Independent of any form library.",
-      "dependencies": [
-        "class-variance-authority@^0.7.1"
-      ],
-      "registryDependencies": [
-        "@corsair/utils",
-        "@corsair/label"
-      ],
+      "dependencies": ["class-variance-authority@^0.7.1"],
+      "registryDependencies": ["@corsair/utils", "@corsair/label"],
       "files": [
         {
           "path": "field.tsx",
@@ -149,12 +120,8 @@
       "type": "registry:ui",
       "title": "Form Field (react-hook-form)",
       "description": "FormField: a react-hook-form Controller laid out with Field, with the id, label and ARIA wiring done for you.",
-      "dependencies": [
-        "react-hook-form@^7.89.0"
-      ],
-      "registryDependencies": [
-        "@corsair/field"
-      ],
+      "dependencies": ["react-hook-form@^7.89.0"],
+      "registryDependencies": ["@corsair/field"],
       "files": [
         {
           "path": "form.tsx",
@@ -167,13 +134,8 @@
       "type": "registry:ui",
       "title": "Checkbox",
       "description": "Checkbox with checked, unchecked and indeterminate states.",
-      "dependencies": [
-        "@radix-ui/react-checkbox@^1.3.11",
-        "lucide-react@^1.48.0"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["@radix-ui/react-checkbox@^1.3.11", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "checkbox.tsx",
@@ -186,13 +148,8 @@
       "type": "registry:ui",
       "title": "Radio Group",
       "description": "A set of options where exactly one can be selected.",
-      "dependencies": [
-        "@radix-ui/react-radio-group@^1.4.7",
-        "lucide-react@^1.48.0"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["@radix-ui/react-radio-group@^1.4.7", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "radio-group.tsx",
@@ -205,12 +162,8 @@
       "type": "registry:ui",
       "title": "Switch",
       "description": "On/off control for settings that apply immediately.",
-      "dependencies": [
-        "@radix-ui/react-switch@^1.3.7"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["@radix-ui/react-switch@^1.3.7"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "switch.tsx",
@@ -223,13 +176,8 @@
       "type": "registry:ui",
       "title": "Select",
       "description": "Pick one option from a list, with groups, labels and separators.",
-      "dependencies": [
-        "@radix-ui/react-select@^2.3.7",
-        "lucide-react@^1.48.0"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["@radix-ui/react-select@^2.3.7", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "select.tsx",
@@ -242,12 +190,8 @@
       "type": "registry:ui",
       "title": "Separator",
       "description": "Horizontal or vertical divider.",
-      "dependencies": [
-        "@radix-ui/react-separator@^1.1.15"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["@radix-ui/react-separator@^1.1.15"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "separator.tsx",
@@ -260,9 +204,7 @@
       "type": "registry:ui",
       "title": "Card",
       "description": "Container with header, title, description, action, content and footer parts.",
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "card.tsx",
@@ -275,12 +217,8 @@
       "type": "registry:ui",
       "title": "Alert",
       "description": "Callout for important messages on a neutral surface; default, success, warning and destructive tones colour the icon.",
-      "dependencies": [
-        "class-variance-authority@^0.7.1"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["class-variance-authority@^0.7.1"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "alert.tsx",
@@ -293,9 +231,7 @@
       "type": "registry:ui",
       "title": "Skeleton",
       "description": "Placeholder shape shown while content loads.",
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "skeleton.tsx",
@@ -308,12 +244,8 @@
       "type": "registry:ui",
       "title": "Popover",
       "description": "Floating panel anchored to a trigger, with header, title and description parts.",
-      "dependencies": [
-        "@radix-ui/react-popover@^1.1.23"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["@radix-ui/react-popover@^1.1.23"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "popover.tsx",
@@ -326,13 +258,8 @@
       "type": "registry:ui",
       "title": "Command",
       "description": "Searchable list navigated with the arrow keys; the base for comboboxes and command menus.",
-      "dependencies": [
-        "cmdk@^1.1.1",
-        "lucide-react@^1.48.0"
-      ],
-      "registryDependencies": [
-        "@corsair/utils"
-      ],
+      "dependencies": ["cmdk@^1.1.1", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
       "files": [
         {
           "path": "command.tsx",
@@ -345,14 +272,8 @@
       "type": "registry:ui",
       "title": "Calendar",
       "description": "Month grid for picking a date, several dates or a range, with dropdown captions and week numbers. Built on DayPicker.",
-      "dependencies": [
-        "@daypicker/react@^10.0.1",
-        "lucide-react@^1.48.0"
-      ],
-      "registryDependencies": [
-        "@corsair/utils",
-        "@corsair/button"
-      ],
+      "dependencies": ["@daypicker/react@^10.0.1", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
       "files": [
         {
           "path": "calendar.tsx",
@@ -365,10 +286,7 @@
       "type": "registry:ui",
       "title": "Date Picker",
       "description": "DatePicker and DateRangePicker: a calendar in a popover behind a button that shows the chosen date or range.",
-      "dependencies": [
-        "@daypicker/react@^10.0.1",
-        "lucide-react@^1.48.0"
-      ],
+      "dependencies": ["@daypicker/react@^10.0.1", "lucide-react@^1.48.0"],
       "registryDependencies": [
         "@corsair/utils",
         "@corsair/button",
@@ -387,17 +305,131 @@
       "type": "registry:ui",
       "title": "Combobox",
       "description": "A select with a search box, for long lists of options.",
-      "dependencies": [
-        "lucide-react@^1.48.0"
-      ],
-      "registryDependencies": [
-        "@corsair/utils",
-        "@corsair/command",
-        "@corsair/popover"
-      ],
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/command", "@corsair/popover"],
       "files": [
         {
           "path": "combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input OTP",
+      "description": "One-time code input drawn as separate slots, with paste and autofill support.",
+      "dependencies": ["input-otp@^1.5.0", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "input-otp.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-caret-blink": "caret-blink 1.25s ease-out infinite"
+        }
+      },
+      "css": {
+        "@keyframes caret-blink": {
+          "0%, 70%, 100%": {
+            "opacity": "1"
+          },
+          "20%, 50%": {
+            "opacity": "0"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "caret-blink": {
+                  "0%, 70%, 100%": {
+                    "opacity": "1"
+                  },
+                  "20%, 50%": {
+                    "opacity": "0"
+                  }
+                }
+              },
+              "animation": {
+                "caret-blink": "caret-blink 1.25s ease-out infinite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Pick a number or a range by dragging or with the arrow keys, horizontal or vertical.",
+      "dependencies": ["@radix-ui/react-slider@^1.4.7"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "A button that stays pressed, in default and outline variants and three sizes.",
+      "dependencies": ["@radix-ui/react-toggle@^1.1.18", "class-variance-authority@^0.7.1"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "A set of toggles with single or multiple selection, joined or spaced apart.",
+      "dependencies": ["@radix-ui/react-toggle-group@^1.1.19", "class-variance-authority@^0.7.1"],
+      "registryDependencies": ["@corsair/utils", "@corsair/toggle"],
+      "files": [
+        {
+          "path": "toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "Number Input",
+      "description": "Number field with decrement and increment buttons, min, max and step, following the spinbutton keyboard pattern.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/button", "@corsair/input-group"],
+      "files": [
+        {
+          "path": "number-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "Password Input",
+      "description": "Password field with a button that shows what was typed.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/button", "@corsair/input-group"],
+      "files": [
+        {
+          "path": "password-input.tsx",
           "type": "registry:ui"
         }
       ]

@@ -50,6 +50,8 @@ const EXPECTED_CLASSES = [
   "focus-visible:ring-ring/50",
   "data-[state=checked]:bg-primary",
   "rounded-md",
+  // Needs input-otp's keyframes: `css` in Tailwind 4, the config in Tailwind 3.
+  "animate-caret-blink",
 ];
 const EXPECTED_VARIABLES = ["--background:", "--primary:", "--radius:"];
 
