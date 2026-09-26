@@ -11,6 +11,7 @@
 export type RuleId =
   | "v4-only-variant"
   | "v4-only-utility"
+  | "v4-theme-variable"
   | "css-var-parens"
   | "css-var-bracket"
   | "important-suffix"
@@ -243,6 +244,13 @@ const V3_LINE_HEIGHTS = setOf(
   "loose"
 );
 
+/**
+ * Variables Tailwind 4 generates from its theme. They do not exist in a
+ * Tailwind 3 project, so an arbitrary value built on them resolves to nothing.
+ */
+const V4_THEME_VARIABLE =
+  /var\(--(spacing|color-|radius-|text-|font-|leading-|tracking-|shadow-|inset-shadow-|drop-shadow-|blur-|ease-|animate-|breakpoint-|container-)|--spacing\(/;
+
 /** Splits on `separator` outside of `[]` and `()`, so arbitrary values stay whole. */
 export function splitTopLevel(value: string, separator: string) {
   const parts: string[] = [];
@@ -283,6 +291,14 @@ function checkUtility(rawUtility: string, token: string): TokenFinding[] {
   }
 
   utility = utility.replace(/^-/, "");
+
+  if (V4_THEME_VARIABLE.test(utility)) {
+    findings.push({
+      rule: "v4-theme-variable",
+      token,
+      message: `Tailwind 4 defines its theme as CSS variables (--spacing, --color-*, --radius-*…); Tailwind 3 does not. Use a literal value, or a variable the theme item declares such as var(--radius).`,
+    });
+  }
 
   // `(--x)` and `(length:--x)`, but not the `var(--x)` inside an arbitrary value.
   if (/(?<!var)\((?:[a-z-]+:)?--[\w-]+\)/.test(utility)) {

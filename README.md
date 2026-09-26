@@ -1,38 +1,65 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/assets/logo-white.png" />
+    <img src="./.github/assets/logo-black.png" alt="Corsair UI logo: a bearded pirate in a tricorn hat" width="120" />
+  </picture>
+</p>
+
 # Corsair UI
 
 A UI component library built to be copied, adapted, and owned by whoever uses it — not locked behind an install.
 
 Components live as code you bring into your own project and modify freely, in the spirit of libraries like shadcn/ui. The goal is a broad, well-built catalog that covers what most projects end up rebuilding from scratch: not just basic UI primitives, but forms, data display, navigation, motion, and more creative/visual pieces too.
 
-Early days — starting with a solid foundation layer (buttons, inputs, cards, and the like) before growing from there.
+Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like) is in; richer inputs such as date pickers come next.
 
 ## What lives in this repository
 
 Only the components, hooks and utilities, plus the tooling that keeps them honest. There is no website or demo app here; the documentation site is a separate project that consumes this registry like any other app would.
 
-The repository itself is the registry: `registry.json` at the root is read by the [shadcn CLI](https://ui.shadcn.com/docs/registry/github) straight from GitHub, so there is no server to run or package to publish.
+`registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair` namespace points to. There is no server to run or package to publish.
 
 ## Using an item
 
-In a project that already has a `components.json` (run `shadcn init` first if it does not):
+In a project that already has a `components.json` (run `shadcn init` first if it does not; it also sets up the animation utilities overlays use):
 
 ```bash
-# see what is available
-pnpm dlx shadcn@latest list KevinGirelli/corsair-ui
+# once per project: add the @corsair namespace to components.json
+pnpm dlx shadcn@latest registry add "@corsair=https://kevingirelli.github.io/corsair-ui/r/{name}.json"
 
-# install an item; it is copied into your project as source code
-pnpm dlx shadcn@latest add KevinGirelli/corsair-ui/use-media-query
+# once per project: colours, radius and base styles
+pnpm dlx shadcn@latest add @corsair/theme
+
+# then any item; it is copied into your project as source code
+pnpm dlx shadcn@latest add @corsair/button @corsair/field
+
+# see everything that is available
+pnpm dlx shadcn@latest list @corsair
 ```
 
-Append `#<tag-or-commit>` to an address to pin it, e.g. `KevinGirelli/corsair-ui/use-media-query#<commit-sha>`.
+`@corsair/<item>` always serves what is on `main`. To install a release instead, use the item's GitHub address with the tag, e.g. `KevinGirelli/corsair-ui/button#v0.2.0`; the Corsair items it depends on still come from `@corsair`.
+
+Dark mode follows the `dark` class on `<html>`; to brand it, override `--primary`, `--primary-foreground` and `--ring` in your CSS.
 
 Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, so it works whichever one your project uses.
+
+## What is in it
+
+- **Actions:** button, badge, spinner
+- **Form controls:** label, input, textarea, input-group, checkbox, radio-group, switch, select
+- **Form layout:** field (no form library needed), form (react-hook-form)
+- **Display:** card, alert, separator, skeleton
+- **Foundations:** theme, utils (`cn`), use-media-query
+
+See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
 
 ## Repository layout
 
 ```text
 registry.json              entry point read by the shadcn CLI
 registry/default/
+  theme/                   CSS variables and base styles for Tailwind 3 and 4
+  ui/                      components
   hooks/                   React hooks
   lib/                     plain utilities
 scripts/                   Tailwind compatibility check and fixture runner
@@ -50,6 +77,7 @@ pnpm lint               # ESLint, with strict accessibility rules for registry c
 pnpm typecheck
 pnpm check:tailwind     # classes must mean the same thing in Tailwind 3 and 4
 pnpm registry:validate  # registry.json and every item match the shadcn schema
+pnpm registry:build     # the JSON that gets published, in dist/registry/r
 pnpm verify:fixtures    # install every item into the fixtures and build them
 ```
 
@@ -57,4 +85,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add an item and the rules co
 
 ## License
 
-[MIT](./LICENSE)
+[MIT](./LICENSE). Several components are adapted from shadcn/ui; see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).

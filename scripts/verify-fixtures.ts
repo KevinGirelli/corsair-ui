@@ -1,7 +1,8 @@
 /**
  * Installs every registry item into throwaway copies of the fixture projects,
- * the same way someone using Corsair would (`shadcn add <item>`), then
- * typechecks the installed code and compiles the project's CSS.
+ * the same way someone using Corsair would (`shadcn add @corsair/<item>`), then
+ * typechecks the installed code, compiles the project's CSS and checks that
+ * the theme's utilities actually came out of it.
  *
  * One fixture runs Tailwind 3.4 and the other Tailwind 4, so an item that only
  * works with one of them fails here instead of in someone's project. The
@@ -12,7 +13,15 @@
  *   pnpm verify:fixtures --keep           keep the temporary copies for inspection
  */
 import { spawn } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import {
+  cpSync,
+  existsSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { createServer, type Server } from "node:http";
 import os from "node:os";
 import path from "node:path";
@@ -21,6 +30,28 @@ const ROOT = process.cwd();
 const REGISTRY_OUTPUT = path.join(ROOT, "dist", "r");
 const FIXTURES_DIR = path.join(ROOT, "tests", "fixtures");
 const SHADCN = path.join(ROOT, "node_modules", ".bin", "shadcn");
+
+/** The namespace items are installed with, and use to refer to each other. */
+const NAMESPACE = "@corsair";
+
+/**
+ * Classes that only exist when the theme item's colours and radii were wired
+ * into Tailwind correctly. If the theme silently fails in one version, these
+ * are missing from that fixture's CSS even though the build succeeds.
+ */
+const EXPECTED_CLASSES = [
+  "bg-primary",
+  "text-primary-foreground",
+  "bg-field",
+  "border-input",
+  "text-muted-foreground",
+  "hover:bg-primary/90",
+  "before:bg-success",
+  "focus-visible:ring-ring/50",
+  "data-[state=checked]:bg-primary",
+  "rounded-md",
+];
+const EXPECTED_VARIABLES = ["--background:", "--primary:", "--radius:"];
 
 const args = process.argv.slice(2);
 const keep = args.includes("--keep");
@@ -71,6 +102,35 @@ function serveRegistry(): Promise<{ server: Server; baseUrl: string }> {
   });
 }
 
+/**
+ * Points the namespace at the local server in the fixture's components.json,
+ * the same one-line setup a consumer does with the published URL. Items and
+ * the items they depend on (`@corsair/utils`) then all come from this build,
+ * so a new item is tested together with what it needs before it merges.
+ */
+function useLocalRegistry(workdir: string, baseUrl: string) {
+  const file = path.join(workdir, "components.json");
+  const config = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
+  config.registries = { [NAMESPACE]: `${baseUrl}/{name}.json` };
+  writeFileSync(file, `${JSON.stringify(config, null, 2)}\n`);
+}
+
+/** A class name as it appears in a compiled selector: `bg-destructive/15` → `.bg-destructive\/15`. */
+function selectorFor(className: string) {
+  return `.${className.replace(/[^\w-]/g, (char) => `\\${char}`)}`;
+}
+
+function checkCompiledCss(workdir: string) {
+  const css = readFileSync(path.join(workdir, "dist", "styles.css"), "utf8");
+  const missing = [
+    ...EXPECTED_CLASSES.filter((name) => !css.includes(selectorFor(name))),
+    ...EXPECTED_VARIABLES.filter((variable) => !css.includes(variable)),
+  ];
+  if (missing.length > 0) {
+    throw new Error(`the compiled CSS is missing: ${missing.join(", ")}`);
+  }
+}
+
 function listFixtures() {
   const available = readdirSync(FIXTURES_DIR, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -86,7 +146,7 @@ function listFixtures() {
   return requested.length > 0 ? requested : available;
 }
 
-async function verifyFixture(fixture: string, itemUrls: string[]) {
+async function verifyFixture(fixture: string, items: string[], baseUrl: string) {
   // Outside the repository on purpose: the fixture must not see this repo's
   // node_modules, lockfile or tsconfig, just like a real consumer project.
   const workdir = mkdtempSync(path.join(os.tmpdir(), `corsair-${fixture}-`));
@@ -99,9 +159,11 @@ async function verifyFixture(fixture: string, itemUrls: string[]) {
   });
 
   try {
+    useLocalRegistry(workdir, baseUrl);
     await run("npm", ["install", "--no-audit", "--no-fund", "--loglevel=error"], workdir);
-    await run(SHADCN, ["add", ...itemUrls, "--yes", "--overwrite"], workdir);
+    await run(SHADCN, ["add", ...items, "--yes", "--overwrite"], workdir);
     await run("npm", ["run", "verify"], workdir);
+    checkCompiledCss(workdir);
     if (!keep) rmSync(workdir, { recursive: true, force: true });
     return true;
   } catch (error) {
@@ -119,13 +181,13 @@ async function main() {
   };
   const fixtures = listFixtures();
   const { server, baseUrl } = await serveRegistry();
-  const itemUrls = catalog.items.map((item) => `${baseUrl}/${item.name}.json`);
+  const items = catalog.items.map((item) => `${NAMESPACE}/${item.name}`);
 
-  console.log(`\nServing ${itemUrls.length} registry item(s) at ${baseUrl}`);
+  console.log(`\nServing ${items.length} registry item(s) at ${baseUrl}`);
 
   const results: { fixture: string; ok: boolean }[] = [];
   for (const fixture of fixtures) {
-    results.push({ fixture, ok: await verifyFixture(fixture, itemUrls) });
+    results.push({ fixture, ok: await verifyFixture(fixture, items, baseUrl) });
   }
   server.close();
 
