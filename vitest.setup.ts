@@ -18,4 +18,6 @@ if (typeof window !== "undefined") {
   Element.prototype.setPointerCapture ??= () => {};
   Element.prototype.releasePointerCapture ??= () => {};
   Element.prototype.scrollIntoView ??= () => {};
+  // input-otp probes for password manager badges.
+  document.elementFromPoint ??= () => null;
 }
