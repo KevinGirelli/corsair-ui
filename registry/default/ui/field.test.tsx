@@ -22,6 +22,14 @@ describe("FieldError", () => {
     expect(screen.getByRole("alert").textContent).toBe("Required");
   });
 
+  it("eases in when it appears, unless reduced motion is requested", () => {
+    render(<FieldError errors={[{ message: "Required" }]} />);
+    const { className } = screen.getByRole("alert");
+    expect(className).toContain("animate-in");
+    expect(className).toContain("slide-in-from-top-1");
+    expect(className).toContain("motion-reduce:animate-none");
+  });
+
   it("lists several messages once each", () => {
     render(
       <FieldError

@@ -23,7 +23,8 @@ function RadioGroupItem({ className, ...props }: ComponentProps<typeof RadioGrou
       data-slot="radio-group-item"
       className={cn(
         "peer border-input bg-field text-primary aspect-square size-4 shrink-0 cursor-pointer rounded-full border",
-        "transition-[color,box-shadow] outline-none motion-reduce:transition-none",
+        "transition-[color,border-color,box-shadow] outline-none motion-reduce:transition-none",
+        "data-[state=checked]:border-primary",
         "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
         "aria-[invalid=true]:border-destructive aria-[invalid=true]:ring-destructive/20",
         "disabled:cursor-not-allowed disabled:opacity-50",
@@ -31,11 +32,16 @@ function RadioGroupItem({ className, ...props }: ComponentProps<typeof RadioGrou
       )}
       {...props}
     >
+      {/* The dot grows in when picked and shrinks out when another option is. */}
       <RadioGroupPrimitive.Indicator
         data-slot="radio-group-indicator"
-        className="relative flex items-center justify-center"
+        className={cn(
+          "flex size-full items-center justify-center",
+          "zoom-in-0 fade-in-0 zoom-out-0 fade-out-0 ease-out",
+          "data-[state=checked]:animate-in data-[state=unchecked]:animate-out motion-reduce:animate-none"
+        )}
       >
-        <CircleIcon className="fill-primary stroke-primary absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2" />
+        <CircleIcon className="fill-primary stroke-primary size-2" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );

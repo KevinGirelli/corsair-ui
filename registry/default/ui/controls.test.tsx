@@ -117,6 +117,43 @@ describe("Select", () => {
   });
 });
 
+describe("motion", () => {
+  it("animates the radio dot in and out, unless reduced motion is requested", async () => {
+    render(
+      <RadioGroup aria-label="Summary email" defaultValue="weekly">
+        <RadioGroupItem value="weekly" aria-label="Weekly" />
+        <RadioGroupItem value="monthly" aria-label="Monthly" />
+      </RadioGroup>
+    );
+    const monthly = screen.getByRole("radio", { name: "Monthly" });
+    await userEvent.click(monthly);
+
+    const dot = monthly.querySelector("[data-slot=radio-group-indicator]");
+    expect(dot?.getAttribute("data-state")).toBe("checked");
+    for (const name of [
+      "data-[state=checked]:animate-in",
+      "data-[state=unchecked]:animate-out",
+      "zoom-in-0",
+      "motion-reduce:animate-none",
+    ]) {
+      expect(dot?.className).toContain(name);
+    }
+    expect(monthly.className).toContain("data-[state=checked]:border-primary");
+  });
+
+  it("scales the checkbox mark in for checked and indeterminate", async () => {
+    render(<Checkbox aria-label="Send me a copy" />);
+    const checkbox = screen.getByRole("checkbox", { name: "Send me a copy" });
+    expect(checkbox.querySelector("[data-slot=checkbox-indicator]")).toBeNull();
+
+    await userEvent.click(checkbox);
+    const mark = checkbox.querySelector("[data-slot=checkbox-indicator]");
+    expect(mark?.className).toContain("data-[state=checked]:animate-in");
+    expect(mark?.className).toContain("data-[state=indeterminate]:animate-in");
+    expect(mark?.className).toContain("motion-reduce:animate-none");
+  });
+});
+
 describe("pointer cursor", () => {
   it("is set on every control you can click", () => {
     render(

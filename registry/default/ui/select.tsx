@@ -30,7 +30,7 @@ function SelectTrigger({
       data-size={size}
       className={cn(
         "border-input bg-field flex w-fit cursor-pointer items-center justify-between gap-2 rounded-md border px-3 py-2 text-sm whitespace-nowrap",
-        "transition-[color,box-shadow] outline-none motion-reduce:transition-none",
+        "transition-[color,border-color,box-shadow] outline-none motion-reduce:transition-none",
         // The chevron points up while the list is open.
         "[&[data-state=open]>[data-slot=select-icon]]:rotate-180",
         "data-[placeholder]:text-muted-foreground data-[size=default]:h-9 data-[size=sm]:h-8",

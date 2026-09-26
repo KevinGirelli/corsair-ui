@@ -21,7 +21,7 @@ function InputGroup({ className, ...props }: ComponentProps<"div">) {
       data-slot="input-group"
       className={cn(
         "border-input bg-field relative flex h-9 w-full min-w-0 items-center rounded-md border",
-        "transition-[color,box-shadow] outline-none motion-reduce:transition-none",
+        "transition-[color,border-color,box-shadow] outline-none motion-reduce:transition-none",
         "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50 has-[[data-slot=input-group-control]:focus-visible]:ring-[3px]",
         "has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-destructive/20",
         "has-[[data-slot=input-group-control]:disabled]:opacity-50",

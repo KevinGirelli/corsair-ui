@@ -141,7 +141,12 @@ function FieldError({ className, children, errors, ...props }: FieldErrorProps) 
     <div
       role="alert"
       data-slot="field-error"
-      className={cn("text-destructive text-sm font-normal", className)}
+      className={cn(
+        "text-destructive text-sm font-normal",
+        // Errors show up in response to input, so ease them in instead of popping.
+        "animate-in fade-in-0 slide-in-from-top-1 ease-out motion-reduce:animate-none",
+        className
+      )}
       {...props}
     >
       {content}

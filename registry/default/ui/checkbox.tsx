@@ -13,7 +13,7 @@ function Checkbox({ className, ...props }: ComponentProps<typeof CheckboxPrimiti
       data-slot="checkbox"
       className={cn(
         "peer group border-input bg-field text-primary-foreground size-4 shrink-0 cursor-pointer rounded-[4px] border",
-        "transition-[color,background-color,box-shadow] outline-none motion-reduce:transition-none",
+        "transition-[color,background-color,border-color,box-shadow] outline-none motion-reduce:transition-none",
         "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
         "aria-[invalid=true]:border-destructive aria-[invalid=true]:ring-destructive/20",
         "data-[state=checked]:border-primary data-[state=checked]:bg-primary",
@@ -23,9 +23,14 @@ function Checkbox({ className, ...props }: ComponentProps<typeof CheckboxPrimiti
       )}
       {...props}
     >
+      {/* The mark scales in while the box fills, and back out when cleared. */}
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
-        className="flex items-center justify-center text-current"
+        className={cn(
+          "flex items-center justify-center text-current",
+          "zoom-in-50 fade-in-0 zoom-out-50 fade-out-0 ease-out",
+          "data-[state=checked]:animate-in data-[state=indeterminate]:animate-in data-[state=unchecked]:animate-out motion-reduce:animate-none"
+        )}
       >
         <CheckIcon className="size-3.5 group-data-[state=indeterminate]:hidden" />
         <MinusIcon className="hidden size-3.5 group-data-[state=indeterminate]:block" />
