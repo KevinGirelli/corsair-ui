@@ -4,7 +4,7 @@ A UI component library built to be copied, adapted, and owned by whoever uses it
 
 Components live as code you bring into your own project and modify freely, in the spirit of libraries like shadcn/ui. The goal is a broad, well-built catalog that covers what most projects end up rebuilding from scratch: not just basic UI primitives, but forms, data display, navigation, motion, and more creative/visual pieces too.
 
-Early days — starting with a solid foundation layer (buttons, inputs, cards, and the like) before growing from there.
+Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like) is in; richer inputs such as date pickers come next.
 
 ## What lives in this repository
 
@@ -14,25 +14,40 @@ The repository itself is the registry: `registry.json` at the root is read by th
 
 ## Using an item
 
-In a project that already has a `components.json` (run `shadcn init` first if it does not):
+In a project that already has a `components.json` (run `shadcn init` first if it does not; it also sets up the animation utilities overlays use):
 
 ```bash
-# see what is available
-pnpm dlx shadcn@latest list KevinGirelli/corsair-ui
+# once per project: colours, radius and base styles
+pnpm dlx shadcn@latest add KevinGirelli/corsair-ui/theme
 
-# install an item; it is copied into your project as source code
-pnpm dlx shadcn@latest add KevinGirelli/corsair-ui/use-media-query
+# then any item; it is copied into your project as source code
+pnpm dlx shadcn@latest add KevinGirelli/corsair-ui/button KevinGirelli/corsair-ui/field
+
+# see everything that is available
+pnpm dlx shadcn@latest list KevinGirelli/corsair-ui
 ```
 
-Append `#<tag-or-commit>` to an address to pin it, e.g. `KevinGirelli/corsair-ui/use-media-query#<commit-sha>`.
+Append a release to pin it, e.g. `KevinGirelli/corsair-ui/button#v0.2.0`. Dark mode follows the `dark` class on `<html>`; to brand it, override `--primary`, `--primary-foreground` and `--ring` in your CSS.
 
 Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, so it works whichever one your project uses.
+
+## What is in it
+
+- **Actions:** button, badge, spinner
+- **Form controls:** label, input, textarea, input-group, checkbox, radio-group, switch, select
+- **Form layout:** field (no form library needed), form (react-hook-form)
+- **Display:** card, alert, separator, skeleton
+- **Foundations:** theme, utils (`cn`), use-media-query
+
+See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
 
 ## Repository layout
 
 ```text
 registry.json              entry point read by the shadcn CLI
 registry/default/
+  theme/                   CSS variables and base styles for Tailwind 3 and 4
+  ui/                      components
   hooks/                   React hooks
   lib/                     plain utilities
 scripts/                   Tailwind compatibility check and fixture runner
@@ -57,4 +72,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add an item and the rules co
 
 ## License
 
-[MIT](./LICENSE)
+[MIT](./LICENSE). Several components are adapted from shadcn/ui; see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
