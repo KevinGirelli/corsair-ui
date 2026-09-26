@@ -5,19 +5,17 @@ import { cn } from "@/registry/default/lib/utils";
 
 const alertVariants = cva(
   [
-    "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm",
-    "has-[>svg]:grid-cols-[1rem_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+    "bg-card text-card-foreground relative grid w-full grid-cols-[0_1fr] items-start gap-y-1 rounded-lg border px-4 py-3 text-sm",
+    "has-[>svg]:grid-cols-[1rem_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5",
   ],
   {
     variants: {
+      // Every tone shares the neutral surface; only the icon takes the colour.
       variant: {
-        default: "bg-card text-card-foreground",
-        destructive:
-          "border-destructive/30 bg-destructive/15 text-destructive [&>[data-slot=alert-description]]:text-destructive/90",
-        success:
-          "border-success/30 bg-success/15 text-success [&>[data-slot=alert-description]]:text-success/90",
-        warning:
-          "border-warning/30 bg-warning/15 text-warning [&>[data-slot=alert-description]]:text-warning/90",
+        default: "[&>svg]:text-foreground",
+        destructive: "[&>svg]:text-destructive",
+        success: "[&>svg]:text-success",
+        warning: "[&>svg]:text-warning",
       },
     },
     defaultVariants: {
@@ -27,9 +25,11 @@ const alertVariants = cva(
 );
 
 /**
- * A message that draws attention. It uses `role="alert"`, which interrupts
- * screen readers: pass `role="status"` for messages that are not urgent.
- * Put an icon first to get the icon column.
+ * A message that draws attention. The tone shows on the icon, so put one
+ * first; the title should still say what happened on its own.
+ *
+ * It uses `role="alert"`, which interrupts screen readers: pass
+ * `role="status"` for messages that are not urgent.
  */
 function Alert({
   className,
@@ -51,7 +51,7 @@ function AlertTitle({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-title"
-      className={cn("col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight", className)}
+      className={cn("col-start-2 min-h-4 leading-5 font-medium tracking-tight", className)}
       {...props}
     />
   );

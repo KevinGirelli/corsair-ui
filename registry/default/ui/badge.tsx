@@ -6,21 +6,27 @@ import { cn } from "@/registry/default/lib/utils";
 
 const badgeVariants = cva(
   [
-    "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-md border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap",
-    "transition-[color,background-color,box-shadow] outline-none motion-reduce:transition-none",
+    "inline-flex w-fit shrink-0 items-center justify-center gap-1.5 overflow-hidden rounded-md border px-2 py-0.5 text-xs font-medium whitespace-nowrap",
+    "transition-[color,background-color,border-color,box-shadow] outline-none motion-reduce:transition-none",
     "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
     "[&>svg]:pointer-events-none [&>svg]:size-3",
   ],
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
-        secondary: "bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/80",
+        default: "bg-primary text-primary-foreground [a&]:hover:bg-primary/90 border-transparent",
+        secondary:
+          "bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/80 border-transparent",
         outline:
           "border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        destructive: "bg-destructive/15 text-destructive",
-        success: "bg-success/15 text-success",
-        warning: "bg-warning/15 text-warning",
+        // Status tones keep the neutral outline and put the colour on a dot,
+        // or on the icon when there is one.
+        destructive:
+          "border-border text-foreground before:bg-destructive [&>svg]:text-destructive [a&]:hover:bg-accent before:size-1.5 before:shrink-0 before:rounded-full has-[>svg]:before:hidden",
+        success:
+          "border-border text-foreground before:bg-success [&>svg]:text-success [a&]:hover:bg-accent before:size-1.5 before:shrink-0 before:rounded-full has-[>svg]:before:hidden",
+        warning:
+          "border-border text-foreground before:bg-warning [&>svg]:text-warning [a&]:hover:bg-accent before:size-1.5 before:shrink-0 before:rounded-full has-[>svg]:before:hidden",
       },
     },
     defaultVariants: {
@@ -34,7 +40,11 @@ interface BadgeProps extends ComponentProps<"span">, VariantProps<typeof badgeVa
   asChild?: boolean;
 }
 
-/** Short status or metadata label. For a live-status dot, put a `BadgeDot` first. */
+/**
+ * Short status or metadata label. The status tones (success, warning,
+ * destructive) show a coloured dot, or colour the icon if you put one first;
+ * the text stays neutral, so it has to say what the status is.
+ */
 function Badge({ className, variant, asChild = false, ...props }: BadgeProps) {
   const Comp = asChild ? Slot : "span";
   return (
@@ -47,16 +57,4 @@ function Badge({ className, variant, asChild = false, ...props }: BadgeProps) {
   );
 }
 
-/** A small dot in the badge's text colour. Decorative: the badge text carries the meaning. */
-function BadgeDot({ className, ...props }: ComponentProps<"span">) {
-  return (
-    <span
-      aria-hidden="true"
-      data-slot="badge-dot"
-      className={cn("size-1.5 shrink-0 rounded-full bg-current", className)}
-      {...props}
-    />
-  );
-}
-
-export { Badge, BadgeDot, badgeVariants, type BadgeProps };
+export { Badge, badgeVariants, type BadgeProps };

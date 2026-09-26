@@ -37,7 +37,7 @@
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "Short status or metadata label in six tones, with an optional status dot.",
+      "description": "Short status or metadata label. Solid, secondary and outline styles, plus success, warning and destructive statuses shown as a coloured dot.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3", "class-variance-authority@^0.7.1"],
       "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
       "files": [
@@ -216,7 +216,7 @@
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
-      "description": "Callout for important messages in default, destructive, success and warning tones.",
+      "description": "Callout for important messages on a neutral surface; default, success, warning and destructive tones colour the icon.",
       "dependencies": ["class-variance-authority@^0.7.1"],
       "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
       "files": [

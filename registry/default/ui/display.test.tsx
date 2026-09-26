@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { Alert, AlertDescription, AlertTitle } from "@/registry/default/ui/alert";
-import { Badge, BadgeDot } from "@/registry/default/ui/badge";
+import { Badge } from "@/registry/default/ui/badge";
 import { Card, CardAction, CardHeader, CardTitle } from "@/registry/default/ui/card";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/registry/default/ui/input-group";
 import { Separator } from "@/registry/default/ui/separator";
@@ -12,17 +12,26 @@ import { Spinner } from "@/registry/default/ui/spinner";
 import { Textarea } from "@/registry/default/ui/textarea";
 
 describe("Badge", () => {
-  it("renders the tone and keeps the dot out of the accessible name", () => {
-    render(
-      <Badge variant="success">
-        <BadgeDot />
-        Paid
-      </Badge>
-    );
+  it("draws status tones as a dot and keeps the text neutral", () => {
+    render(<Badge variant="success">Paid</Badge>);
     const badge = screen.getByText("Paid");
     expect(badge).toHaveProperty("dataset.variant", "success");
-    expect(badge.className).toContain("bg-success/15");
-    expect(badge.querySelector("[data-slot=badge-dot]")?.getAttribute("aria-hidden")).toBe("true");
+    expect(badge.className).toContain("before:bg-success");
+    expect(badge.className).toContain("text-foreground");
+    // The dot is a pseudo-element, so nothing extra reaches the accessible name.
+    expect(badge.childElementCount).toBe(0);
+  });
+
+  it("moves the tone to the icon when there is one", () => {
+    render(
+      <Badge variant="warning">
+        <svg aria-hidden="true" />
+        Pending
+      </Badge>
+    );
+    const { className } = screen.getByText("Pending");
+    expect(className).toContain("has-[>svg]:before:hidden");
+    expect(className).toContain("[&>svg]:text-warning");
   });
 
   it("can render as a link", () => {
@@ -45,7 +54,14 @@ describe("Alert", () => {
     );
     const alert = screen.getByRole("alert");
     expect(alert.textContent).toBe("Payment failed" + "Try another card.");
-    expect(alert.className).toContain("text-destructive");
+  });
+
+  it("keeps a neutral surface and colours only the icon", () => {
+    render(<Alert variant="destructive">Payment failed</Alert>);
+    const { className } = screen.getByRole("alert");
+    expect(className).toContain("bg-card");
+    expect(className).toContain("[&>svg]:text-destructive");
+    expect(className).not.toMatch(/(^|\s)(text|bg|border)-destructive/);
   });
 
   it("can be a polite status instead", () => {
