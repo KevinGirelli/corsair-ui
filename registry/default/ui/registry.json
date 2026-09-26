@@ -1,0 +1,243 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Triggers an action. Variants default, secondary, outline, ghost, destructive and link; sizes sm, default, lg and three square icon sizes. Supports asChild and a loading state.",
+      "dependencies": [
+        "@radix-ui/react-slot@^1.3.3",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Animated status indicator for work in progress, announced as Loading.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Short status or metadata label in six tones, with an optional status dot.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3", "class-variance-authority@^0.7.1"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Accessible name for a form control.",
+      "dependencies": ["@radix-ui/react-label@^2.1.15"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Single-line text control. Its error state comes from aria-invalid, so any form library can drive it.",
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multi-line text control with the same states as Input.",
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "An input with icons, text or buttons attached on either side.",
+      "dependencies": ["class-variance-authority@^0.7.1"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils", "KevinGirelli/corsair-ui/input"],
+      "files": [
+        {
+          "path": "input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "Layout for a control with its label, description and error, plus fieldset and group helpers. Independent of any form library.",
+      "dependencies": ["class-variance-authority@^0.7.1"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils", "KevinGirelli/corsair-ui/label"],
+      "files": [
+        {
+          "path": "field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "title": "Form Field (react-hook-form)",
+      "description": "FormField: a react-hook-form Controller laid out with Field, with the id, label and ARIA wiring done for you.",
+      "dependencies": ["react-hook-form@^7.89.0"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/field"],
+      "files": [
+        {
+          "path": "form.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Checkbox with checked, unchecked and indeterminate states.",
+      "dependencies": ["@radix-ui/react-checkbox@^1.3.11", "lucide-react@^1.48.0"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "A set of options where exactly one can be selected.",
+      "dependencies": ["@radix-ui/react-radio-group@^1.4.7", "lucide-react@^1.48.0"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "On/off control for settings that apply immediately.",
+      "dependencies": ["@radix-ui/react-switch@^1.3.7"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Pick one option from a list, with groups, labels and separators.",
+      "dependencies": ["@radix-ui/react-select@^2.3.7", "lucide-react@^1.48.0"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Horizontal or vertical divider.",
+      "dependencies": ["@radix-ui/react-separator@^1.1.15"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Container with header, title, description, action, content and footer parts.",
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Callout for important messages in default, destructive, success and warning tones.",
+      "dependencies": ["class-variance-authority@^0.7.1"],
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Placeholder shape shown while content loads.",
+      "registryDependencies": ["KevinGirelli/corsair-ui/utils"],
+      "files": [
+        {
+          "path": "skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

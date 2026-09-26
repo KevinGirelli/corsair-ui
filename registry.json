@@ -2,5 +2,10 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "corsair",
   "homepage": "https://corsairui.dev",
-  "include": ["registry/default/lib/registry.json", "registry/default/hooks/registry.json"]
+  "include": [
+    "registry/default/theme/registry.json",
+    "registry/default/lib/registry.json",
+    "registry/default/hooks/registry.json",
+    "registry/default/ui/registry.json"
+  ]
 }
