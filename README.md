@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/assets/logo-white.png" />
+    <img src="./.github/assets/logo-black.png" alt="Corsair UI logo: a bearded pirate in a tricorn hat" width="120" />
+  </picture>
+</p>
+
 # Corsair UI
 
 A UI component library built to be copied, adapted, and owned by whoever uses it — not locked behind an install.
