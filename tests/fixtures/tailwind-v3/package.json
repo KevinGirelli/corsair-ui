@@ -1,0 +1,21 @@
+{
+  "name": "fixture-tailwind-v3",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:css": "tailwindcss --input ./src/styles.css --output ./dist/styles.css",
+    "verify": "npm run typecheck && npm run build:css"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tailwindcss": "3.4.19",
+    "tailwindcss-animate": "1.0.7",
+    "typescript": "6.0.3"
+  }
+}

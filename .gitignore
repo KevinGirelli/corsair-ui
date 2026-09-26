@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+
+# built registry JSON written by `pnpm verify:fixtures`
+dist/
+
+# env
+.env
+.env*.local
+
+# os / editors
+.DS_Store
+*.log
