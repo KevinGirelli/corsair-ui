@@ -1,0 +1,55 @@
+version: 2
+
+updates:
+  # Tooling at the root. Minor and patch bumps arrive together in one PR;
+  # majors come one per PR so CI can show what each one breaks.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      tooling:
+        update-types: [minor, patch]
+    ignore:
+      # Tracks the Node.js line in .nvmrc, not the newest Node.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
+  # The Tailwind 3 fixture exists to prove items still work on Tailwind 3,
+  # so it must never be moved to Tailwind 4.
+  - package-ecosystem: npm
+    directory: /tests/fixtures/tailwind-v3
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      fixture:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: tailwindcss
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: npm
+    directory: /tests/fixtures/tailwind-v4
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      fixture:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      actions:
+        patterns: ["*"]
