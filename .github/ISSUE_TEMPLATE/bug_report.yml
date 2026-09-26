@@ -1,0 +1,38 @@
+name: Bug report
+description: An item misbehaves, fails to install, or looks wrong in your project.
+labels: [bug]
+body:
+  - type: input
+    id: item
+    attributes:
+      label: Item
+      description: Registry item name, e.g. use-media-query.
+    validations:
+      required: true
+  - type: dropdown
+    id: tailwind
+    attributes:
+      label: Tailwind CSS version
+      options:
+        - "4.x"
+        - "3.4"
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: stack
+    attributes:
+      label: Framework and React version
+      placeholder: Next.js 16, React 19
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Steps to reproduce, what you expected and what you got. Include the CLI output if the install failed.
+    validations:
+      required: true
+  - type: input
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Link to a repository or sandbox, if you have one.

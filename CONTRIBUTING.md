@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping out. This guide covers how the registry is organised, how to add an item, and the rules every item follows so it can be dropped into any project.
+Thanks for helping out. This guide covers how the registry is organised, how to add an item, and the rules every item follows so it can be dropped into any project. By taking part you agree to the [code of conduct](./CODE_OF_CONDUCT.md); security issues go through [SECURITY.md](./SECURITY.md), not public issues.
 
 ## Setup
 
@@ -82,6 +82,8 @@ When an item needs CSS variables or keyframes, declare them for both versions in
 
 ## Pull requests
 
-- Branch off `main` and open a PR; nothing is pushed to `main` directly.
-- Keep a PR to one item or one change. Describe what changed, why, and how you checked it.
-- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures. All of it has to pass.
+- Branch off `main` and open a PR. `main` is protected: direct pushes and force pushes are rejected.
+- Keep a PR to one item or one change. The template asks what changed, why, and how you checked it.
+- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures. Both jobs have to pass before merging.
+- PRs are squash-merged, so write the PR title as the commit you want on `main`.
+- Dependabot opens dependency updates on Mondays; they go through the same checks.

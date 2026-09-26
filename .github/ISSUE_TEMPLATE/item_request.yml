@@ -1,0 +1,32 @@
+name: Item request
+description: Suggest a component, hook, utility or effect for the registry.
+labels: [request]
+body:
+  - type: markdown
+    attributes:
+      value: Items get in when they solve a problem that keeps coming back across projects, so the real use case matters more than the idea.
+  - type: input
+    id: item
+    attributes:
+      label: What should it be?
+      placeholder: Date range picker, magnetic button, useScrollVelocity…
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Where did you need it?
+      description: The project or screen, what you built instead, and what was painful about it.
+    validations:
+      required: true
+  - type: textarea
+    id: api
+    attributes:
+      label: How would you use it?
+      description: A sketch of the props or the call site you would like to write.
+      render: tsx
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Prior art
+      description: Libraries or sites that do something similar. Mention their license if you know it.
