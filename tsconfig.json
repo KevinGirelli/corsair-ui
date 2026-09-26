@@ -19,6 +19,5 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["registry", "scripts", "vitest.config.ts", "vitest.setup.ts"],
-  "exclude": ["node_modules", "dist", ".tmp", "tests/fixtures"]
+  "include": ["registry", "scripts", "vitest.config.ts", "vitest.setup.ts"]
 }

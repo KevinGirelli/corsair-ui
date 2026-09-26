@@ -24,7 +24,7 @@ pnpm dlx shadcn@latest list KevinGirelli/corsair-ui
 pnpm dlx shadcn@latest add KevinGirelli/corsair-ui/use-media-query
 ```
 
-Append `#<tag-or-commit>` to an address to pin it, e.g. `KevinGirelli/corsair-ui/use-media-query#v0.1.0`.
+Append `#<tag-or-commit>` to an address to pin it, e.g. `KevinGirelli/corsair-ui/use-media-query#<commit-sha>`.
 
 Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, so it works whichever one your project uses.
 
@@ -33,8 +33,6 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 ```text
 registry.json              entry point read by the shadcn CLI
 registry/default/
-  ui/                      primitives and form controls (planned)
-  components/              larger pieces grouped by area: motion, media, … (planned)
   hooks/                   React hooks
   lib/                     plain utilities
 scripts/                   Tailwind compatibility check and fixture runner

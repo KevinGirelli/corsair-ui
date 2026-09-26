@@ -1,7 +1,4 @@
-node_modules/
 dist/
-.tmp/
-coverage/
 pnpm-lock.yaml
 
 # Copied verbatim into temporary projects by verify:fixtures. The Tailwind

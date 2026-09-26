@@ -1,13 +1,8 @@
 # dependencies
 node_modules/
 
-# build output (`pnpm registry:build` writes the registry JSON to dist/r)
+# built registry JSON written by `pnpm verify:fixtures`
 dist/
-*.tsbuildinfo
-
-# tests and local scratch
-coverage/
-.tmp/
 
 # env
 .env

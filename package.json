@@ -10,7 +10,6 @@
   },
   "scripts": {
     "registry:validate": "shadcn registry validate ./registry.json",
-    "registry:build": "shadcn build ./registry.json --output ./dist/r",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
