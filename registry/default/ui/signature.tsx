@@ -49,13 +49,22 @@ interface SignatureProps extends Omit<ComponentProps<"svg">, "children"> {
   /** Scroll: the CSS `animation-range` the drawing spans. */
   scrollRange?: string;
   strokeWidth?: number;
+  /**
+   * Fill the shapes as the pen passes, like ink soaking into letters. For
+   * closed outlines such as glyphs; leave it off for open lines and routes.
+   */
+  ink?: boolean;
+  /** Ink: how wide it spreads behind the pen, in viewBox units. */
+  inkWidth?: number;
 }
 
 /**
  * Draws SVG strokes as if by hand: a signature, a route on a map, an
- * underline. Strokes use the current text colour. Give it an `aria-label`
- * when it carries meaning; without one it is hidden from screen readers.
- * With `prefers-reduced-motion` it appears finished.
+ * underline. Strokes use the current text colour; with `ink`, closed
+ * shapes fill in behind the pen. Give it an `aria-label` when it carries
+ * meaning; without one it is hidden from screen readers. With
+ * `prefers-reduced-motion` it appears finished. To write any text in a
+ * font of your choice, see TextSignature.
  *
  * In-view drawings start blank, so they need JavaScript to show up.
  */
@@ -66,13 +75,17 @@ function Signature({
   delay = 0,
   scrollRange = "entry 25% cover 50%",
   strokeWidth = 2,
+  ink = false,
+  inkWidth = 14,
   className,
   style,
   ref,
   "aria-label": label,
   ...props
 }: SignatureProps) {
-  const timeline = `--signature-${useId().replace(/[^\w-]/g, "")}`;
+  const id = useId().replace(/[^\w-]/g, "");
+  const timeline = `--signature-${id}`;
+  const maskId = `signature-ink-${id}`;
   const strokes = useRef<(SVGPathElement | null)[]>([]);
   const [drawing, setDrawing] = useState<{ lengths: number[]; instant: boolean } | null>(null);
   const [observe] = useInView<SVGSVGElement>({
@@ -100,6 +113,11 @@ function Signature({
   const waits = timings.map(
     (_, index) => delay + timings.slice(0, index).reduce((sum, share) => sum + share, 0)
   );
+
+  const drawClass =
+    trigger === "scroll"
+      ? "supports-[animation-timeline:view()]:animate-signature-draw motion-reduce:!animate-none"
+      : undefined;
 
   const strokeStyle = (index: number): CSSProperties => {
     if (trigger === "scroll") {
@@ -138,6 +156,29 @@ function Signature({
       style={{ ...(trigger === "scroll" ? { viewTimelineName: timeline } : null), ...style }}
       {...props}
     >
+      {ink ? (
+        <>
+          {/* Wide strokes drawn in step with the pen reveal the filled shapes behind it. */}
+          <mask id={maskId} maskUnits="userSpaceOnUse">
+            <g stroke="white" strokeWidth={inkWidth}>
+              {paths.map((d, index) => (
+                <path
+                  key={index}
+                  d={d}
+                  pathLength={1}
+                  className={drawClass}
+                  style={strokeStyle(index)}
+                />
+              ))}
+            </g>
+          </mask>
+          <g mask={`url(#${maskId})`} fill="currentColor" stroke="none">
+            {paths.map((d, index) => (
+              <path key={index} d={d} />
+            ))}
+          </g>
+        </>
+      ) : null}
       {paths.map((d, index) => (
         <path
           key={index}
@@ -146,11 +187,7 @@ function Signature({
           }}
           d={d}
           pathLength={1}
-          className={
-            trigger === "scroll"
-              ? "supports-[animation-timeline:view()]:animate-signature-draw motion-reduce:!animate-none"
-              : undefined
-          }
+          className={drawClass}
           style={strokeStyle(index)}
         />
       ))}
