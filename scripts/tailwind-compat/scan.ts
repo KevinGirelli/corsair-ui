@@ -20,6 +20,8 @@ interface StringChunk {
   offset: number;
 }
 
+const CLASS_ATTRIBUTE = /^(class|className)$|ClassName$/;
+
 /**
  * Every string a class name could live in: plain literals, template chunks,
  * `cn(...)`/`cva(...)` arguments and JSX attributes. Module specifiers and
@@ -31,6 +33,16 @@ function collectStrings(sourceFile: ts.SourceFile): StringChunk[] {
   const visit = (node: ts.Node) => {
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) return;
     if (ts.isExpressionStatement(node) && ts.isStringLiteral(node.expression)) return;
+    // `variant="outline"` or `type="button"` are prop values, not classes. Only
+    // class attributes (className, containerClassName…) hold classes in JSX.
+    if (
+      ts.isJsxAttribute(node) &&
+      node.initializer &&
+      ts.isStringLiteral(node.initializer) &&
+      !CLASS_ATTRIBUTE.test(node.name.getText(sourceFile))
+    ) {
+      return;
+    }
 
     if (
       ts.isStringLiteral(node) ||
