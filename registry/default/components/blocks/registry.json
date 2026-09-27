@@ -1,0 +1,72 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "hero",
+      "type": "registry:block",
+      "title": "Hero",
+      "description": "The opening section of a landing page with an eyebrow, a title, a description, actions and an optional media slot.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/badge", "@corsair/button"],
+      "files": [
+        {
+          "path": "hero.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "feature-grid",
+      "type": "registry:block",
+      "title": "Feature Grid",
+      "description": "A grid of features with an icon, a title and a description under a centred section header.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/card"],
+      "files": [
+        {
+          "path": "feature-grid.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "stats",
+      "type": "registry:block",
+      "title": "Stats",
+      "description": "A row of key figures that count up when they scroll into view, under a centred section header.",
+      "registryDependencies": ["@corsair/utils", "@corsair/stat", "@corsair/number-ticker"],
+      "files": [
+        {
+          "path": "stats.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "logo-cloud",
+      "type": "registry:block",
+      "title": "Logo Cloud",
+      "description": "Customer or partner logos in a grid or a scrolling marquee under a small title.",
+      "registryDependencies": ["@corsair/utils", "@corsair/marquee"],
+      "files": [
+        {
+          "path": "logo-cloud.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "cta",
+      "type": "registry:block",
+      "title": "Call to Action",
+      "description": "A closing band with a title, a description and one or two actions.",
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "files": [
+        {
+          "path": "cta.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

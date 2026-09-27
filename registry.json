@@ -6,6 +6,7 @@
     "registry/default/theme/registry.json",
     "registry/default/lib/registry.json",
     "registry/default/hooks/registry.json",
-    "registry/default/ui/registry.json"
+    "registry/default/ui/registry.json",
+    "registry/default/components/blocks/registry.json"
   ]
 }
