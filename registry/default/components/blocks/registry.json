@@ -113,6 +113,53 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "contact-form",
+      "type": "registry:block",
+      "title": "Contact Form",
+      "description": "A contact section with a header, contact details and a validated message form that reports pending, success and error states.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": [
+        "@corsair/utils",
+        "@corsair/button",
+        "@corsair/card",
+        "@corsair/field",
+        "@corsair/input",
+        "@corsair/textarea"
+      ],
+      "files": [
+        {
+          "path": "contact-form.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "newsletter",
+      "type": "registry:block",
+      "title": "Newsletter",
+      "description": "A compact sign-up band with an inline email form that reports pending, success and error states.",
+      "registryDependencies": ["@corsair/utils", "@corsair/button", "@corsair/input"],
+      "files": [
+        {
+          "path": "newsletter.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "site-footer",
+      "type": "registry:block",
+      "title": "Site Footer",
+      "description": "A page footer with a brand, link columns in a navigation landmark, a copyright line and optional social icon links.",
+      "registryDependencies": ["@corsair/utils", "@corsair/button", "@corsair/separator"],
+      "files": [
+        {
+          "path": "site-footer.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
