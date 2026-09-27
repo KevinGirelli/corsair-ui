@@ -2,6 +2,42 @@
 
 `@corsair/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.6.0
+
+Overlays, site chrome, media and page effects: what a portfolio or marketing site is usually rebuilt from. Every item is generic and meant to be restyled in the project that installs it, and follows the same rules as before: CSS animations, no animation library, paused off screen, still or finished with `prefers-reduced-motion`.
+
+### Added
+
+- Overlays:
+  - `dialog` and `alert-dialog`: modal windows with a trapped focus, Escape and scroll lock; the alert version asks for a decision and does not close on an outside click.
+  - `sheet`: a dialog that slides in from any edge, for mobile menus and side panels.
+  - `toast`: `toast()` from anywhere and one `Toaster`, announced to screen readers, paused on hover and focus, swipe to dismiss, at most three at a time.
+- Navigation:
+  - `site-header`: a sticky header with brand, nav, actions and a mobile menu in a sheet. `data-scrolled` tells when the page has left the top, from an observer rather than a scroll listener.
+  - `nav-link`: a link that marks the current page with `aria-current`; `asChild` for your router's link.
+  - `dock`: a floating bar of icon links with tooltips, shown after a scroll distance and out of the tab order while hidden.
+  - `tabs`: pill or underline tabs, horizontal or vertical.
+  - `carousel`: slides on a native scroll-snap track, with buttons, dots, keys, loop and a coverflow variant. `useCarouselItem` tells a slide whether it is active, e.g. to play a video only there.
+- Display:
+  - `avatar` (with a group), `rating` (read-only with fractions, or a star radio group), `stat` (label, value and trend in a description list).
+  - `number-ticker`: counts up to a number once in view; the server HTML has the final value.
+  - `code-block`: a code sample with a title, language and copy button.
+  - `corner-frame`: bracket corners around any box.
+- Media: `youtube-embed`, a poster and play button that load the player only when wanted, controlled through `ref` without the IFrame API script; embeds in a `group` pause each other.
+- Page effects:
+  - `preloader`: a first-load screen with progress, a `ready` gate and an exit, as an accessible progress bar.
+  - `custom-cursor`: a dot and ring following fine pointers, with hover states and labels from `data-cursor`; the native cursor comes back on touch and with reduced motion.
+  - `scroll-progress`: a reading progress bar on a CSS scroll timeline, with no JavaScript.
+  - `smooth-scroll`: smooth wheel scrolling with Lenis, off with reduced motion, and a `scrollTo` that works with or without it.
+- Surfaces: `grain` (film grain, server-safe), `hover-reveal` (a second layer under a pointer-following circle), `particles` (seeded drifting dots), `topography` (animated contour lines from one WebGL2 shader).
+- Text: `roll-text`, characters rolling to a copy of themselves on hover and focus.
+
+### Changed
+
+- `signature`: `trigger="manual"` follows a `progress` value from 0 to 1, for drawings driven by your own timeline. With `ink` and `strokeWidth={0}` only the fill is drawn.
+- `highlight-text`: `variant="scribble"` draws a hand-drawn underline (single or double) instead of the marker.
+- `theme`: the smaller radii never go below 0, so `--radius: 0` gives square corners without invalid values.
+
 ## 0.5.0
 
 Animated text, backgrounds, a chart and embeds. They follow the same rules as 0.4.0: CSS animations, no animation library, paused off screen, and still or finished with `prefers-reduced-motion`.
