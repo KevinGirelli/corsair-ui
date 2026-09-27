@@ -11,7 +11,7 @@ A UI component library built to be copied, adapted, and owned by whoever uses it
 
 Components live as code you bring into your own project and modify freely. The goal is a broad, well-built catalog that covers what most projects end up rebuilding from scratch: not just basic UI primitives, but forms, data display, navigation, motion, and more creative/visual pieces too.
 
-Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields), overlays, menus, site chrome, tables, motion, animated text, backgrounds, a chart and embeds are in; ready-made blocks come next.
+Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields), overlays, menus, site chrome, tables, motion, animated text, backgrounds, a chart, embeds and ready-made page blocks are in.
 
 ## What lives in this repository
 
@@ -59,6 +59,7 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 - **Data and embeds:** line-chart, qr-code, tweet-card, spotify-card (with `getSpotifyTrack` for the server), youtube-embed, code-block
 - **Form layout:** field (no form library needed), form (react-hook-form)
 - **Display:** card, alert, separator, skeleton, avatar, rating, stat, progress, table
+- **Blocks:** hero, feature-grid, stats, logo-cloud, pricing, testimonials, faq, cta, contact-form, newsletter, site-footer
 - **Foundations:** theme, utils (`cn`), use-media-query, use-in-view, use-entrance
 
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
@@ -70,6 +71,7 @@ registry.json              entry point read by the shadcn CLI
 registry/default/
   theme/                   CSS variables and base styles for Tailwind 3 and 4
   ui/                      components
+  components/blocks/       page sections built from the components
   hooks/                   React hooks
   lib/                     plain utilities
 scripts/                   Tailwind compatibility check and fixture runner

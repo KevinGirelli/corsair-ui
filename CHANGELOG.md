@@ -2,6 +2,27 @@
 
 `@corsair/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.8.0
+
+Blocks: whole page sections built from the components, installed into `components/blocks/`. Each one renders a complete example with no props and takes every piece of content (text, lists, links, labels) through props, so it can be filled in and restyled in the project that installs it. Nothing from earlier releases changes.
+
+### Added
+
+- Landing sections:
+  - `hero`: eyebrow, the page's `<h1>`, description, actions and an optional media slot, centred or side by side.
+  - `feature-grid`: features with an icon, title and description in two to four columns; a feature with `href` becomes a card-sized link.
+  - `stats`: key figures on `stat`, counting up with `number-ticker` when they scroll into view.
+  - `logo-cloud`: named logos or wordmarks in a grid or a `marquee`.
+  - `cta`: a closing band in muted, primary or outline, centred or split.
+- Content:
+  - `pricing`: plan cards with a featured plan, and a monthly or yearly switch when prices differ per period (controlled or uncontrolled).
+  - `testimonials`: quotes as figures with name, role and an avatar or initials, in masonry or a grid.
+  - `faq`: questions in an `accordion`, header beside or above them.
+- Forms and footer:
+  - `contact-form`: name, email and message with native validation; `onSubmit` gets the values and the block reports pending, success and error through `data-status` and live regions.
+  - `newsletter`: an inline email sign-up with the same states, through `onSubscribe`.
+  - `site-footer`: brand, link columns in one navigation landmark, a bottom line and social icon links.
+
 ## 0.7.0
 
 Menus, disclosure and data: the pieces applications need next to the site chrome of 0.6.0. Nothing from earlier releases changes.
