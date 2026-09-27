@@ -50,10 +50,24 @@ const EXPECTED_CLASSES = [
   "focus-visible:ring-ring/50",
   "data-[state=checked]:bg-primary",
   "rounded-md",
-  // Needs input-otp's keyframes: `css` in Tailwind 4, the config in Tailwind 3.
+  // Need their item's keyframes: `css` in Tailwind 4, the config in Tailwind 3.
   "animate-caret-blink",
+  "animate-aurora",
+  "supports-[animation-timeline:view()]:animate-text-reveal",
+  "supports-[animation-timeline:view()]:animate-parallax",
+  "supports-[animation-timeline:view()]:animate-signature-draw",
 ];
-const EXPECTED_VARIABLES = ["--background:", "--primary:", "--radius:"];
+const EXPECTED_VARIABLES = [
+  "--background:",
+  "--primary:",
+  "--radius:",
+  // Scroll-driven items set animation-name only through these utilities, so
+  // the keyframes have to come out with them.
+  "@keyframes aurora",
+  "@keyframes text-reveal",
+  "@keyframes parallax",
+  "@keyframes signature-draw",
+];
 
 const args = process.argv.slice(2);
 const keep = args.includes("--keep");
