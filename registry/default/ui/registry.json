@@ -1651,6 +1651,234 @@
           "transition-behavior": "allow-discrete"
         }
       }
+    },
+    {
+      "name": "grain",
+      "type": "registry:ui",
+      "title": "Grain",
+      "description": "Film grain over a surface, from a tile of SVG noise, with an optional stepped jitter.",
+      "registryDependencies": ["@corsair/utils"],
+      "categories": ["creative", "background"],
+      "files": [
+        {
+          "path": "grain.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-grain": "grain 0.8s steps(1) infinite"
+        }
+      },
+      "css": {
+        "@keyframes grain": {
+          "0%, 100%": {
+            "transform": "translate3d(0, 0, 0)"
+          },
+          "10%": {
+            "transform": "translate3d(-5%, -10%, 0)"
+          },
+          "20%": {
+            "transform": "translate3d(-15%, 5%, 0)"
+          },
+          "30%": {
+            "transform": "translate3d(7%, -15%, 0)"
+          },
+          "40%": {
+            "transform": "translate3d(-5%, 15%, 0)"
+          },
+          "50%": {
+            "transform": "translate3d(-15%, 10%, 0)"
+          },
+          "60%": {
+            "transform": "translate3d(15%, 0, 0)"
+          },
+          "70%": {
+            "transform": "translate3d(0, 10%, 0)"
+          },
+          "80%": {
+            "transform": "translate3d(3%, 15%, 0)"
+          },
+          "90%": {
+            "transform": "translate3d(-10%, 10%, 0)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "grain": {
+                  "0%, 100%": {
+                    "transform": "translate3d(0, 0, 0)"
+                  },
+                  "10%": {
+                    "transform": "translate3d(-5%, -10%, 0)"
+                  },
+                  "20%": {
+                    "transform": "translate3d(-15%, 5%, 0)"
+                  },
+                  "30%": {
+                    "transform": "translate3d(7%, -15%, 0)"
+                  },
+                  "40%": {
+                    "transform": "translate3d(-5%, 15%, 0)"
+                  },
+                  "50%": {
+                    "transform": "translate3d(-15%, 10%, 0)"
+                  },
+                  "60%": {
+                    "transform": "translate3d(15%, 0, 0)"
+                  },
+                  "70%": {
+                    "transform": "translate3d(0, 10%, 0)"
+                  },
+                  "80%": {
+                    "transform": "translate3d(3%, 15%, 0)"
+                  },
+                  "90%": {
+                    "transform": "translate3d(-10%, 10%, 0)"
+                  }
+                }
+              },
+              "animation": {
+                "grain": "grain 0.8s steps(1) infinite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hover-reveal",
+      "type": "registry:ui",
+      "title": "Hover Reveal",
+      "description": "A second layer seen through a soft circle that follows the pointer.",
+      "registryDependencies": ["@corsair/utils"],
+      "categories": ["creative"],
+      "files": [
+        {
+          "path": "hover-reveal.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "particles",
+      "type": "registry:ui",
+      "title": "Particles",
+      "description": "Dots drifting slowly across a surface, laid out from a seed and moved with CSS alone.",
+      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "categories": ["motion", "background"],
+      "files": [
+        {
+          "path": "particles.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-particles-up": "particles-up 14s linear infinite",
+          "animate-particles-down": "particles-down 14s linear infinite"
+        }
+      },
+      "css": {
+        "@keyframes particles-up": {
+          "0%": {
+            "transform": "translate3d(0, 0, 0)",
+            "opacity": "0"
+          },
+          "15%, 85%": {
+            "opacity": "var(--particles-opacity, 1)"
+          },
+          "100%": {
+            "transform": "translate3d(var(--particles-drift, 0), -100%, 0)",
+            "opacity": "0"
+          }
+        },
+        "@keyframes particles-down": {
+          "0%": {
+            "transform": "translate3d(0, 0, 0)",
+            "opacity": "0"
+          },
+          "15%, 85%": {
+            "opacity": "var(--particles-opacity, 1)"
+          },
+          "100%": {
+            "transform": "translate3d(var(--particles-drift, 0), 100%, 0)",
+            "opacity": "0"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "particles-up": {
+                  "0%": {
+                    "transform": "translate3d(0, 0, 0)",
+                    "opacity": "0"
+                  },
+                  "15%, 85%": {
+                    "opacity": "var(--particles-opacity, 1)"
+                  },
+                  "100%": {
+                    "transform": "translate3d(var(--particles-drift, 0), -100%, 0)",
+                    "opacity": "0"
+                  }
+                },
+                "particles-down": {
+                  "0%": {
+                    "transform": "translate3d(0, 0, 0)",
+                    "opacity": "0"
+                  },
+                  "15%, 85%": {
+                    "opacity": "var(--particles-opacity, 1)"
+                  },
+                  "100%": {
+                    "transform": "translate3d(var(--particles-drift, 0), 100%, 0)",
+                    "opacity": "0"
+                  }
+                }
+              },
+              "animation": {
+                "particles-up": "particles-up 14s linear infinite",
+                "particles-down": "particles-down 14s linear infinite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "topography",
+      "type": "registry:ui",
+      "title": "Topography",
+      "description": "Contour lines like a topographic map over slowly shifting terrain, from one WebGL2 shader.",
+      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "categories": ["creative", "background"],
+      "files": [
+        {
+          "path": "topography.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "roll-text",
+      "type": "registry:ui",
+      "title": "Roll Text",
+      "description": "Characters that roll up to a copy of themselves on hover or keyboard focus.",
+      "registryDependencies": ["@corsair/utils"],
+      "categories": ["text"],
+      "files": [
+        {
+          "path": "roll-text.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
