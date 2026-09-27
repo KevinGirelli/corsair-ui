@@ -14,15 +14,30 @@ import { TextSignature } from "@/registry/default/ui/text-signature";
 import { WaveText } from "@/registry/default/ui/wave-text";
 import { installIntersectionObserver, installMatchMedia } from "@/test-utils/browser";
 
+// Each glyph is a closed triangle 8 wide and 40 tall, 10 apart; spaces are
+// empty. Scaling by fontSize / unitsPerEm leaves float dust such as
+// 72.00000000000001, which the outlines must not trip over.
 vi.mock("opentype.js", () => ({
   parse: () => ({
     unitsPerEm: 1000,
     ascender: 800,
     getPaths: (text: string) =>
-      Array.from(text).map((character, index) => ({
-        toPathData: () => (character === " " ? "" : `M${index * 10} 0L${index * 10 + 8} 40`),
-        getBoundingBox: () => ({ x1: index * 10, y1: 0, x2: index * 10 + 8, y2: 40 }),
-      })),
+      Array.from(text).map((character, index) => {
+        const x = index * 10;
+        return {
+          commands:
+            character === " "
+              ? []
+              : [
+                  { type: "M", x: x + 1e-14, y: 0 },
+                  { type: "Q", x1: x + 4, y1: 20.004999, x: x + 8, y: 40 },
+                  { type: "C", x1: x + 6, y1: 40, x2: x + 2, y2: 40, x, y: 40 - 1e-12 },
+                  { type: "L", x, y: 0 },
+                  { type: "Z" },
+                ],
+          getBoundingBox: () => ({ x1: x, y1: 0, x2: x + 8, y2: 40 }),
+        };
+      }),
   }),
 }));
 
@@ -308,5 +323,21 @@ describe("TextSignature", () => {
     // The glyphs span 0–48 × 0–40, plus a margin of 8% of the font size on every side.
     expect(svg.getAttribute("viewBox")).toBe("-5.76 -5.76 59.52 51.52");
     expect(fetch).toHaveBeenCalledWith("/fonts/hand.ttf");
+  });
+
+  it("writes every coordinate as a plain number, rounded to hundredths", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => ({ ok: true, status: 200, arrayBuffer: async () => new ArrayBuffer(8) }))
+    );
+    render(<TextSignature text="nb" font="/fonts/hand.ttf" />);
+    await waitFor(() => expect(document.querySelectorAll("g[mask] path")).toHaveLength(2));
+    const outlines = [...document.querySelectorAll("g[mask] path")].map((path) =>
+      path.getAttribute("d")
+    );
+    expect(outlines).toEqual([
+      "M0 0Q4 20 8 40C6 40 2 40 0 40L0 0Z",
+      "M10 0Q14 20 18 40C16 40 12 40 10 40L10 0Z",
+    ]);
   });
 });

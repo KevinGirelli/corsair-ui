@@ -1,6 +1,6 @@
 "use client";
 
-import type { Font } from "opentype.js";
+import type { Font, Path } from "opentype.js";
 import { useEffect, useState } from "react";
 
 import { Signature, type SignatureProps } from "@/registry/default/ui/signature";
@@ -23,6 +23,33 @@ function loadFont(url: string) {
   return font;
 }
 
+// Hundredths of a unit, and never in exponent notation at these sizes.
+const round = (value: number) => String(Math.round(value * 100) / 100);
+const point = (x: number, y: number) => `${round(x)} ${round(y)}`;
+
+/**
+ * SVG path data for one glyph. Path#toPathData would do, except that in
+ * opentype.js 2.0 it writes NaN for coordinates a hair above a whole number,
+ * and browsers stop drawing a path at its first NaN.
+ */
+function pathData(glyph: Path) {
+  return glyph.commands
+    .map((command) => {
+      switch (command.type) {
+        case "M":
+        case "L":
+          return command.type + point(command.x, command.y);
+        case "Q":
+          return `Q${point(command.x1, command.y1)} ${point(command.x, command.y)}`;
+        case "C":
+          return `C${point(command.x1, command.y1)} ${point(command.x2, command.y2)} ${point(command.x, command.y)}`;
+        case "Z":
+          return "Z";
+      }
+    })
+    .join("");
+}
+
 /** One outline per glyph, in writing order, and a viewBox that fits them all. */
 function lettering(font: Font, text: string, fontSize: number) {
   const baseline = font.ascender * (fontSize / font.unitsPerEm);
@@ -33,7 +60,7 @@ function lettering(font: Font, text: string, fontSize: number) {
   let maxY = -Infinity;
   const paths: string[] = [];
   for (const glyph of glyphs) {
-    const d = glyph.toPathData(2);
+    const d = pathData(glyph);
     if (!d) continue;
     const box = glyph.getBoundingBox();
     minX = Math.min(minX, box.x1);
