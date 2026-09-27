@@ -2,6 +2,42 @@
 
 `@corsair/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.5.0
+
+Animated text, backgrounds, a chart and embeds, most of them adapted from [Spell UI](https://github.com/xxtomm/spell-ui) (see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)). They follow the same rules as 0.4.0: CSS animations, no animation library, paused off screen, and still or finished with `prefers-reduced-motion`.
+
+### Added
+
+- `use-entrance`: decides when a one-shot entrance plays, on first paint (`trigger="load"`, CSS only) or once in view, without hiding server-rendered content that is already on screen. A `play` prop takes manual control.
+- Text:
+  - `blur-text`: characters come into focus one at a time, and blur back out with `show={false}`.
+  - `slide-text`: words, characters or lines rise from below their baseline, from the first, the last or the centre.
+  - `dissolve-text`: words or characters surface at scattered moments, seeded by the text so the server and the browser agree.
+  - `highlight-text`: a marker slides in behind a phrase and inverts the text where it passes.
+  - `scramble-text`: noise sweeps across, then the real characters lock in. The text is in the server HTML.
+  - `shimmer-text`: a band of light sweeps across text now and then.
+  - `wave-text`: bands of colour wash through text, on one CSS animation of a registered custom property.
+  - `text-signature`: writes any text in any TTF, OTF or WOFF font as a signature, with opentype.js loaded on demand.
+- `marquee`: a seamless loop that stops while a link inside has focus, with the copies hidden from screen readers.
+- Backgrounds:
+  - `light-rays`: soft beams from above, from a small WebGL2 shader, with a CSS fallback.
+  - `warp-gradient`: a liquid field of two to five colours, adapted from Paper Shaders' Warp, with presets and optional grain.
+- Actions and controls:
+  - `copy-button`: copies a value, swaps to a check mark and announces it; never claims success when the clipboard refused.
+  - `dash-button`: a pill button whose fill gives way to a marching dashed outline.
+  - `color-swatches`: one colour from a row of swatches, as a radio group with arrow keys and form support.
+  - `bars-spinner`: twelve bars around a hub, with no JavaScript.
+- Data and embeds:
+  - `line-chart`: one series with a cursor that snaps to points, smooth or straight. Keyboards and screen readers use it as a slider over the points.
+  - `qr-code`: an SVG QR code in dots, rounded or square modules, rendered on the server.
+  - `tweet-card`: a post from X drawn with the theme, no embed script. `Tweet` fetches by id in a server component, `ClientTweet` in the browser.
+  - `spotify-card`: a track card that plays the preview clip, and `spotify-track` (`getSpotifyTrack`) to read the track on the server.
+
+### Changed
+
+- `signature`: `ink` fills closed shapes in behind the pen, for lettering.
+- `text-reveal` also belongs to the `text` category, and `aurora` to `background`, so they group with the new items.
+
 ## 0.4.0
 
 A first set of motion and visual effects, all CSS-first: transforms and opacity only, IntersectionObserver instead of scroll listeners, CSS scroll-driven animations for scroll-linked effects, loops paused off screen, and everything still or finished with `prefers-reduced-motion`. No animation library is needed.

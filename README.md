@@ -11,7 +11,7 @@ A UI component library built to be copied, adapted, and owned by whoever uses it
 
 Components live as code you bring into your own project and modify freely, in the spirit of libraries like shadcn/ui. The goal is a broad, well-built catalog that covers what most projects end up rebuilding from scratch: not just basic UI primitives, but forms, data display, navigation, motion, and more creative/visual pieces too.
 
-Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields) and a first set of motion and effects are in; dialogs, menus and other overlays come next.
+Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields), motion, animated text, backgrounds, a chart and embeds are in; dialogs, menus and other overlays come next.
 
 ## What lives in this repository
 
@@ -45,15 +45,18 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 
 ## What is in it
 
-- **Actions:** button, badge, spinner
-- **Form controls:** label, input, textarea, input-group, checkbox, radio-group, switch, select
+- **Actions:** button, copy-button, dash-button, badge, spinner, bars-spinner
+- **Form controls:** label, input, textarea, input-group, checkbox, radio-group, switch, select, color-swatches
 - **Richer inputs:** calendar, date-picker (single date and range), combobox, input-otp, slider, number-input, password-input, toggle, toggle-group
 - **Overlays:** popover, command, tooltip
-- **Motion:** reveal, text-reveal, magnetic, parallax
-- **Creative:** spotlight, animated-border, aurora, signature
+- **Text:** text-reveal, blur-text, slide-text, dissolve-text, highlight-text, scramble-text, shimmer-text, wave-text, text-signature
+- **Motion:** reveal, magnetic, parallax, marquee
+- **Creative:** spotlight, animated-border, signature
+- **Backgrounds:** aurora, light-rays, warp-gradient
+- **Data and embeds:** line-chart, qr-code, tweet-card, spotify-card (with `getSpotifyTrack` for the server)
 - **Form layout:** field (no form library needed), form (react-hook-form)
 - **Display:** card, alert, separator, skeleton
-- **Foundations:** theme, utils (`cn`), use-media-query, use-in-view
+- **Foundations:** theme, utils (`cn`), use-media-query, use-in-view, use-entrance
 
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
 
