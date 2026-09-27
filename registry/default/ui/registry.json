@@ -1217,6 +1217,66 @@
       }
     },
     {
+      "name": "line-chart",
+      "type": "registry:ui",
+      "title": "Line Chart",
+      "description": "One series as a line, with a cursor that snaps to points; a slider for keyboards and screen readers.",
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "line-chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "qr-code",
+      "type": "registry:ui",
+      "title": "QR Code",
+      "description": "A crisp SVG QR code in dots, rounded or square modules. Renders on the server.",
+      "dependencies": ["qrcode@^1.5.4"],
+      "devDependencies": ["@types/qrcode@^1.5.6"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "qr-code.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tweet-card",
+      "type": "registry:ui",
+      "title": "Tweet Card",
+      "description": "A post from X in your theme, with no embed script: a card, a server component that fetches by id, and a client one.",
+      "dependencies": ["react-tweet@^3.3.1", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "tweet-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "tweet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spotify-card",
+      "type": "registry:ui",
+      "title": "Spotify Card",
+      "description": "A track card with cover art, a link to Spotify and a preview clip that spins a record while it plays.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/spotify-track"],
+      "files": [
+        {
+          "path": "spotify-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "light-rays",
       "type": "registry:ui",
       "title": "Light Rays",
