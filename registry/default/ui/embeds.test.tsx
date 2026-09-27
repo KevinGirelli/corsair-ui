@@ -51,6 +51,21 @@ describe("LineChart", () => {
     );
     expect(html).toContain("$3,400.00");
   });
+
+  it("labels the axis at an even step that ends on the latest point", () => {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    const year = [...months, "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const axis = () =>
+      [...document.querySelectorAll("[data-slot=line-chart-axis] span")].map(
+        (label) => label.textContent
+      );
+    const { rerender } = render(<LineChart data={year.map((_, index) => index)} labels={year} />);
+    expect(axis()).toEqual(["Feb", "Apr", "Jun", "Aug", "Oct", "Dec"]);
+    rerender(<LineChart data={year.map((_, index) => index)} labels={year} tickCount={4} />);
+    expect(axis()).toEqual(["Mar", "Jun", "Sep", "Dec"]);
+    rerender(<LineChart data={[1, 2, 3, 4, 5, 6]} labels={months} />);
+    expect(axis()).toEqual(months);
+  });
 });
 
 describe("QRCode", () => {

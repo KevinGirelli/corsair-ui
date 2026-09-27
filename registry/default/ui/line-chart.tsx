@@ -126,7 +126,10 @@ interface LineChartProps extends Omit<ComponentProps<"div">, "children"> {
   onIndexChange?: (index: number) => void;
   /** Show labels along the X axis. Needs `labels`. */
   showXAxis?: boolean;
-  /** How many X axis labels to aim for; fewer fit on narrow charts. */
+  /**
+   * The most X axis labels to show, evenly spaced and ending on the latest
+   * point; narrow charts show fewer.
+   */
   tickCount?: number;
   /** Colour the line only up to the selected point, grey after it. */
   reveal?: boolean;
@@ -217,11 +220,16 @@ function LineChart({
 
   const ticks = useMemo(() => {
     if (!showXAxis || !labels?.length || points.length === 0) return [];
-    // Roughly 80px per label, so they never run into each other.
-    const count = Math.min(tickCount, Math.max(2, Math.floor(width / 80)), points.length);
-    if (count <= 1) return [0];
-    return Array.from({ length: count }, (_, tick) =>
-      Math.round((tick * (points.length - 1)) / (count - 1))
+    // At most one label per 80px, so they never run into each other.
+    const most = Math.min(tickCount, Math.max(2, Math.floor(width / 80)), points.length);
+    if (most < 1) return [];
+    // Every step-th point, counted back from the latest so it always has a
+    // label, and the smallest step that keeps within `most` labels.
+    const last = points.length - 1;
+    const step = Math.floor(last / most) + 1;
+    return Array.from(
+      { length: Math.floor(last / step) + 1 },
+      (_, tick) => (last % step) + tick * step
     );
   }, [showXAxis, labels, points.length, tickCount, width]);
 
@@ -387,15 +395,22 @@ function LineChart({
 
       {ticks.length > 0 ? (
         <div aria-hidden="true" data-slot="line-chart-axis" className="relative mt-2 h-5">
-          {ticks.map((tick) => (
-            <span
-              key={tick}
-              className="text-muted-foreground absolute top-0 -translate-x-1/2 text-[11px] leading-none whitespace-nowrap tabular-nums first:translate-x-0 last:-translate-x-full"
-              style={{ left: `${(points[tick]!.x / WIDTH) * 100}%` }}
-            >
-              {labels?.[tick]}
-            </span>
-          ))}
+          {ticks.map((tick) => {
+            const at = points[tick]!.x / WIDTH;
+            return (
+              <span
+                key={tick}
+                className={cn(
+                  "text-muted-foreground absolute top-0 text-[11px] leading-none whitespace-nowrap tabular-nums",
+                  // Labels near an edge line up with it instead of spilling past.
+                  at < 0.1 ? "translate-x-0" : at > 0.9 ? "-translate-x-full" : "-translate-x-1/2"
+                )}
+                style={{ left: `${at * 100}%` }}
+              >
+                {labels?.[tick]}
+              </span>
+            );
+          })}
         </div>
       ) : null}
     </div>
