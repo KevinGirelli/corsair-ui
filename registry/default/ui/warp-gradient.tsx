@@ -94,10 +94,10 @@ void main() {
     float f = fract(uv.y * (0.25 + 3.0 * u_shapeScale));
     shape = smoothstep(0.0, 0.55, f) * (1.0 - smoothstep(0.45, 1.0, f)) + lean;
   } else {
-    // Back to 0-1 down the canvas, so the edge crosses the middle.
-    float across = (0.5 - uv.y) / (zoom * u_resolution.y / u_pixelRatio) + 0.5;
-    float width = 0.2 * (1.0 - u_shapeScale);
-    shape = smoothstep(0.45 - width, 0.55 + width, across + 0.3 * (proportion - 0.5));
+    // One split through the middle, wide enough that the swirls bend it
+    // rather than break it into blocks; a smaller shapeScale softens it.
+    float width = 5.0 * (1.0 - clamp(u_shapeScale, 0.0, 1.0));
+    shape = smoothstep(0.45 - width, 0.55 + width, 1.0 - uv.y + 0.3 * (proportion - 0.5));
   }
 
   float mixer = clamp(shape, 0.0, 1.0) * (u_colorsCount - 1.0);
@@ -130,7 +130,7 @@ interface WarpSettings {
   proportion: number;
   /** 0 draws hard edges between colours, 1 blends them smoothly. */
   softness: number;
-  /** Size of the base pattern, from 0 to 1. */
+  /** Size of the base pattern, from 0 to 1; for "edge", how sharp the split is. */
   shapeScale: number;
   /** Noise that bends the pattern, from 0 to 1. */
   distortion: number;
@@ -165,7 +165,7 @@ const PRESETS = {
     shape: "edge",
     proportion: 0.5,
     softness: 0.9,
-    shapeScale: 0.3,
+    shapeScale: 0.75,
     distortion: 0.2,
     swirl: 0.35,
     swirlIterations: 12,
@@ -200,16 +200,16 @@ const PRESETS = {
     speed: 0.5,
   },
   fog: {
-    colors: ["#fafaf9", "#d6d3d1", "#fafaf9", "#a8a29e"],
-    shape: "edge",
-    proportion: 0.5,
+    colors: ["#fafaf9", "#e7e5e4", "#a8a29e", "#fafaf9"],
+    shape: "stripes",
+    proportion: 0.45,
     softness: 1,
-    shapeScale: 0.15,
-    distortion: 0.25,
+    shapeScale: 0.25,
+    distortion: 0.15,
     swirl: 0.5,
-    swirlIterations: 10,
-    scale: 0.35,
-    rotation: 180,
+    swirlIterations: 8,
+    scale: 0.4,
+    rotation: 30,
     speed: 0.3,
   },
 } satisfies Record<string, WarpSettings>;
