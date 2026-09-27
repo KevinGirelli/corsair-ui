@@ -2,6 +2,30 @@
 
 `@corsair/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.4.0
+
+A first set of motion and visual effects, all CSS-first: transforms and opacity only, IntersectionObserver instead of scroll listeners, CSS scroll-driven animations for scroll-linked effects, loops paused off screen, and everything still or finished with `prefers-reduced-motion`. No animation library is needed.
+
+### Added
+
+- `use-in-view`: whether an element is in the viewport, with `once`, `rootMargin`, `amount` and an `onChange` callback.
+- Motion:
+  - `reveal`: content fades and moves into place when it scrolls into view. `RevealGroup` staggers its children. Server-rendered content stays visible until the browser confirms it is below the fold, so nothing blinks on load and it works without JavaScript.
+  - `text-reveal`: text revealed word by word, either when it comes into view or tied to the scroll position with no JavaScript. Screen readers get the sentence in one piece.
+  - `magnetic`: content pulled toward the mouse, springing back on leave.
+  - `parallax`: content that drifts at its own speed while scrolling past, on CSS scroll-driven animations. It works in server components.
+- Creative:
+  - `spotlight`: a light that follows the pointer across a surface and along its edge.
+  - `animated-border`: a light travelling around a border.
+  - `aurora`: slow light drifting behind content.
+  - `signature`: SVG strokes drawn as if by hand, on view or with the scroll.
+- `tooltip`: a short label on hover and keyboard focus.
+- Motion and effects items carry `categories` (`motion`, `creative`) for grouping.
+
+### Tooling
+
+- `verify:fixtures` checks that every keyframe the new items use is compiled in both fixtures.
+
 ## 0.3.0
 
 Richer inputs, and the popover and command pieces they are built from. Checked against Tailwind 3.4 and Tailwind 4 like everything else, and all of them work inside `FormField` by mapping `value` / `onValueChange`.

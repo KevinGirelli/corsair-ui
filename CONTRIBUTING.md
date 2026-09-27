@@ -37,7 +37,7 @@ registry/default/
 ## Adding an item
 
 1. Put the source in the folder that matches what it is: `ui/` for primitives and form controls, `components/<area>/` for larger pieces, `hooks/`, or `lib/`.
-2. Add the item to that folder's `registry.json`: `name`, `type`, `title`, `description` and `files`. List npm packages in `dependencies` with a version range (`"motion@^12.0.0"`) and other Corsair items in `registryDependencies` with the namespace (`"@corsair/utils"`); a bare `"utils"` would pull shadcn's item instead. `verify:fixtures` points the namespace at the local build, so new items are tested together before they reach `main`.
+2. Add the item to that folder's `registry.json`: `name`, `type`, `title`, `description` and `files`. List npm packages in `dependencies` with a version range (`"motion@^12.0.0"`) and other Corsair items in `registryDependencies` with the namespace (`"@corsair/utils"`); a bare `"utils"` would pull shadcn's item instead. `verify:fixtures` points the namespace at the local build, so new items are tested together before they reach `main`. Motion and visual effects also get `"categories": ["motion"]` or `["creative"]`, which the docs site uses to group them.
 3. Write tests next to the source (`*.test.ts` / `*.test.tsx`). They are never shipped: only the paths listed in `files` are.
 4. Run `pnpm registry:validate`, `pnpm check:tailwind` and `pnpm verify:fixtures` before opening the PR.
 
@@ -64,6 +64,7 @@ Corsair items are generic building blocks. Anything specific to one product stay
 - **Same building blocks.** Radix primitives for behaviour, `class-variance-authority` for variants, `lucide-react` for icons, `cn` for class merging, and a `data-slot` attribute on every part.
 - **Accessible by default.** Registry code is linted with `eslint-plugin-jsx-a11y` in strict mode. Interactive components need keyboard support and visible focus.
 - **Motion is optional.** Anything that animates respects `prefers-reduced-motion`. Put enter and exit animations behind `motion-safe:` (`motion-safe:data-[state=open]:animate-in`): `motion-reduce:animate-none` has lower specificity than a `data-[state=…]:` variant, so it does not stop them. Transitions can keep `motion-reduce:transition-none`. Leave animation durations at the library default, since `duration-*` sets the animation duration in Tailwind 3 but not in Tailwind 4.
+- **Motion is cheap.** Animate `transform` and `opacity`. Never listen to `scroll`: use `useInView` (IntersectionObserver) for "when it shows up", and CSS scroll-driven animations for "as it scrolls", gated with `supports-[animation-timeline:view()]:` so other browsers get the finished state. The `animation` shorthand resets `animation-timeline`, so put the timeline and range in `style`, which always wins over the utility. Pointer effects write CSS variables inside `requestAnimationFrame` instead of setting state. Anything that loops pauses while off screen.
 
 ## Tailwind 3 and 4
 
@@ -83,7 +84,7 @@ If a flagged class is intentional, put `// tailwind-compat-ignore-next-line` on 
 When an item needs CSS variables or keyframes, declare them for both versions in its registry entry:
 
 - **Colours:** full colour values (hex, `rgb()` or `oklch()`) in `cssVars.light` / `cssVars.dark`, mapped for v4 in `cssVars.theme` (`"color-brand": "var(--brand)"`) and for v3 in `tailwind.config` as `"color-mix(in oklab, var(--brand) calc(<alpha-value> * 100%), transparent)"`, which keeps opacity modifiers like `bg-brand/50` working. The `theme` item is the reference for this.
-- **Keyframes:** in `css` for v4 and in `tailwind.config.theme.extend.keyframes` (plus `animation`) for v3. The CLI also writes the `css` block into v3 projects wrapped in `@theme`, which v3 ignores, so the config entry is what makes the animation work there.
+- **Keyframes:** in `css` for v4 and in `tailwind.config.theme.extend.keyframes` (plus `animation`) for v3. The CLI also writes the `css` block into v3 projects wrapped in `@theme`, which v3 ignores, so the config entry is what makes the animation work there. Both versions only output keyframes that an `animate-*` utility in use refers to, so an item that picks its animation in `style` still needs the utility in its classes.
 
 `pnpm verify:fixtures` installs everything into `tests/fixtures/tailwind-v3` and `tests/fixtures/tailwind-v4`, typechecks the result, compiles the CSS and checks that utilities built on the theme (`bg-primary`, `bg-field`, `focus-visible:ring-ring/50`…) made it into both outputs.
 
