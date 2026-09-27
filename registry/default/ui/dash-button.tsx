@@ -57,7 +57,7 @@ function DashButton({
           fill="none"
           stroke="currentColor"
           strokeWidth="1"
-          strokeDasharray="6 4"
+          strokeDasharray="5 3"
           className="motion-safe:animate-dash-march [animation-play-state:paused] group-hover/dash:[animation-play-state:running] group-focus-visible/dash:[animation-play-state:running]"
         />
       </svg>

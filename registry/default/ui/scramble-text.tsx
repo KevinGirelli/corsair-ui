@@ -20,46 +20,36 @@ function prefersReducedMotion() {
 
 const NBSP = "\u00a0";
 
-/** A random character from the set, never the same as the one before it. */
-function pick(characters: string, previous?: string) {
-  let next = previous;
-  for (let tries = 0; tries < 4 && next === previous; tries++) {
-    next = characters[Math.floor(Math.random() * characters.length)];
-  }
-  return next ?? "";
+/**
+ * When each character settles, in ms after the start: a sweep from the left,
+ * scattered a little so it reads as decoding rather than typing. The
+ * scatter comes from the position, so every run of the same text matches.
+ */
+function settleTimes(glyphs: string[], gap: number) {
+  return glyphs.map((_, index) => {
+    const scatter = Math.sin(index * 7.31 + glyphs.length * 1.7) * 0.5 + 0.5;
+    return (index + scatter * 2.5) * gap;
+  });
 }
 
-/**
- * One frame of the effect. First the line fills up with noise from the
- * left; then the real text takes over one character every two steps, with
- * a cursor at the edge. Spaces stay spaces, so the words keep their shape.
- */
-function frame(text: string, step: number, characters: string) {
-  const length = text.length;
-  const out: string[] = [];
-  if (step < length * 2) {
-    const filled = Math.min(step + 1, length);
-    for (let index = 0; index < length; index++) {
-      if (text[index] === " ") out.push(" ");
-      else if (index < filled) out.push(pick(characters, out[index - 1]));
-      else out.push(NBSP);
-    }
-    return out.join("");
-  }
-  const revealStep = step - length * 2;
-  const revealed = Math.floor(revealStep / 2);
-  for (let index = 0; index < length; index++) {
-    if (index < revealed || text[index] === " ") out.push(text[index] ?? "");
-    else if (index === revealed) out.push(revealStep % 2 === 0 ? "_" : pick(characters));
-    else out.push(pick(characters, out[index - 1]));
-  }
-  return out.join("");
+/** The line at a moment: settled characters as they are, the rest as noise. Spaces stay spaces. */
+function frame(glyphs: string[], elapsed: number, times: number[], characters: string) {
+  return glyphs
+    .map((glyph, index) =>
+      /\s/.test(glyph) || elapsed >= (times[index] ?? 0)
+        ? glyph
+        : characters[Math.floor(Math.random() * characters.length)]
+    )
+    .join("");
 }
+
+// Fresh noise at most this often, so it flickers rather than smears.
+const NOISE_EVERY = 45;
 
 interface ScrambleTextProps extends Omit<ComponentProps<"span">, "children"> {
   /** Plain text. */
   children: string;
-  /** Milliseconds per step. Each character takes four steps in all. */
+  /** Milliseconds between one character settling and the next. */
   speed?: number;
   /** Wait before it starts, in ms. */
   delay?: number;
@@ -74,8 +64,8 @@ interface ScrambleTextProps extends Omit<ComponentProps<"span">, "children"> {
 }
 
 /**
- * Text that decodes itself: noise sweeps across, then the real characters
- * lock in one by one behind a cursor. It writes straight to the DOM once
+ * Text that decodes itself: the line starts as noise and the real
+ * characters settle into place in a loose sweep from the left. It writes straight to the DOM once
  * per frame instead of re-rendering React. The text is in the server HTML
  * for search engines and for browsers without JavaScript, screen readers
  * get it in one piece, and with `prefers-reduced-motion` it just appears.
@@ -86,9 +76,9 @@ interface ScrambleTextProps extends Omit<ComponentProps<"span">, "children"> {
  */
 function ScrambleText({
   children: text,
-  speed = 20,
+  speed = 40,
   delay = 0,
-  characters = "_!X$0-+*#/<>",
+  characters = "01<>[]{}/\\|=~^",
   trigger = "load",
   once = true,
   play,
@@ -115,16 +105,19 @@ function ScrambleText({
     if (phase === "static" || prefersReducedMotion()) return settle();
     if (phase === "armed") return write(NBSP.repeat(Math.max(text.length, 1)));
 
-    const steps = text.length * 4;
+    const glyphs = Array.from(text);
+    const times = settleTimes(glyphs, Math.max(speed, 1));
+    const end = Math.max(0, ...times);
+    const noise = characters || "#";
     const start = performance.now() + delay;
-    let shown = -1;
+    let written = -Infinity;
     let id = 0;
     const tick = (now: number) => {
-      const step = Math.floor((now - start) / Math.max(speed, 1));
-      if (step >= steps) return settle();
-      if (step >= 0 && step !== shown) {
-        shown = step;
-        write(frame(text, step, characters || "#"));
+      const elapsed = now - start;
+      if (elapsed >= end) return settle();
+      if (elapsed >= 0 && now - written >= NOISE_EVERY) {
+        written = now;
+        write(frame(glyphs, elapsed, times, noise));
       }
       id = requestAnimationFrame(tick);
     };

@@ -14,9 +14,11 @@ function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
   };
 }
 
-// The band is half the text wide. From -100% to 250% it crosses the whole line.
-const SWEEP_FROM = -100;
-const SWEEP_LENGTH = 350;
+// The band is 40% of the text wide, so a background position of -70% hides
+// it past the left edge and 170% past the right.
+const BAND = "40% 100%";
+const SWEEP_FROM = -70;
+const SWEEP_LENGTH = 240;
 
 interface ShimmerTextProps extends ComponentProps<"span"> {
   /** Seconds the light takes to cross the text. */
@@ -40,9 +42,9 @@ interface ShimmerTextProps extends ComponentProps<"span"> {
  * <ShimmerText className="text-muted-foreground">Charting a course…</ShimmerText>
  */
 function ShimmerText({
-  duration = 1.5,
-  pause = 1.5,
-  delay = 1.5,
+  duration = 1.8,
+  pause = 2,
+  delay = 0.8,
   highlight,
   className,
   style,
@@ -74,9 +76,10 @@ function ShimmerText({
           "--shimmer-text-from": `${SWEEP_FROM}%`,
           "--shimmer-text-to": `${end}%`,
           backgroundColor: "currentColor",
+          // A soft, slanted peak of light over the text colour.
           backgroundImage:
-            "linear-gradient(90deg, currentColor 0%, var(--shimmer-text-light) 40%, var(--shimmer-text-light) 60%, currentColor 100%)",
-          backgroundSize: "50% 200%",
+            "linear-gradient(105deg, transparent 20%, var(--shimmer-text-light) 50%, transparent 80%)",
+          backgroundSize: BAND,
           backgroundPositionX: `${SWEEP_FROM}%`,
           animationDuration: `${cycle}s`,
           animationDelay: `${delay}s`,

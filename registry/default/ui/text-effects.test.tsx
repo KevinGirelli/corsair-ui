@@ -286,7 +286,7 @@ describe("ShimmerText", () => {
     );
     const root = document.querySelector<HTMLElement>("[data-slot=shimmer-text]")!;
     expect(root.style.animationDuration).toBe("3s");
-    expect(root.style.getPropertyValue("--shimmer-text-to")).toBe("425%");
+    expect(root.style.getPropertyValue("--shimmer-text-to")).toBe("290%");
     expect(root.style.animationPlayState).toBe("paused");
     act(() => io.intersect(root, true));
     expect(root.style.animationPlayState).toBe("");

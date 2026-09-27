@@ -81,7 +81,7 @@ function DissolveText({
   play,
   delay = 200,
   spread = 230,
-  duration = 1200,
+  duration = 1000,
   className,
   ref,
   ...props

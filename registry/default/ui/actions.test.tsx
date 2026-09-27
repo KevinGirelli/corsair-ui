@@ -51,7 +51,7 @@ describe("DashButton", () => {
     const button = screen.getByRole("button", { name: "Plot a course" });
     const outline = button.querySelector("[data-slot=dash-button-outline]");
     expect(outline?.getAttribute("aria-hidden")).toBe("true");
-    expect(outline?.querySelector("rect")?.getAttribute("stroke-dasharray")).toBe("6 4");
+    expect(outline?.querySelector("rect")?.getAttribute("stroke-dasharray")).toBe("5 3");
     rerender(
       <DashButton asChild>
         <a href="/docs">Read the docs</a>

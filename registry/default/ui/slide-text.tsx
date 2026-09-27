@@ -21,13 +21,18 @@ function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
   };
 }
 
-/** Splits into user-perceived characters, so emoji and accents stay whole. */
+// One splitter for the module: user-perceived characters, so emoji and
+// accents stay whole wherever the runtime can tell them apart.
+const characterSplitter =
+  typeof Intl === "object" && typeof Intl.Segmenter === "function"
+    ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+    : null;
+
 function graphemes(text: string) {
-  if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
-    const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
-    return Array.from(segmenter.segment(text), ({ segment }) => segment);
-  }
-  return Array.from(text);
+  if (!characterSplitter) return [...text];
+  const pieces: string[] = [];
+  for (const { segment } of characterSplitter.segment(text)) pieces.push(segment);
+  return pieces;
 }
 
 type SlideTextTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
@@ -75,7 +80,7 @@ function SlideText({
   play,
   delay = 0,
   stagger = 80,
-  duration = 600,
+  duration = 650,
   onAnimationComplete,
   className,
   ref,

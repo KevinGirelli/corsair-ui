@@ -23,7 +23,7 @@ function BarsSpinner({ size, className, style, ...props }: BarsSpinnerProps) {
       aria-label="Loading"
       data-slot="bars-spinner"
       className={cn(
-        "relative inline-block size-4 shrink-0 [--bars-spinner-period:1.2s] motion-reduce:[--bars-spinner-period:2.4s]",
+        "relative inline-block size-4 shrink-0 [--bars-spinner-period:1s] motion-reduce:[--bars-spinner-period:2s]",
         className
       )}
       style={{ ...(size === undefined ? null : { width: size, height: size }), ...style }}
@@ -33,10 +33,10 @@ function BarsSpinner({ size, className, style, ...props }: BarsSpinnerProps) {
         <span
           key={index}
           aria-hidden="true"
-          className="animate-bars-spinner absolute top-[46%] left-[38%] h-[8%] w-[24%] rounded-full bg-current"
+          className="animate-bars-spinner absolute top-[45.5%] left-[37%] h-[9%] w-[26%] rounded-full bg-current"
           style={
             {
-              transform: `rotate(${index * 30}deg) translate(146%)`,
+              transform: `rotate(${index * 30}deg) translate(140%)`,
               animationDuration: "var(--bars-spinner-period)",
               // Negative delays start every bar part-way through, so the wheel turns from the first frame.
               animationDelay: `calc(var(--bars-spinner-period) * ${(index - 12) / 12})`,

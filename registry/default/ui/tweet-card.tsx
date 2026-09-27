@@ -7,7 +7,7 @@ import type { Tweet, TweetEntities } from "react-tweet/api";
 
 import { cn } from "@/registry/default/lib/utils";
 
-// The X logo, from Simple Icons (CC0).
+// The X logo.
 const X_LOGO =
   "M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z";
 
@@ -47,19 +47,13 @@ function compact(count: number) {
  * the enricher assumed they were there. Fill them in, and fall back to
  * nothing rather than throwing on a tweet shape nobody expected.
  */
+const ENTITY_LISTS = ["hashtags", "urls", "user_mentions", "symbols"] as const;
+
 function enrich(tweet: Tweet): EnrichedTweet | null {
+  const entities: Partial<TweetEntities> = { ...tweet.entities };
+  for (const list of ENTITY_LISTS) entities[list] ??= [];
   try {
-    const entities: Partial<TweetEntities> = tweet.entities ?? {};
-    return enrichTweet({
-      ...tweet,
-      entities: {
-        ...entities,
-        hashtags: entities.hashtags ?? [],
-        urls: entities.urls ?? [],
-        user_mentions: entities.user_mentions ?? [],
-        symbols: entities.symbols ?? [],
-      },
-    });
+    return enrichTweet({ ...tweet, entities: entities as TweetEntities });
   } catch {
     return null;
   }

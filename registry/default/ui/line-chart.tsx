@@ -16,11 +16,11 @@ import {
 import { cn } from "@/registry/default/lib/utils";
 
 // The drawing is laid out in a fixed box and scaled to its container.
-const WIDTH = 640;
-const HEIGHT = 220;
-const TOP = 24;
-const BOTTOM = 12;
-const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
+const WIDTH = 600;
+const HEIGHT = 200;
+const TOP = 22;
+const BOTTOM = 10;
+const EASE = "cubic-bezier(0.22, 0.9, 0.3, 1)";
 
 interface Point {
   x: number;
@@ -29,32 +29,9 @@ interface Point {
 
 const n = (value: number) => Math.round(value * 100) / 100;
 
-/** Straight segments with each join rounded off by `radius`. */
-function linearPath(points: Point[], radius = 3) {
-  const [first, ...rest] = points;
-  if (!first) return "";
-  let d = `M${n(first.x)} ${n(first.y)}`;
-  rest.forEach((point, index) => {
-    const next = rest[index + 1];
-    const previous = points[index]!;
-    if (!next) {
-      d += ` L${n(point.x)} ${n(point.y)}`;
-      return;
-    }
-    const into = Math.hypot(point.x - previous.x, point.y - previous.y) || 1;
-    const out = Math.hypot(next.x - point.x, next.y - point.y) || 1;
-    const r = Math.min(radius, into / 2, out / 2);
-    const before = {
-      x: point.x - ((point.x - previous.x) / into) * r,
-      y: point.y - ((point.y - previous.y) / into) * r,
-    };
-    const after = {
-      x: point.x + ((next.x - point.x) / out) * r,
-      y: point.y + ((next.y - point.y) / out) * r,
-    };
-    d += ` L${n(before.x)} ${n(before.y)} Q${n(point.x)} ${n(point.y)} ${n(after.x)} ${n(after.y)}`;
-  });
-  return d;
+/** Straight segments; the stroke's round joins soften the corners. */
+function linearPath(points: Point[]) {
+  return points.map((point, index) => `${index ? "L" : "M"}${n(point.x)} ${n(point.y)}`).join(" ");
 }
 
 /**
@@ -62,7 +39,7 @@ function linearPath(points: Point[], radius = 3) {
  * (monotone cubic interpolation), so peaks in the drawing are peaks in the data.
  */
 function smoothPath(points: Point[]) {
-  if (points.length < 3) return linearPath(points, 0);
+  if (points.length < 3) return linearPath(points);
   const slopes = points
     .slice(1)
     .map((point, index) => (point.y - points[index]!.y) / (point.x - points[index]!.x || 1));
@@ -299,7 +276,7 @@ function LineChart({
         aria-valuetext={valueText}
         aria-orientation="horizontal"
         data-slot="line-chart-plot"
-        className="focus-visible:ring-ring/50 relative aspect-[640/220] w-full touch-pan-y rounded-md outline-none focus-visible:ring-[3px]"
+        className="focus-visible:ring-ring/50 relative aspect-[3/1] w-full touch-pan-y rounded-md outline-none focus-visible:ring-[3px]"
         onPointerMove={onPointer}
         onPointerDown={onPointer}
         onKeyDown={onKeyDown}
@@ -371,24 +348,28 @@ function LineChart({
             style={{ transform: `translate3d(${cursorX}px, ${cursorY}px, 0)`, transition }}
           />
         ) : null}
+        {/* A zero-size anchor rides on the point; the card hangs off its side. */}
         <div
           aria-hidden="true"
-          data-slot="line-chart-tooltip"
-          className="bg-popover text-popover-foreground pointer-events-none absolute top-0 left-0 z-10 grid min-w-32 gap-1.5 rounded-md border px-2.5 py-1.5 text-xs shadow-md motion-reduce:!transition-none"
-          style={{
-            transform: flip
-              ? `translate3d(calc(${cursorX}px - 100% - 12px), calc(${cursorY}px - 50%), 0)`
-              : `translate3d(${cursorX + 12}px, calc(${cursorY}px - 50%), 0)`,
-            transition,
-          }}
+          data-slot="line-chart-tooltip-anchor"
+          className="pointer-events-none absolute top-0 left-0 z-10 size-0 motion-reduce:!transition-none"
+          style={{ transform: `translate3d(${cursorX}px, ${cursorY}px, 0)`, transition }}
         >
-          {label ? <div className="font-medium">{label}</div> : null}
-          <div className="flex items-center gap-2">
-            <span className="size-2.5 shrink-0 rounded-[3px] bg-[color:var(--line-chart-color)]" />
-            {name ? <span className="text-muted-foreground">{name}</span> : null}
-            <span className="ml-auto font-mono font-medium tabular-nums">
-              {formatValue ? formatValue(point.value, index) : formatted}
-            </span>
+          <div
+            data-slot="line-chart-tooltip"
+            className={cn(
+              "bg-popover text-popover-foreground absolute top-0 grid w-max min-w-32 -translate-y-1/2 gap-1.5 rounded-md border px-2.5 py-1.5 text-xs shadow-md",
+              flip ? "right-3" : "left-3"
+            )}
+          >
+            {label ? <div className="font-medium">{label}</div> : null}
+            <div className="flex items-center gap-2">
+              <span className="size-2.5 shrink-0 rounded-[3px] bg-[color:var(--line-chart-color)]" />
+              {name ? <span className="text-muted-foreground">{name}</span> : null}
+              <span className="ml-auto font-mono font-medium tabular-nums">
+                {formatValue ? formatValue(point.value, index) : formatted}
+              </span>
+            </div>
           </div>
         </div>
       </div>
