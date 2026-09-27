@@ -447,6 +447,136 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "reveal",
+      "type": "registry:ui",
+      "title": "Reveal",
+      "description": "Fades and moves content into place when it scrolls into view, alone or staggered in a group. Visible without JavaScript.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "reveal.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "text-reveal",
+      "type": "registry:ui",
+      "title": "Text Reveal",
+      "description": "Reveals text word by word, when it comes into view or tied to the scroll position.",
+      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "text-reveal.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-text-reveal": "text-reveal linear both"
+        }
+      },
+      "css": {
+        "@keyframes text-reveal": {
+          "from": {
+            "opacity": "var(--text-reveal-dim, 0.15)"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "text-reveal": {
+                  "from": {
+                    "opacity": "var(--text-reveal-dim, 0.15)"
+                  },
+                  "to": {
+                    "opacity": "1"
+                  }
+                }
+              },
+              "animation": {
+                "text-reveal": "text-reveal linear both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "magnetic",
+      "type": "registry:ui",
+      "title": "Magnetic",
+      "description": "Pulls its content toward the mouse while hovered and springs it back on leave.",
+      "registryDependencies": ["@corsair/utils"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "magnetic.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "parallax",
+      "type": "registry:ui",
+      "title": "Parallax",
+      "description": "Drifts content at a different speed from the page as it scrolls past, with CSS scroll-driven animations and no JavaScript.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "registryDependencies": ["@corsair/utils"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "parallax.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-parallax": "parallax linear both"
+        }
+      },
+      "css": {
+        "@keyframes parallax": {
+          "from": {
+            "transform": "translate3d(0, var(--parallax-offset, 0px), 0)"
+          },
+          "to": {
+            "transform": "translate3d(0, calc(var(--parallax-offset, 0px) * -1), 0)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "parallax": {
+                  "from": {
+                    "transform": "translate3d(0, var(--parallax-offset, 0px), 0)"
+                  },
+                  "to": {
+                    "transform": "translate3d(0, calc(var(--parallax-offset, 0px) * -1), 0)"
+                  }
+                }
+              },
+              "animation": {
+                "parallax": "parallax linear both"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
