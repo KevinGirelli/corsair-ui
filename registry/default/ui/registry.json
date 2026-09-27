@@ -1303,6 +1303,66 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Modal window centred over the page, with a focus trap, overlay, close button, header, footer, title and description parts.",
+      "dependencies": ["@radix-ui/react-dialog@^1.1.23", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "Modal that asks the user to confirm or cancel before an action, with action and cancel buttons.",
+      "dependencies": ["@radix-ui/react-alert-dialog@^1.1.23"],
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "files": [
+        {
+          "path": "alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Dialog that slides in from any edge of the screen, for menus, filters and side panels.",
+      "dependencies": [
+        "@radix-ui/react-dialog@^1.1.23",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Brief notifications shown with a toast() call and a Toaster mounted once, with variants, an optional action, swipe to dismiss and screen reader announcements.",
+      "dependencies": ["@radix-ui/react-toast@^1.2.23", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
