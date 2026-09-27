@@ -1957,6 +1957,206 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Stacked sections that open and close under their headings, one or several at a time, with a height animation.",
+      "dependencies": ["@radix-ui/react-accordion@^1.2.20", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-accordion-open": "accordion-open 0.2s ease-out",
+          "animate-accordion-close": "accordion-close 0.2s ease-out"
+        }
+      },
+      "css": {
+        "@keyframes accordion-open": {
+          "from": {
+            "height": "0"
+          },
+          "to": {
+            "height": "var(--radix-accordion-content-height)"
+          }
+        },
+        "@keyframes accordion-close": {
+          "from": {
+            "height": "var(--radix-accordion-content-height)"
+          },
+          "to": {
+            "height": "0"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "accordion-open": {
+                  "from": {
+                    "height": "0"
+                  },
+                  "to": {
+                    "height": "var(--radix-accordion-content-height)"
+                  }
+                },
+                "accordion-close": {
+                  "from": {
+                    "height": "var(--radix-accordion-content-height)"
+                  },
+                  "to": {
+                    "height": "0"
+                  }
+                }
+              },
+              "animation": {
+                "accordion-open": "accordion-open 0.2s ease-out",
+                "accordion-close": "accordion-close 0.2s ease-out"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "A region that a trigger button shows and hides, with a height animation.",
+      "dependencies": ["@radix-ui/react-collapsible@^1.1.20"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-collapsible-open": "collapsible-open 0.2s ease-out",
+          "animate-collapsible-close": "collapsible-close 0.2s ease-out"
+        }
+      },
+      "css": {
+        "@keyframes collapsible-open": {
+          "from": {
+            "height": "0"
+          },
+          "to": {
+            "height": "var(--radix-collapsible-content-height)"
+          }
+        },
+        "@keyframes collapsible-close": {
+          "from": {
+            "height": "var(--radix-collapsible-content-height)"
+          },
+          "to": {
+            "height": "0"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "collapsible-open": {
+                  "from": {
+                    "height": "0"
+                  },
+                  "to": {
+                    "height": "var(--radix-collapsible-content-height)"
+                  }
+                },
+                "collapsible-close": {
+                  "from": {
+                    "height": "var(--radix-collapsible-content-height)"
+                  },
+                  "to": {
+                    "height": "0"
+                  }
+                }
+              },
+              "animation": {
+                "collapsible-open": "collapsible-open 0.2s ease-out",
+                "collapsible-close": "collapsible-close 0.2s ease-out"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "A progress bar for tasks with a known amount, or an indeterminate one when the amount is unknown.",
+      "dependencies": ["@radix-ui/react-progress@^1.1.16"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "progress.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-progress-indeterminate": "progress-indeterminate 1.5s ease-in-out infinite"
+        }
+      },
+      "css": {
+        "@keyframes progress-indeterminate": {
+          "from": {
+            "transform": "translateX(-100%)"
+          },
+          "to": {
+            "transform": "translateX(250%)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "progress-indeterminate": {
+                  "from": {
+                    "transform": "translateX(-100%)"
+                  },
+                  "to": {
+                    "transform": "translateX(250%)"
+                  }
+                }
+              },
+              "animation": {
+                "progress-indeterminate": "progress-indeterminate 1.5s ease-in-out infinite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "A scrolling box with thin themed scrollbars that keeps native scrolling.",
+      "dependencies": ["@radix-ui/react-scroll-area@^1.2.18"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

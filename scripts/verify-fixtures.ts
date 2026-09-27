@@ -72,6 +72,11 @@ const EXPECTED_CLASSES = [
   "motion-safe:animate-particles-up",
   "motion-safe:animate-particles-down",
   "motion-safe:animate-highlight-text-draw",
+  "motion-safe:data-[state=open]:animate-accordion-open",
+  "motion-safe:data-[state=closed]:animate-accordion-close",
+  "motion-safe:data-[state=open]:animate-collapsible-open",
+  "motion-safe:data-[state=closed]:animate-collapsible-close",
+  "motion-safe:data-[state=indeterminate]:animate-progress-indeterminate",
 ];
 const EXPECTED_VARIABLES = [
   "--background:",
@@ -100,6 +105,11 @@ const EXPECTED_VARIABLES = [
   "@keyframes particles-up",
   "@keyframes particles-down",
   "@keyframes highlight-text-draw",
+  "@keyframes accordion-open",
+  "@keyframes accordion-close",
+  "@keyframes collapsible-open",
+  "@keyframes collapsible-close",
+  "@keyframes progress-indeterminate",
 ];
 
 const args = process.argv.slice(2);
