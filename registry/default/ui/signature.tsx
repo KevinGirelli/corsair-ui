@@ -37,7 +37,9 @@ interface SignatureProps extends Omit<ComponentProps<"svg">, "children"> {
   /**
    * "in-view" draws once when the drawing scrolls into view. "scroll" draws
    * with the scroll position, on CSS scroll-driven animations; browsers
-   * without them show it finished.
+   * without them show it finished. Scroll follows the nearest scroll
+   * container: clip ancestors with `overflow-clip`, as `overflow-hidden` makes
+   * one that never scrolls.
    */
   trigger?: "in-view" | "scroll";
   /** In-view: total drawing time in ms; longer strokes get a bigger share. */

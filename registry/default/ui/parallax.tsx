@@ -18,6 +18,10 @@ interface ParallaxProps extends ComponentProps<"div"> {
  * It runs on CSS scroll-driven animations, so there is no JavaScript and no
  * scroll listener; browsers without them, and `prefers-reduced-motion`, keep
  * the content still. Works in server components.
+ *
+ * It follows the nearest scroll container, and `overflow: hidden` makes one
+ * that never scrolls, so the content stays put. Clip a wrapper with
+ * `overflow: clip` (`overflow-clip`) instead.
  */
 function Parallax({ asChild = false, offset = 40, className, style, ...props }: ParallaxProps) {
   const Comp = asChild ? Slot : "div";

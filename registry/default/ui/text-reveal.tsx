@@ -42,7 +42,9 @@ interface TextRevealProps extends Omit<ComponentProps<"p">, "children"> {
    * "in-view" brings the words in one after another once the text scrolls
    * into view. "scroll" ties each word to the scroll position instead, with
    * CSS scroll-driven animations and no JavaScript; browsers without them
-   * show the text as is.
+   * show the text as is. Scroll follows the nearest scroll container: clip
+   * ancestors with `overflow-clip`, as `overflow-hidden` makes one that never
+   * scrolls.
    */
   trigger?: "in-view" | "scroll";
   /** In-view: delay between words, in ms. */
