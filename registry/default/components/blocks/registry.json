@@ -67,6 +67,52 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "pricing",
+      "type": "registry:block",
+      "title": "Pricing",
+      "description": "A pricing section with plan cards, a featured plan and an optional monthly or yearly billing switch.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": [
+        "@corsair/utils",
+        "@corsair/badge",
+        "@corsair/button",
+        "@corsair/card",
+        "@corsair/toggle-group"
+      ],
+      "files": [
+        {
+          "path": "pricing.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "faq",
+      "type": "registry:block",
+      "title": "FAQ",
+      "description": "A frequently asked questions section with a header and the answers in an accordion, split or stacked.",
+      "registryDependencies": ["@corsair/utils", "@corsair/accordion"],
+      "files": [
+        {
+          "path": "faq.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "testimonials",
+      "type": "registry:block",
+      "title": "Testimonials",
+      "description": "A section of customer quotes with names, roles and avatars, in a masonry or grid layout.",
+      "registryDependencies": ["@corsair/utils", "@corsair/avatar", "@corsair/card"],
+      "files": [
+        {
+          "path": "testimonials.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
