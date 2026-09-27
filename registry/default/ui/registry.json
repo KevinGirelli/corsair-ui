@@ -1897,6 +1897,66 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "A menu of actions and options that opens from a button, with checkbox and radio items, labels, shortcuts and submenus.",
+      "dependencies": ["@radix-ui/react-dropdown-menu@^2.1.24", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "A menu of actions for an area of the page that opens on right click or long press, with checkbox and radio items, labels, shortcuts and submenus.",
+      "dependencies": ["@radix-ui/react-context-menu@^2.3.7", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "Site navigation with links and triggers that open panels of links in a shared, animated viewport.",
+      "dependencies": [
+        "@radix-ui/react-navigation-menu@^1.2.22",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "navigation-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "A preview card that appears while a link is hovered or focused, for supplementary content.",
+      "dependencies": ["@radix-ui/react-hover-card@^1.1.23"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
