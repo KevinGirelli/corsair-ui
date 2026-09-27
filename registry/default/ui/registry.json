@@ -1511,6 +1511,34 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "youtube-embed",
+      "type": "registry:ui",
+      "title": "YouTube Embed",
+      "description": "A YouTube video that costs one poster image until it is played, with player controls through its ref.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "files": [
+        {
+          "path": "youtube-embed.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "Slides on a native scroll-snap track, with keyboard steps, previous and next buttons, dots and an optional coverflow look.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "files": [
+        {
+          "path": "carousel.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
