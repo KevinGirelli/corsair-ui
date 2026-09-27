@@ -2157,6 +2157,52 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "The trail of links from the top of a site to the current page, with separators and an ellipsis.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Page links with previous and next, an ellipsis, and a helper that works out which page numbers to show.",
+      "dependencies": [
+        "@radix-ui/react-slot@^1.3.3",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "files": [
+        {
+          "path": "pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A data table on native table elements, with a scroll container, selected rows and sortable column headers.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "table.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
