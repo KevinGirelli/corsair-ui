@@ -158,8 +158,12 @@ function Signature({
     >
       {ink ? (
         <>
-          {/* Wide strokes drawn in step with the pen reveal the filled shapes behind it. */}
-          <mask id={maskId} maskUnits="userSpaceOnUse">
+          {/*
+            Wide strokes drawn in step with the pen reveal the filled shapes
+            behind it. The mask region stays the default, around the shapes'
+            own box, so it covers them whatever the viewBox.
+          */}
+          <mask id={maskId}>
             <g stroke="white" strokeWidth={inkWidth}>
               {paths.map((d, index) => (
                 <path
