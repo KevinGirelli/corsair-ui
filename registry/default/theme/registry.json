@@ -30,8 +30,8 @@
           "color-input": "var(--input)",
           "color-field": "var(--field)",
           "color-ring": "var(--ring)",
-          "radius-sm": "calc(var(--radius) - 4px)",
-          "radius-md": "calc(var(--radius) - 2px)",
+          "radius-sm": "max(0px, calc(var(--radius) - 4px))",
+          "radius-md": "max(0px, calc(var(--radius) - 2px))",
           "radius-lg": "var(--radius)",
           "radius-xl": "calc(var(--radius) + 4px)"
         },
@@ -128,8 +128,8 @@
                 "ring": "color-mix(in oklab, var(--ring) calc(<alpha-value> * 100%), transparent)"
               },
               "borderRadius": {
-                "sm": "calc(var(--radius) - 4px)",
-                "md": "calc(var(--radius) - 2px)",
+                "sm": "max(0px, calc(var(--radius) - 4px))",
+                "md": "max(0px, calc(var(--radius) - 2px))",
                 "lg": "var(--radius)",
                 "xl": "calc(var(--radius) + 4px)"
               }
