@@ -12,6 +12,18 @@
           "type": "registry:hook"
         }
       ]
+    },
+    {
+      "name": "use-in-view",
+      "type": "registry:hook",
+      "title": "useInView",
+      "description": "Whether an element is in the viewport, from IntersectionObserver, with once, margin and amount options.",
+      "files": [
+        {
+          "path": "use-in-view.ts",
+          "type": "registry:hook"
+        }
+      ]
     }
   ]
 }

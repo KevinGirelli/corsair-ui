@@ -19,5 +19,5 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["registry", "scripts", "vitest.config.ts", "vitest.setup.ts"]
+  "include": ["registry", "scripts", "test-utils", "vitest.config.ts", "vitest.setup.ts"]
 }
