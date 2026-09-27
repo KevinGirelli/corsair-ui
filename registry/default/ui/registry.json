@@ -1897,6 +1897,312 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "A menu of actions and options that opens from a button, with checkbox and radio items, labels, shortcuts and submenus.",
+      "dependencies": ["@radix-ui/react-dropdown-menu@^2.1.24", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "A menu of actions for an area of the page that opens on right click or long press, with checkbox and radio items, labels, shortcuts and submenus.",
+      "dependencies": ["@radix-ui/react-context-menu@^2.3.7", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "Site navigation with links and triggers that open panels of links in a shared, animated viewport.",
+      "dependencies": [
+        "@radix-ui/react-navigation-menu@^1.2.22",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "navigation-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "A preview card that appears while a link is hovered or focused, for supplementary content.",
+      "dependencies": ["@radix-ui/react-hover-card@^1.1.23"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Stacked sections that open and close under their headings, one or several at a time, with a height animation.",
+      "dependencies": ["@radix-ui/react-accordion@^1.2.20", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-accordion-open": "accordion-open 0.2s ease-out",
+          "animate-accordion-close": "accordion-close 0.2s ease-out"
+        }
+      },
+      "css": {
+        "@keyframes accordion-open": {
+          "from": {
+            "height": "0"
+          },
+          "to": {
+            "height": "var(--radix-accordion-content-height)"
+          }
+        },
+        "@keyframes accordion-close": {
+          "from": {
+            "height": "var(--radix-accordion-content-height)"
+          },
+          "to": {
+            "height": "0"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "accordion-open": {
+                  "from": {
+                    "height": "0"
+                  },
+                  "to": {
+                    "height": "var(--radix-accordion-content-height)"
+                  }
+                },
+                "accordion-close": {
+                  "from": {
+                    "height": "var(--radix-accordion-content-height)"
+                  },
+                  "to": {
+                    "height": "0"
+                  }
+                }
+              },
+              "animation": {
+                "accordion-open": "accordion-open 0.2s ease-out",
+                "accordion-close": "accordion-close 0.2s ease-out"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "A region that a trigger button shows and hides, with a height animation.",
+      "dependencies": ["@radix-ui/react-collapsible@^1.1.20"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-collapsible-open": "collapsible-open 0.2s ease-out",
+          "animate-collapsible-close": "collapsible-close 0.2s ease-out"
+        }
+      },
+      "css": {
+        "@keyframes collapsible-open": {
+          "from": {
+            "height": "0"
+          },
+          "to": {
+            "height": "var(--radix-collapsible-content-height)"
+          }
+        },
+        "@keyframes collapsible-close": {
+          "from": {
+            "height": "var(--radix-collapsible-content-height)"
+          },
+          "to": {
+            "height": "0"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "collapsible-open": {
+                  "from": {
+                    "height": "0"
+                  },
+                  "to": {
+                    "height": "var(--radix-collapsible-content-height)"
+                  }
+                },
+                "collapsible-close": {
+                  "from": {
+                    "height": "var(--radix-collapsible-content-height)"
+                  },
+                  "to": {
+                    "height": "0"
+                  }
+                }
+              },
+              "animation": {
+                "collapsible-open": "collapsible-open 0.2s ease-out",
+                "collapsible-close": "collapsible-close 0.2s ease-out"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "A progress bar for tasks with a known amount, or an indeterminate one when the amount is unknown.",
+      "dependencies": ["@radix-ui/react-progress@^1.1.16"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "progress.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-progress-indeterminate": "progress-indeterminate 1.5s ease-in-out infinite"
+        }
+      },
+      "css": {
+        "@keyframes progress-indeterminate": {
+          "from": {
+            "transform": "translateX(-100%)"
+          },
+          "to": {
+            "transform": "translateX(250%)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "progress-indeterminate": {
+                  "from": {
+                    "transform": "translateX(-100%)"
+                  },
+                  "to": {
+                    "transform": "translateX(250%)"
+                  }
+                }
+              },
+              "animation": {
+                "progress-indeterminate": "progress-indeterminate 1.5s ease-in-out infinite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "A scrolling box with thin themed scrollbars that keeps native scrolling.",
+      "dependencies": ["@radix-ui/react-scroll-area@^1.2.18"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "The trail of links from the top of a site to the current page, with separators and an ellipsis.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3", "lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Page links with previous and next, an ellipsis, and a helper that works out which page numbers to show.",
+      "dependencies": [
+        "@radix-ui/react-slot@^1.3.3",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "files": [
+        {
+          "path": "pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A data table on native table elements, with a scroll container, selected rows and sortable column headers.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "table.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
