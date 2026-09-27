@@ -613,7 +613,7 @@
       "title": "Aurora",
       "description": "Slow, soft light drifting behind its content, from three radial gradients.",
       "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
-      "categories": ["creative"],
+      "categories": ["creative", "background"],
       "files": [
         {
           "path": "aurora.tsx",
@@ -1156,6 +1156,90 @@
       "files": [
         {
           "path": "text-signature.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "marquee",
+      "type": "registry:ui",
+      "title": "Marquee",
+      "description": "Content scrolling in a seamless loop, pausing on focus and off screen.",
+      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "marquee.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-marquee-x": "marquee-x 20s linear infinite",
+          "animate-marquee-y": "marquee-y 20s linear infinite"
+        }
+      },
+      "css": {
+        "@keyframes marquee-x": {
+          "to": {
+            "transform": "translate3d(calc(-100% / var(--marquee-copies)), 0, 0)"
+          }
+        },
+        "@keyframes marquee-y": {
+          "to": {
+            "transform": "translate3d(0, calc(-100% / var(--marquee-copies)), 0)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "marquee-x": {
+                  "to": {
+                    "transform": "translate3d(calc(-100% / var(--marquee-copies)), 0, 0)"
+                  }
+                },
+                "marquee-y": {
+                  "to": {
+                    "transform": "translate3d(0, calc(-100% / var(--marquee-copies)), 0)"
+                  }
+                }
+              },
+              "animation": {
+                "marquee-x": "marquee-x 20s linear infinite",
+                "marquee-y": "marquee-y 20s linear infinite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "light-rays",
+      "type": "registry:ui",
+      "title": "Light Rays",
+      "description": "Soft beams of light falling from above, from a small WebGL2 shader.",
+      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "categories": ["background"],
+      "files": [
+        {
+          "path": "light-rays.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "warp-gradient",
+      "type": "registry:ui",
+      "title": "Warp Gradient",
+      "description": "A liquid field of colour warped by noise and swirls, adapted from Paper Shaders' Warp.",
+      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "categories": ["background"],
+      "files": [
+        {
+          "path": "warp-gradient.tsx",
           "type": "registry:ui"
         }
       ]
