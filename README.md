@@ -11,7 +11,7 @@ A UI component library built to be copied, adapted, and owned by whoever uses it
 
 Components live as code you bring into your own project and modify freely. The goal is a broad, well-built catalog that covers what most projects end up rebuilding from scratch: not just basic UI primitives, but forms, data display, navigation, motion, and more creative/visual pieces too.
 
-Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields), overlays, site chrome, motion, animated text, backgrounds, a chart and embeds are in; menus, tables and data-heavy pieces come next.
+Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields), overlays, menus, site chrome, tables, motion, animated text, backgrounds, a chart and embeds are in; ready-made blocks come next.
 
 ## What lives in this repository
 
@@ -48,15 +48,17 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 - **Actions:** button, copy-button, dash-button, badge, spinner, bars-spinner
 - **Form controls:** label, input, textarea, input-group, checkbox, radio-group, switch, select, color-swatches
 - **Richer inputs:** calendar, date-picker (single date and range), combobox, input-otp, slider, number-input, password-input, toggle, toggle-group
-- **Overlays:** dialog, alert-dialog, sheet, popover, command, tooltip, toast
-- **Navigation:** site-header, nav-link, dock, tabs, carousel
+- **Overlays:** dialog, alert-dialog, sheet, popover, hover-card, command, tooltip, toast
+- **Menus:** dropdown-menu, context-menu, navigation-menu
+- **Navigation:** site-header, nav-link, dock, tabs, carousel, breadcrumb, pagination
+- **Disclosure:** accordion, collapsible, scroll-area
 - **Text:** text-reveal, blur-text, slide-text, dissolve-text, highlight-text, scramble-text, shimmer-text, wave-text, text-signature, roll-text, number-ticker
 - **Motion:** reveal, magnetic, parallax, marquee, preloader, custom-cursor, scroll-progress, smooth-scroll
 - **Creative:** spotlight, animated-border, signature, hover-reveal, grain, corner-frame
 - **Backgrounds:** aurora, light-rays, warp-gradient, topography, particles
 - **Data and embeds:** line-chart, qr-code, tweet-card, spotify-card (with `getSpotifyTrack` for the server), youtube-embed, code-block
 - **Form layout:** field (no form library needed), form (react-hook-form)
-- **Display:** card, alert, separator, skeleton, avatar, rating, stat
+- **Display:** card, alert, separator, skeleton, avatar, rating, stat, progress, table
 - **Foundations:** theme, utils (`cn`), use-media-query, use-in-view, use-entrance
 
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.

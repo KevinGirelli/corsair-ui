@@ -2,6 +2,28 @@
 
 `@corsair/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.7.0
+
+Menus, disclosure and data: the pieces applications need next to the site chrome of 0.6.0. Nothing from earlier releases changes.
+
+### Added
+
+- Menus:
+  - `dropdown-menu`: actions and options from a button, with checkbox and radio items, submenus, shortcuts and a destructive variant.
+  - `context-menu`: the same menu on right click, long press or the context menu key.
+  - `navigation-menu`: site navigation with panels of links in a shared, resizing viewport or under each trigger; `active` marks the current page.
+  - `hover-card`: a preview while a link is hovered or focused, for supplementary content only.
+- Disclosure:
+  - `accordion`: sections that open one at a time or several, with a height animation.
+  - `collapsible`: one area that expands and collapses.
+  - `scroll-area`: a scroll box with scroll bars in the theme.
+- Feedback and data:
+  - `progress`: a determinate or indeterminate progress bar.
+  - `table`: native table parts, a focusable scroll region with `scrollLabel`, and a sort button whose direction the head announces through `aria-sort`.
+- Navigation:
+  - `breadcrumb`: the trail to the current page, with `aria-current`, custom separators and an ellipsis.
+  - `pagination`: page links with previous and next, `asChild` for router links, and `getPaginationRange` to work out which numbers to show.
+
 ## 0.6.0
 
 Overlays, site chrome, media and page effects: what a portfolio or marketing site is usually rebuilt from. Every item is generic and meant to be restyled in the project that installs it, and follows the same rules as before: CSS animations, no animation library, paused off screen, still or finished with `prefers-reduced-motion`.
