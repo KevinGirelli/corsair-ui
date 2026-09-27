@@ -88,9 +88,9 @@ When an item needs CSS variables or keyframes, declare them for both versions in
 
 `pnpm verify:fixtures` installs everything into `tests/fixtures/tailwind-v3` and `tests/fixtures/tailwind-v4`, typechecks the result, compiles the CSS and checks that utilities built on the theme (`bg-primary`, `bg-field`, `focus-visible:ring-ring/50`…) made it into both outputs.
 
-## Credits and releases
+## Licences and releases
 
-Many components follow the structure and API of [shadcn/ui](https://ui.shadcn.com) (MIT); see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md). Code adapted from another project keeps its license notice there.
+Code adapted from another project keeps its license notice in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
 Every merge to `main` that touches the registry is published to GitHub Pages by the "Publish registry" workflow, so `@corsair/<item>` always serves `main`. Releases are git tags (`v0.2.0`) with an entry in [CHANGELOG.md](./CHANGELOG.md); consumers can install a release with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 

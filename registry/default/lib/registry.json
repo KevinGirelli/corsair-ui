@@ -13,6 +13,19 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "spotify-track",
+      "type": "registry:lib",
+      "title": "getSpotifyTrack",
+      "description": "Title, artist, cover and preview clip for a Spotify link, read on the server from the public embed page.",
+      "dependencies": ["spotify-url-info@^3.3.3"],
+      "files": [
+        {
+          "path": "spotify-track.ts",
+          "type": "registry:lib"
+        }
+      ]
     }
   ]
 }

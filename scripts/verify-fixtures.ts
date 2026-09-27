@@ -56,6 +56,17 @@ const EXPECTED_CLASSES = [
   "supports-[animation-timeline:view()]:animate-text-reveal",
   "supports-[animation-timeline:view()]:animate-parallax",
   "supports-[animation-timeline:view()]:animate-signature-draw",
+  "motion-safe:animate-dash-march",
+  "animate-bars-spinner",
+  "motion-safe:animate-shimmer-text",
+  "motion-safe:animate-blur-text",
+  "motion-safe:animate-blur-text-out",
+  "motion-safe:animate-slide-text",
+  "motion-safe:animate-dissolve-text",
+  "motion-safe:animate-highlight-text",
+  "motion-safe:animate-wave-text",
+  "motion-safe:animate-marquee-x",
+  "motion-safe:animate-marquee-y",
 ];
 const EXPECTED_VARIABLES = [
   "--background:",
@@ -67,6 +78,18 @@ const EXPECTED_VARIABLES = [
   "@keyframes text-reveal",
   "@keyframes parallax",
   "@keyframes signature-draw",
+  // Set through inline durations and delays, so only the utility names them.
+  "@keyframes dash-march",
+  "@keyframes bars-spinner",
+  "@keyframes shimmer-text",
+  "@keyframes blur-text",
+  "@keyframes blur-text-out",
+  "@keyframes slide-text",
+  "@keyframes dissolve-text",
+  "@keyframes highlight-text",
+  "@keyframes wave-text",
+  "@keyframes marquee-x",
+  "@keyframes marquee-y",
 ];
 
 const args = process.argv.slice(2);
