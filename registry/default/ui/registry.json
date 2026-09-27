@@ -1363,6 +1363,67 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "nav-link",
+      "type": "registry:ui",
+      "title": "Nav Link",
+      "description": "A navigation link that marks the current page with aria-current and data-active. Supports asChild for router links.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "nav-link.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "site-header",
+      "type": "registry:ui",
+      "title": "Site Header",
+      "description": "A sticky page header with brand, navigation, actions and a sheet menu for small screens, flagging data-scrolled once the page scrolls.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": [
+        "@corsair/utils",
+        "@corsair/button",
+        "@corsair/sheet",
+        "@corsair/use-in-view"
+      ],
+      "files": [
+        {
+          "path": "site-header.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dock",
+      "type": "registry:ui",
+      "title": "Dock",
+      "description": "A floating bar of icon links pinned to the bottom or top of the viewport, with tooltips and an optional reveal after scrolling.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "registryDependencies": ["@corsair/utils", "@corsair/tooltip", "@corsair/use-in-view"],
+      "files": [
+        {
+          "path": "dock.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Sections of content shown one at a time, with a segmented or underlined tab list, horizontal or vertical.",
+      "dependencies": ["@radix-ui/react-tabs@^1.1.21", "class-variance-authority@^0.7.1"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
