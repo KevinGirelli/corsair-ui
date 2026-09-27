@@ -149,3 +149,86 @@ describe("Tooltip", () => {
     expect((await screen.findByRole("tooltip")).textContent).toBe("Saves the draft");
   });
 });
+
+describe("Signature manual progress", () => {
+  const paths = ["M0 0 L10 0", "M0 5 L30 5"];
+  const offsets = (root: Element, selector = "svg > path") =>
+    [...root.querySelectorAll<SVGPathElement>(selector)].map((path) =>
+      parseFloat(path.style.strokeDashoffset)
+    );
+
+  /** Gives paths real lengths: 10 for the first, 30 for the second. */
+  function withLengths() {
+    Object.defineProperty(SVGElement.prototype, "getTotalLength", {
+      configurable: true,
+      value(this: SVGElement) {
+        return this.getAttribute("d") === paths[0] ? 10 : 30;
+      },
+    });
+  }
+
+  afterEach(() => {
+    delete (SVGElement.prototype as { getTotalLength?: unknown }).getTotalLength;
+  });
+
+  it("follows progress without an observer or a transition", () => {
+    const { rerender } = render(
+      <Signature trigger="manual" progress={0} paths={paths} data-testid="drawing" />
+    );
+    const svg = screen.getByTestId("drawing");
+    expect(io.observers(svg)).toBe(0);
+    expect(svg.dataset.trigger).toBe("manual");
+    expect(svg.dataset.state).toBe("blank");
+    expect(offsets(svg)).toEqual([1.01, 1.01]);
+
+    // Before the lengths are known, each stroke gets an equal share.
+    rerender(<Signature trigger="manual" progress={0.75} paths={paths} data-testid="drawing" />);
+    expect(svg.dataset.state).toBe("drawing");
+    expect(offsets(svg)).toEqual([0, 0.5]);
+    expect(svg.querySelector("path")!.getAttribute("style")).not.toContain("transition");
+
+    rerender(<Signature trigger="manual" progress={1} paths={paths} data-testid="drawing" />);
+    expect(svg.dataset.state).toBe("drawn");
+    expect(offsets(svg)).toEqual([0, 0]);
+  });
+
+  it("splits progress across strokes by their measured length", async () => {
+    withLengths();
+    render(<Signature trigger="manual" progress={0.5} paths={paths} data-testid="drawing" />);
+    const svg = screen.getByTestId("drawing");
+    await act(flushFrames);
+    // Half of 40 units: the 10-long stroke is done and a third of the 30-long one.
+    const [first, second] = offsets(svg);
+    expect(first).toBe(0);
+    expect(second).toBeCloseTo(2 / 3, 5);
+  });
+
+  it("still follows progress with reduced motion, since the parent drives it", () => {
+    installMatchMedia(["(prefers-reduced-motion: reduce)"]);
+    render(<Signature trigger="manual" progress={0.25} paths={paths} data-testid="drawing" />);
+    expect(offsets(screen.getByTestId("drawing"))).toEqual([0.5, 1.01]);
+  });
+
+  it("draws the ink mask in step, and leaves out the pen with strokeWidth 0", async () => {
+    withLengths();
+    const { container, rerender } = render(
+      <Signature trigger="manual" progress={0.5} paths={paths} ink />
+    );
+    expect(container.querySelectorAll("svg > path")).toHaveLength(2);
+
+    rerender(<Signature trigger="manual" progress={0.5} paths={paths} ink strokeWidth={0} />);
+    await act(flushFrames);
+    // Only the fill and its mask are left, measured from the mask.
+    expect(container.querySelectorAll("svg > path")).toHaveLength(0);
+    expect(container.querySelectorAll("g[mask] path")).toHaveLength(2);
+    const [first, second] = offsets(container, "mask path");
+    expect(first).toBe(0);
+    expect(second).toBeCloseTo(2 / 3, 5);
+  });
+
+  it("lets outlines with holes fill by the even-odd rule", () => {
+    const { container } = render(<Signature paths={paths} ink fillRule="evenodd" />);
+    expect(container.querySelector("svg")?.getAttribute("fill-rule")).toBe("evenodd");
+    expect(container.querySelector("g[mask]")?.hasAttribute("fill-rule")).toBe(false);
+  });
+});

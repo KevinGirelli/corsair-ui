@@ -341,3 +341,69 @@ describe("TextSignature", () => {
     ]);
   });
 });
+
+describe("HighlightText scribble", () => {
+  it("draws a hand-drawn line under the phrase and leaves the text alone", () => {
+    render(
+      <HighlightText variant="scribble" markerClassName="text-primary" strokeWidth={4}>
+        last
+      </HighlightText>
+    );
+    const root = document.querySelector<HTMLElement>("[data-slot=highlight-text]")!;
+    expect(root.dataset.variant).toBe("scribble");
+    expect(root.textContent).toBe("last");
+    expect(root.querySelector("[data-slot=highlight-text-marker]")).toBeNull();
+    expect(root.querySelector(".mix-blend-difference")).toBeNull();
+    const svg = root.querySelector("[data-slot=highlight-text-scribble]")!;
+    expect(svg.getAttribute("aria-hidden")).toBe("true");
+    expect(svg.getAttribute("preserveAspectRatio")).toBe("none");
+    expect(svg.getAttribute("stroke")).toBe("currentColor");
+    expect(svg.getAttribute("stroke-width")).toBe("4");
+    expect(svg.getAttribute("class")).toContain("text-primary");
+    const strokes = svg.querySelectorAll<SVGPathElement>("path");
+    expect(strokes).toHaveLength(1);
+    expect(strokes[0]!.getAttribute("pathLength")).toBe("1");
+    expect(strokes[0]!.getAttribute("class")).toContain("motion-safe:animate-highlight-text-draw");
+    // The finished line is the resting state, so reduced motion shows it drawn.
+    expect(strokes[0]!.style.strokeDashoffset).toBe("0");
+  });
+
+  it("draws two strokes one after the other for the double scribble", () => {
+    render(
+      <HighlightText variant="scribble" scribble="double" duration={1000} delay={100}>
+        twice
+      </HighlightText>
+    );
+    const [first, second] = document.querySelectorAll<SVGPathElement>(
+      "[data-slot=highlight-text-scribble] path"
+    );
+    expect(first!.style.animationDelay).toBe("100ms");
+    expect(first!.style.animationDuration).toBe("550ms");
+    expect(second!.style.animationDelay).toBe("550ms");
+    expect(second!.style.animationDuration).toBe("550ms");
+  });
+
+  it("uses the same entrance as the marker", () => {
+    const { container } = render(
+      <HighlightText variant="scribble" trigger="in-view">
+        later
+      </HighlightText>
+    );
+    const root = container.querySelector<HTMLElement>("[data-slot=highlight-text]")!;
+    const stroke = root.querySelector<SVGPathElement>("path")!;
+    expect(root.dataset.state).toBe("armed");
+    expect(stroke.style.animationPlayState).toBe("paused");
+    act(() => io.intersect(root, true));
+    expect(root.dataset.state).toBe("play");
+    expect(stroke.style.animationPlayState).toBe("");
+
+    const html = renderToString(
+      <HighlightText variant="scribble" trigger="in-view">
+        later
+      </HighlightText>
+    );
+    // Server HTML stays static: the line is simply there.
+    expect(html).not.toContain("animate-highlight-text-draw");
+    expect(html).toContain("stroke-dashoffset:0");
+  });
+});
