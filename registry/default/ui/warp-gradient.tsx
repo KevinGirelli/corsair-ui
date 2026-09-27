@@ -5,15 +5,6 @@ import { useEffect, useMemo, useRef, type ComponentProps, type Ref } from "react
 import { useInView } from "@/registry/default/hooks/use-in-view";
 import { cn } from "@/registry/default/lib/utils";
 
-/*
- * The shader is adapted from the Warp shader of Paper Shaders
- * (https://github.com/paper-design/shaders, Apache License 2.0, "Powered by
- * Paper Shaders: https://shaders.paper.design"), partly by way of Spell UI's
- * animated gradient (MIT). Changes: a standalone WebGL2 program, hashed
- * noise instead of a noise texture, a fixed pattern space in CSS pixels,
- * two to five colours and Corsair's own presets.
- */
-
 function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
   return (node: T | null) => {
     for (const ref of refs) {
@@ -29,116 +20,121 @@ const VERTEX = `#version 300 es
 in vec2 a_position;
 void main() { gl_Position = vec4(a_position, 0.0, 1.0); }`;
 
+// Gradient noise, layered and fed back into itself (domain warping), sets
+// the flow; a simple pattern read through that flow picks the colours.
 const FRAGMENT = `#version 300 es
 precision highp float;
-uniform vec2 u_resolution;
-uniform float u_pixelRatio;
-uniform float u_time;
+uniform vec2 u_size;
+uniform float u_dpr;
+uniform float u_clock;
 uniform float u_scale;
-uniform float u_rotation;
-uniform vec4 u_colors[${MAX_COLORS}];
-uniform float u_colorsCount;
-uniform float u_proportion;
+uniform float u_turn;
+uniform vec4 u_palette[${MAX_COLORS}];
+uniform int u_count;
+uniform int u_pattern;
+uniform float u_density;
 uniform float u_softness;
-uniform float u_shape;
-uniform float u_shapeScale;
-uniform float u_distortion;
-uniform float u_swirl;
-uniform float u_swirlIterations;
-out vec4 fragColor;
+uniform float u_warp;
+uniform float u_turbulence;
+out vec4 outColor;
 
-#define TWO_PI 6.28318530718
+float hash(vec2 cell) {
+  return fract(sin(dot(cell, vec2(41.37, 289.13))) * 17853.217);
+}
 
-vec2 rotate(vec2 uv, float th) {
-  return mat2(cos(th), sin(th), -sin(th), cos(th)) * uv;
+// The corner's random slope, followed from the corner to the point.
+float lean(vec2 cell, vec2 offset) {
+  float angle = 6.2831853 * hash(cell);
+  return dot(vec2(cos(angle), sin(angle)), offset);
 }
-float random(vec2 p) {
-  return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453123);
+
+// Gradient noise with quintic fades, roughly -0.7 to 0.7.
+float noise(vec2 p) {
+  vec2 cell = floor(p);
+  vec2 f = p - cell;
+  vec2 fade = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+  float bottom = mix(lean(cell, f), lean(cell + vec2(1.0, 0.0), f - vec2(1.0, 0.0)), fade.x);
+  float top = mix(lean(cell + vec2(0.0, 1.0), f - vec2(0.0, 1.0)), lean(cell + 1.0, f - 1.0), fade.x);
+  return mix(bottom, top, fade.y);
 }
-float valueNoise(vec2 st) {
-  vec2 i = floor(st);
-  vec2 f = fract(st);
-  float a = random(i);
-  float b = random(i + vec2(1.0, 0.0));
-  float c = random(i + vec2(0.0, 1.0));
-  float d = random(i + vec2(1.0, 1.0));
-  vec2 u = f * f * (3.0 - 2.0 * f);
-  return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+
+// Each layer is finer, fainter and turned, so the layers never line up.
+const mat2 TURN = mat2(0.8776, 0.4794, -0.4794, 0.8776);
+
+float layered(vec2 p, int layers) {
+  float sum = 0.0;
+  float weight = 0.55;
+  for (int i = 0; i < 5; i++) {
+    if (i >= layers) break;
+    sum += weight * noise(p);
+    p = TURN * p * 1.97 + vec2(3.7, -1.9);
+    weight *= 0.5;
+  }
+  return sum;
 }
 
 void main() {
-  float zoom = 0.0005 + 0.006 * u_scale;
-  vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution) / u_pixelRatio * zoom;
-  uv = rotate(uv, u_rotation) + 0.5;
-  float t = 0.5 * u_time;
+  // Pattern space counts CSS pixels from the centre, so the flow keeps its
+  // size on any canvas and any screen density.
+  vec2 p = (gl_FragCoord.xy - 0.5 * u_size) / u_dpr * mix(0.0065, 0.0012, u_scale);
+  float c = cos(u_turn);
+  float s = sin(u_turn);
+  p = mat2(c, s, -s, c) * p;
 
-  float n1 = valueNoise(uv + t);
-  float n2 = valueNoise(uv * 2.0 - t);
-  float angle = n1 * TWO_PI;
-  uv += 4.0 * u_distortion * n2 * vec2(cos(angle), sin(angle));
+  float t = 0.15 * u_clock;
+  int layers = 1 + int(u_turbulence * 4.0 + 0.5);
+  vec2 drift = vec2(t, -0.6 * t);
+  // The flow is broader than the pattern, so it bends bands instead of folding them.
+  vec2 q = 0.6 * p;
+  vec2 first = vec2(layered(q + drift, layers), layered(q + vec2(5.3, -2.1) - drift, layers));
+  vec2 second = vec2(
+    layered(q + 1.8 * first + vec2(-4.6, 7.2) + drift.yx, layers),
+    layered(q + 1.8 * first + vec2(8.1, 1.4) - 0.5 * drift, layers)
+  );
+  vec2 w = p + 1.8 * u_warp * second;
 
-  for (int i = 1; i <= 20; i++) {
-    if (i >= int(u_swirlIterations)) break;
-    float k = float(i);
-    uv.x += u_swirl / k * cos(t + k * 1.5 * uv.y);
-    uv.y += u_swirl / k * cos(t + k * uv.x);
-  }
-
-  float proportion = clamp(u_proportion, 0.0, 1.0);
-  float lean = 0.48 * sign(proportion - 0.5) * pow(abs(proportion - 0.5), 0.5);
-  float shape;
-  if (u_shape < 0.5) {
-    vec2 checks = uv * (0.5 + 3.5 * u_shapeScale);
-    shape = 0.5 + 0.5 * sin(checks.x) * cos(checks.y) + lean;
-  } else if (u_shape < 1.5) {
-    float f = fract(uv.y * (0.25 + 3.0 * u_shapeScale));
-    shape = smoothstep(0.0, 0.55, f) * (1.0 - smoothstep(0.45, 1.0, f)) + lean;
+  float field;
+  if (u_pattern == 0) {
+    field = 0.5 + 0.5 * sin(3.14159265 * mix(0.5, 3.5, u_density) * w.y);
+  } else if (u_pattern == 1) {
+    float k = mix(1.0, 5.0, u_density);
+    field = 0.5 + 0.5 * sin(k * w.x) * sin(k * w.y);
   } else {
-    // One split through the middle, wide enough that the swirls bend it
-    // rather than break it into blocks; a smaller shapeScale softens it.
-    float width = 5.0 * (1.0 - clamp(u_shapeScale, 0.0, 1.0));
-    shape = smoothstep(0.45 - width, 0.55 + width, 1.0 - uv.y + 0.3 * (proportion - 0.5));
+    float spread = mix(2.5, 0.1, u_density);
+    field = smoothstep(-spread, spread, w.y);
   }
 
-  float mixer = clamp(shape, 0.0, 1.0) * (u_colorsCount - 1.0);
-  vec4 gradient = u_colors[0];
-  gradient.rgb *= gradient.a;
-  float aa = fwidth(shape);
-  for (int i = 1; i < ${MAX_COLORS}; i++) {
-    if (i >= int(u_colorsCount)) break;
-    float m = clamp(mixer - float(i - 1), 0.0, 1.0);
-    float start = floor(m);
-    float soft = 0.5 * u_softness + fwidth(m);
-    float smoothed = smoothstep(max(0.0, 0.5 - soft - aa), min(1.0, 0.5 + soft + aa), m - start);
-    m = mix(start + smoothed, m, u_softness);
-    vec4 c = u_colors[i];
-    c.rgb *= c.a;
-    gradient = mix(gradient, c, m);
+  vec4 a = u_palette[0];
+  vec4 color = vec4(a.rgb * a.a, a.a);
+  if (u_count > 1) {
+    float x = clamp(field, 0.0, 1.0) * float(u_count - 1);
+    int i = min(int(x), u_count - 2);
+    float reach = 0.5 * u_softness + fwidth(x);
+    float blend = smoothstep(0.5 - reach, 0.5 + reach, x - float(i));
+    vec4 from = u_palette[i];
+    vec4 to = u_palette[i + 1];
+    color = mix(vec4(from.rgb * from.a, from.a), vec4(to.rgb * to.a, to.a), blend);
   }
-  vec3 color = gradient.rgb;
-  // A whisper of noise hides banding in slow gradients.
-  color += 1.0 / 256.0 * (fract(sin(dot(0.014 * gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453123) - 0.5);
-  fragColor = vec4(color, gradient.a);
+  // Dither by a fraction of a level so slow gradients do not band.
+  color.rgb += (hash(gl_FragCoord.xy) - 0.5) / 255.0;
+  outColor = color;
 }`;
 
-type WarpShape = "checks" | "stripes" | "edge";
+type WarpPattern = "bands" | "cells" | "split";
 
 interface WarpSettings {
   colors: string[];
-  shape: WarpShape;
-  /** Balance between the colours, from 0 to 1; 0.5 gives each the same room. */
-  proportion: number;
-  /** 0 draws hard edges between colours, 1 blends them smoothly. */
+  /** What the colours are laid on: soft bands, a grid of cells, or one divide. */
+  pattern: WarpPattern;
+  /** From 0 to 1: how many bands or cells fit; for "split", how sharp the divide is. */
+  density: number;
+  /** From 0 to 1: 0 keeps crisp borders between colours, 1 melts them together. */
   softness: number;
-  /** Size of the base pattern, from 0 to 1; for "edge", how sharp the split is. */
-  shapeScale: number;
-  /** Noise that bends the pattern, from 0 to 1. */
-  distortion: number;
-  /** Strength of the swirls, from 0 to 1. */
-  swirl: number;
-  /** Swirl passes, from 1 to 20; more is busier. */
-  swirlIterations: number;
-  /** Zoom of the whole field, from 0 to 1. */
+  /** From 0 to 1: how far the flow pushes the pattern around. */
+  warp: number;
+  /** From 0 to 1: fine detail in the flow. */
+  turbulence: number;
+  /** From 0 to 1: size of the flow; larger is broader. */
   scale: number;
   /** Turn of the whole field, in degrees. */
   rotation: number;
@@ -149,66 +145,56 @@ interface WarpSettings {
 const PRESETS = {
   tide: {
     colors: ["#04090f", "#1f5f72", "#6fb3c2"],
-    shape: "checks",
-    proportion: 0.45,
+    pattern: "bands",
+    density: 0.4,
     softness: 1,
-    shapeScale: 0.35,
-    distortion: 0.12,
-    swirl: 0.7,
-    swirlIterations: 8,
-    scale: 0.45,
+    warp: 0.8,
+    turbulence: 0.2,
+    scale: 0.6,
     rotation: -20,
     speed: 0.5,
   },
   brass: {
     colors: ["#0b0907", "#7a5b2a", "#d9b06a"],
-    shape: "edge",
-    proportion: 0.5,
+    pattern: "split",
+    density: 0.55,
     softness: 0.9,
-    shapeScale: 0.75,
-    distortion: 0.2,
-    swirl: 0.35,
-    swirlIterations: 12,
-    scale: 0.5,
+    warp: 0.8,
+    turbulence: 0.25,
+    scale: 0.6,
     rotation: 110,
     speed: 0.5,
   },
   abyss: {
     colors: ["#020308", "#102447", "#3a6ea5", "#020308"],
-    shape: "stripes",
-    proportion: 0.5,
+    pattern: "bands",
+    density: 0.3,
     softness: 1,
-    shapeScale: 0.25,
-    distortion: 0.1,
-    swirl: 0.9,
-    swirlIterations: 4,
-    scale: 0.4,
+    warp: 0.9,
+    turbulence: 0.2,
+    scale: 0.5,
     rotation: 0,
     speed: 0.4,
   },
   dusk: {
     colors: ["#100a18", "#6d63c9", "#e07a5f"],
-    shape: "checks",
-    proportion: 0.6,
+    pattern: "cells",
+    density: 0.45,
     softness: 1,
-    shapeScale: 0.5,
-    distortion: 0.08,
-    swirl: 0.6,
-    swirlIterations: 6,
-    scale: 0.6,
+    warp: 0.7,
+    turbulence: 0.1,
+    scale: 0.5,
     rotation: 45,
     speed: 0.5,
   },
   fog: {
     colors: ["#fafaf9", "#e7e5e4", "#a8a29e", "#fafaf9"],
-    shape: "stripes",
-    proportion: 0.45,
+    pattern: "bands",
+    density: 0.35,
     softness: 1,
-    shapeScale: 0.25,
-    distortion: 0.15,
-    swirl: 0.5,
-    swirlIterations: 8,
-    scale: 0.4,
+    warp: 0.8,
+    turbulence: 0.25,
+    scale: 0.55,
     rotation: 30,
     speed: 0.3,
   },
@@ -244,7 +230,9 @@ function compile(gl: WebGL2RenderingContext) {
   return gl.getProgramParameter(program, gl.LINK_STATUS) ? program : null;
 }
 
-const SHAPES: Record<WarpShape, number> = { checks: 0, stripes: 1, edge: 2 };
+const PATTERNS: Record<WarpPattern, number> = { bands: 0, cells: 1, split: 2 };
+
+const unit = (value: number) => Math.min(Math.max(value, 0), 1);
 
 // Film grain from an SVG noise filter: a few hundred bytes, no image to load.
 const GRAIN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")`;
@@ -257,13 +245,13 @@ interface WarpGradientProps extends Omit<ComponentProps<"div">, "children">, Par
 }
 
 /**
- * A slow, liquid field of colour: two to five colours laid over checks,
- * stripes or a split edge, then warped by noise and swirls. It is one
- * WebGL2 fragment shader, adapted from Paper Shaders' Warp. Put it inside a
- * positioned element; it fills it. Colours can be theme variables and
- * follow theme switches. It pauses off screen and in background tabs,
- * draws one still frame with `prefers-reduced-motion`, and falls back to a
- * CSS gradient of the same colours where WebGL2 is unavailable.
+ * A slow, liquid field of colour: two to five colours laid over bands,
+ * cells or a single divide, then carried along by layered noise. It is one
+ * WebGL2 fragment shader. Put it inside a positioned element; it fills it.
+ * Colours can be theme variables and follow theme switches. It pauses off
+ * screen and in background tabs, draws one still frame with
+ * `prefers-reduced-motion`, and falls back to a CSS gradient of the same
+ * colours where WebGL2 is unavailable.
  *
  * @example
  * <section className="relative isolate overflow-hidden rounded-2xl p-12">
@@ -275,13 +263,11 @@ function WarpGradient({
   preset = "tide",
   grain = 0,
   colors,
-  shape,
-  proportion,
+  pattern,
+  density,
   softness,
-  shapeScale,
-  distortion,
-  swirl,
-  swirlIterations,
+  warp,
+  turbulence,
   scale,
   rotation,
   speed,
@@ -320,27 +306,23 @@ function WarpGradient({
     gl.enableVertexAttribArray(position);
     gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
     gl.useProgram(program);
-    const at = (name: string) => gl.getUniformLocation(program, name);
     const names = [
-      "u_resolution",
-      "u_pixelRatio",
-      "u_time",
+      "u_size",
+      "u_dpr",
+      "u_clock",
       "u_scale",
-      "u_rotation",
-      "u_colors",
-      "u_colorsCount",
-      "u_proportion",
+      "u_turn",
+      "u_palette",
+      "u_count",
+      "u_pattern",
+      "u_density",
       "u_softness",
-      "u_shape",
-      "u_shapeScale",
-      "u_distortion",
-      "u_swirl",
-      "u_swirlIterations",
+      "u_warp",
+      "u_turbulence",
     ] as const;
-    const u = Object.fromEntries(names.map((name) => [name, at(name)])) as Record<
-      (typeof names)[number],
-      WebGLUniformLocation | null
-    >;
+    const u = Object.fromEntries(
+      names.map((name) => [name, gl.getUniformLocation(program, name)])
+    ) as Record<(typeof names)[number], WebGLUniformLocation | null>;
 
     const probe = document.createElement("span");
     probe.style.display = "none";
@@ -349,26 +331,24 @@ function WarpGradient({
       const current = settings.current.colors;
       const values = new Float32Array(MAX_COLORS * 4);
       current.forEach((color, index) => values.set(resolveColor(color, probe), index * 4));
-      gl.uniform4fv(u.u_colors, values);
-      gl.uniform1f(u.u_colorsCount, Math.max(current.length, 1));
+      gl.uniform4fv(u.u_palette, values);
+      gl.uniform1i(u.u_count, Math.max(current.length, 1));
     };
 
-    let time = 0;
+    let clock = 0;
     let ratio = 1;
     const draw = () => {
       const s = settings.current;
-      gl.uniform2f(u.u_resolution, element.width, element.height);
-      gl.uniform1f(u.u_pixelRatio, ratio);
-      gl.uniform1f(u.u_time, time);
-      gl.uniform1f(u.u_scale, s.scale);
-      gl.uniform1f(u.u_rotation, (s.rotation * Math.PI) / 180);
-      gl.uniform1f(u.u_proportion, s.proportion);
-      gl.uniform1f(u.u_softness, s.softness);
-      gl.uniform1f(u.u_shape, SHAPES[s.shape]);
-      gl.uniform1f(u.u_shapeScale, s.shapeScale);
-      gl.uniform1f(u.u_distortion, s.distortion);
-      gl.uniform1f(u.u_swirl, s.swirl);
-      gl.uniform1f(u.u_swirlIterations, s.swirl === 0 ? 0 : s.swirlIterations);
+      gl.uniform2f(u.u_size, element.width, element.height);
+      gl.uniform1f(u.u_dpr, ratio);
+      gl.uniform1f(u.u_clock, clock);
+      gl.uniform1f(u.u_scale, unit(s.scale));
+      gl.uniform1f(u.u_turn, (s.rotation * Math.PI) / 180);
+      gl.uniform1i(u.u_pattern, PATTERNS[s.pattern] ?? 0);
+      gl.uniform1f(u.u_density, unit(s.density));
+      gl.uniform1f(u.u_softness, unit(s.softness));
+      gl.uniform1f(u.u_warp, unit(s.warp));
+      gl.uniform1f(u.u_turbulence, unit(s.turbulence));
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
@@ -386,7 +366,7 @@ function WarpGradient({
     const loop = (now: number) => {
       frame = 0;
       const moving = visible.current && !still?.matches && settings.current.speed !== 0;
-      if (moving && last) time += ((now - last) / 1000) * settings.current.speed;
+      if (moving && last) clock += ((now - last) / 1000) * settings.current.speed;
       last = moving ? now : 0;
       draw();
       if (moving) frame = requestAnimationFrame(loop);
@@ -426,16 +406,11 @@ function WarpGradient({
   useEffect(() => {
     settings.current = {
       colors: paletteKey.split("|"),
-      shape: shape ?? base.shape,
-      proportion: proportion ?? base.proportion,
+      pattern: pattern ?? base.pattern,
+      density: density ?? base.density,
       softness: softness ?? base.softness,
-      shapeScale: shapeScale ?? base.shapeScale,
-      distortion: distortion ?? base.distortion,
-      swirl: swirl ?? base.swirl,
-      swirlIterations: Math.min(
-        Math.max(Math.round(swirlIterations ?? base.swirlIterations), 1),
-        20
-      ),
+      warp: warp ?? base.warp,
+      turbulence: turbulence ?? base.turbulence,
       scale: scale ?? base.scale,
       rotation: rotation ?? base.rotation,
       speed: speed ?? base.speed,
@@ -446,13 +421,11 @@ function WarpGradient({
   }, [
     base,
     paletteKey,
-    shape,
-    proportion,
+    pattern,
+    density,
     softness,
-    shapeScale,
-    distortion,
-    swirl,
-    swirlIterations,
+    warp,
+    turbulence,
     scale,
     rotation,
     speed,
