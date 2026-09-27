@@ -67,6 +67,7 @@ const EXPECTED_CLASSES = [
   "motion-safe:animate-wave-text",
   "motion-safe:animate-marquee-x",
   "motion-safe:animate-marquee-y",
+  "supports-[animation-timeline:scroll()]:animate-scroll-progress",
 ];
 const EXPECTED_VARIABLES = [
   "--background:",
@@ -90,6 +91,7 @@ const EXPECTED_VARIABLES = [
   "@keyframes wave-text",
   "@keyframes marquee-x",
   "@keyframes marquee-y",
+  "@keyframes scroll-progress",
 ];
 
 const args = process.argv.slice(2);
