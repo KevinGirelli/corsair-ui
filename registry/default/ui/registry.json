@@ -714,6 +714,127 @@
       }
     },
     {
+      "name": "copy-button",
+      "type": "registry:ui",
+      "title": "Copy Button",
+      "description": "An icon button that copies a value and swaps to a check mark, announcing it to screen readers.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "files": [
+        {
+          "path": "copy-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dash-button",
+      "type": "registry:ui",
+      "title": "Dash Button",
+      "description": "A pill button whose fill gives way to a dashed outline that marches on hover.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "files": [
+        {
+          "path": "dash-button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-dash-march": "dash-march 1s linear infinite"
+        }
+      },
+      "css": {
+        "@keyframes dash-march": {
+          "to": {
+            "stroke-dashoffset": "-10"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "dash-march": {
+                  "to": {
+                    "stroke-dashoffset": "-10"
+                  }
+                }
+              },
+              "animation": {
+                "dash-march": "dash-march 1s linear infinite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "color-swatches",
+      "type": "registry:ui",
+      "title": "Color Swatches",
+      "description": "Pick one colour from a row of swatches: a radio group with arrow keys and form support.",
+      "dependencies": ["@radix-ui/react-radio-group@^1.4.7"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "color-swatches.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "bars-spinner",
+      "type": "registry:ui",
+      "title": "Bars Spinner",
+      "description": "Twelve bars around a hub fading in turn, announced as Loading. No JavaScript.",
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "bars-spinner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-bars-spinner": "bars-spinner 1.2s linear infinite"
+        }
+      },
+      "css": {
+        "@keyframes bars-spinner": {
+          "0%": {
+            "opacity": "1"
+          },
+          "100%": {
+            "opacity": "0.15"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "bars-spinner": {
+                  "0%": {
+                    "opacity": "1"
+                  },
+                  "100%": {
+                    "opacity": "0.15"
+                  }
+                }
+              },
+              "animation": {
+                "bars-spinner": "bars-spinner 1.2s linear infinite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "shimmer-text",
       "type": "registry:ui",
       "title": "Shimmer Text",
