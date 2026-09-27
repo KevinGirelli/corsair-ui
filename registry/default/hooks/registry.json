@@ -24,6 +24,19 @@
           "type": "registry:hook"
         }
       ]
+    },
+    {
+      "name": "use-entrance",
+      "type": "registry:hook",
+      "title": "useEntrance",
+      "description": "When a one-shot entrance runs: on first paint, or once in view, without hiding server-rendered content that is already on screen.",
+      "registryDependencies": ["@corsair/use-in-view"],
+      "files": [
+        {
+          "path": "use-entrance.ts",
+          "type": "registry:hook"
+        }
+      ]
     }
   ]
 }
