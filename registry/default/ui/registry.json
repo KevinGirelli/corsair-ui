@@ -1424,6 +1424,93 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A round picture of a person with a fallback while it loads or when it fails, in three sizes, plus an overlapping group.",
+      "dependencies": ["@radix-ui/react-avatar@^1.2.6", "class-variance-authority@^0.7.1"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "Stars for giving a score as a radio group, or for showing one read-only with fractional fills.",
+      "dependencies": [
+        "@radix-ui/react-radio-group@^1.4.7",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stat",
+      "type": "registry:ui",
+      "title": "Stat",
+      "description": "Key figures as a description list: label, value and a caption with an optional trend arrow.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "stat.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "number-ticker",
+      "type": "registry:ui",
+      "title": "Number Ticker",
+      "description": "A number that counts up to its value when it comes into view, formatted for the locale.",
+      "registryDependencies": ["@corsair/utils", "@corsair/use-entrance"],
+      "categories": ["text"],
+      "files": [
+        {
+          "path": "number-ticker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "description": "A block of code with an optional caption, a language label and a copy button.",
+      "registryDependencies": ["@corsair/utils", "@corsair/copy-button"],
+      "files": [
+        {
+          "path": "code-block.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "corner-frame",
+      "type": "registry:ui",
+      "title": "Corner Frame",
+      "description": "A box with bracket marks on its corners, in any size, thickness, colour and inset.",
+      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "registryDependencies": ["@corsair/utils"],
+      "files": [
+        {
+          "path": "corner-frame.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
