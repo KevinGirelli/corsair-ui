@@ -9,7 +9,7 @@
 
 A UI component library built to be copied, adapted, and owned by whoever uses it — not locked behind an install.
 
-Components live as code you bring into your own project and modify freely, in the spirit of libraries like shadcn/ui. The goal is a broad, well-built catalog that covers what most projects end up rebuilding from scratch: not just basic UI primitives, but forms, data display, navigation, motion, and more creative/visual pieces too.
+Components live as code you bring into your own project and modify freely. The goal is a broad, well-built catalog that covers what most projects end up rebuilding from scratch: not just basic UI primitives, but forms, data display, navigation, motion, and more creative/visual pieces too.
 
 Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields), motion, animated text, backgrounds, a chart and embeds are in; dialogs, menus and other overlays come next.
 
@@ -92,4 +92,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add an item and the rules co
 
 ## License
 
-[MIT](./LICENSE). Several components are adapted from shadcn/ui; see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+[MIT](./LICENSE).

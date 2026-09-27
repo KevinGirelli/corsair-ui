@@ -4,7 +4,7 @@
 
 ## 0.5.0
 
-Animated text, backgrounds, a chart and embeds, most of them adapted from [Spell UI](https://github.com/xxtomm/spell-ui) (see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)). They follow the same rules as 0.4.0: CSS animations, no animation library, paused off screen, and still or finished with `prefers-reduced-motion`.
+Animated text, backgrounds, a chart and embeds. They follow the same rules as 0.4.0: CSS animations, no animation library, paused off screen, and still or finished with `prefers-reduced-motion`.
 
 ### Added
 
@@ -21,7 +21,7 @@ Animated text, backgrounds, a chart and embeds, most of them adapted from [Spell
 - `marquee`: a seamless loop that stops while a link inside has focus, with the copies hidden from screen readers.
 - Backgrounds:
   - `light-rays`: soft beams from above, from a small WebGL2 shader, with a CSS fallback.
-  - `warp-gradient`: a liquid field of two to five colours, adapted from Paper Shaders' Warp, with presets and optional grain.
+  - `warp-gradient`: a liquid field of two to five colours over bands, cells or a divide, carried along by layered noise, with presets and optional grain.
 - Actions and controls:
   - `copy-button`: copies a value, swaps to a check mark and announces it; never claims success when the clipboard refused.
   - `dash-button`: a pill button whose fill gives way to a marching dashed outline.
