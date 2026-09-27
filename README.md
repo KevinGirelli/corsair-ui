@@ -11,7 +11,7 @@ A UI component library built to be copied, adapted, and owned by whoever uses it
 
 Components live as code you bring into your own project and modify freely. The goal is a broad, well-built catalog that covers what most projects end up rebuilding from scratch: not just basic UI primitives, but forms, data display, navigation, motion, and more creative/visual pieces too.
 
-Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields), motion, animated text, backgrounds, a chart and embeds are in; dialogs, menus and other overlays come next.
+Early days: the foundation layer (theme, buttons, inputs, form layout, cards and the like), the richer inputs (date pickers, combobox, one-time codes, sliders, number fields), overlays, site chrome, motion, animated text, backgrounds, a chart and embeds are in; menus, tables and data-heavy pieces come next.
 
 ## What lives in this repository
 
@@ -39,7 +39,7 @@ pnpm dlx shadcn@latest list @corsair
 
 `@corsair/<item>` always serves what is on `main`. To install a release instead, use the item's GitHub address with the tag, e.g. `KevinGirelli/corsair-ui/button#v0.2.0`; the Corsair items it depends on still come from `@corsair`.
 
-Dark mode follows the `dark` class on `<html>`; to brand it, override `--primary`, `--primary-foreground` and `--ring` in your CSS.
+Dark mode follows the `dark` class on `<html>`; to brand it, override `--primary`, `--primary-foreground` and `--ring` in your CSS. Items are generic on purpose: restyle them in your own project, through the theme variables, `className` and the `data-*` attributes every part exposes. `--radius: 0` gives square corners everywhere, and a page that paints its own background behind the content (a canvas, a fixed layer) can set `body { background: transparent; }` after the theme.
 
 Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, so it works whichever one your project uses.
 
@@ -48,14 +48,15 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 - **Actions:** button, copy-button, dash-button, badge, spinner, bars-spinner
 - **Form controls:** label, input, textarea, input-group, checkbox, radio-group, switch, select, color-swatches
 - **Richer inputs:** calendar, date-picker (single date and range), combobox, input-otp, slider, number-input, password-input, toggle, toggle-group
-- **Overlays:** popover, command, tooltip
-- **Text:** text-reveal, blur-text, slide-text, dissolve-text, highlight-text, scramble-text, shimmer-text, wave-text, text-signature
-- **Motion:** reveal, magnetic, parallax, marquee
-- **Creative:** spotlight, animated-border, signature
-- **Backgrounds:** aurora, light-rays, warp-gradient
-- **Data and embeds:** line-chart, qr-code, tweet-card, spotify-card (with `getSpotifyTrack` for the server)
+- **Overlays:** dialog, alert-dialog, sheet, popover, command, tooltip, toast
+- **Navigation:** site-header, nav-link, dock, tabs, carousel
+- **Text:** text-reveal, blur-text, slide-text, dissolve-text, highlight-text, scramble-text, shimmer-text, wave-text, text-signature, roll-text, number-ticker
+- **Motion:** reveal, magnetic, parallax, marquee, preloader, custom-cursor, scroll-progress, smooth-scroll
+- **Creative:** spotlight, animated-border, signature, hover-reveal, grain, corner-frame
+- **Backgrounds:** aurora, light-rays, warp-gradient, topography, particles
+- **Data and embeds:** line-chart, qr-code, tweet-card, spotify-card (with `getSpotifyTrack` for the server), youtube-embed, code-block
 - **Form layout:** field (no form library needed), form (react-hook-form)
-- **Display:** card, alert, separator, skeleton
+- **Display:** card, alert, separator, skeleton, avatar, rating, stat
 - **Foundations:** theme, utils (`cn`), use-media-query, use-in-view, use-entrance
 
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
