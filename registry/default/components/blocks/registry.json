@@ -1,0 +1,165 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "hero",
+      "type": "registry:block",
+      "title": "Hero",
+      "description": "The opening section of a landing page with an eyebrow, a title, a description, actions and an optional media slot.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/badge", "@corsair/button"],
+      "files": [
+        {
+          "path": "hero.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "feature-grid",
+      "type": "registry:block",
+      "title": "Feature Grid",
+      "description": "A grid of features with an icon, a title and a description under a centred section header.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": ["@corsair/utils", "@corsair/card"],
+      "files": [
+        {
+          "path": "feature-grid.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "stats",
+      "type": "registry:block",
+      "title": "Stats",
+      "description": "A row of key figures that count up when they scroll into view, under a centred section header.",
+      "registryDependencies": ["@corsair/utils", "@corsair/stat", "@corsair/number-ticker"],
+      "files": [
+        {
+          "path": "stats.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "logo-cloud",
+      "type": "registry:block",
+      "title": "Logo Cloud",
+      "description": "Customer or partner logos in a grid or a scrolling marquee under a small title.",
+      "registryDependencies": ["@corsair/utils", "@corsair/marquee"],
+      "files": [
+        {
+          "path": "logo-cloud.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "cta",
+      "type": "registry:block",
+      "title": "Call to Action",
+      "description": "A closing band with a title, a description and one or two actions.",
+      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "files": [
+        {
+          "path": "cta.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "pricing",
+      "type": "registry:block",
+      "title": "Pricing",
+      "description": "A pricing section with plan cards, a featured plan and an optional monthly or yearly billing switch.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": [
+        "@corsair/utils",
+        "@corsair/badge",
+        "@corsair/button",
+        "@corsair/card",
+        "@corsair/toggle-group"
+      ],
+      "files": [
+        {
+          "path": "pricing.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "faq",
+      "type": "registry:block",
+      "title": "FAQ",
+      "description": "A frequently asked questions section with a header and the answers in an accordion, split or stacked.",
+      "registryDependencies": ["@corsair/utils", "@corsair/accordion"],
+      "files": [
+        {
+          "path": "faq.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "testimonials",
+      "type": "registry:block",
+      "title": "Testimonials",
+      "description": "A section of customer quotes with names, roles and avatars, in a masonry or grid layout.",
+      "registryDependencies": ["@corsair/utils", "@corsair/avatar", "@corsair/card"],
+      "files": [
+        {
+          "path": "testimonials.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "contact-form",
+      "type": "registry:block",
+      "title": "Contact Form",
+      "description": "A contact section with a header, contact details and a validated message form that reports pending, success and error states.",
+      "dependencies": ["lucide-react@^1.48.0"],
+      "registryDependencies": [
+        "@corsair/utils",
+        "@corsair/button",
+        "@corsair/card",
+        "@corsair/field",
+        "@corsair/input",
+        "@corsair/textarea"
+      ],
+      "files": [
+        {
+          "path": "contact-form.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "newsletter",
+      "type": "registry:block",
+      "title": "Newsletter",
+      "description": "A compact sign-up band with an inline email form that reports pending, success and error states.",
+      "registryDependencies": ["@corsair/utils", "@corsair/button", "@corsair/input"],
+      "files": [
+        {
+          "path": "newsletter.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "site-footer",
+      "type": "registry:block",
+      "title": "Site Footer",
+      "description": "A page footer with a brand, link columns in a navigation landmark, a copyright line and optional social icon links.",
+      "registryDependencies": ["@corsair/utils", "@corsair/button", "@corsair/separator"],
+      "files": [
+        {
+          "path": "site-footer.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}
