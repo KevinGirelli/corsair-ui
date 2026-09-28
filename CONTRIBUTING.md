@@ -101,6 +101,6 @@ Every merge to `main` that touches the registry is published to GitHub Pages by 
 
 - Branch off `main` and open a PR. `main` is protected: direct pushes and force pushes are rejected.
 - Keep a PR to one item or one change. The template asks what changed, why, and how you checked it.
-- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures. Both jobs have to pass before merging.
+- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures. Both jobs have to pass before merging. A third workflow, "shadcn latest", runs the fixtures with the newest shadcn CLI every Monday and on PRs that touch the registry, so CLI changes show up here first.
 - PRs are squash-merged, so write the PR title as the commit you want on `main`.
 - Dependabot opens dependency updates on Mondays; they go through the same checks.

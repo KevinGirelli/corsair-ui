@@ -1,0 +1,35 @@
+name: shadcn latest
+# The fixtures again, with the newest shadcn CLI instead of the pinned one.
+# Installs change when the CLI does (how it resolves namespaces, skips
+# installed packages or writes CSS), so this catches it before users do.
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - registry.json
+      - registry/**
+      - scripts/verify-fixtures.ts
+      - tests/fixtures/**
+permissions:
+  contents: read
+jobs:
+  fixtures:
+    name: Install with shadcn@latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install the latest shadcn CLI
+        run: |
+          npm install --prefix "$RUNNER_TEMP/shadcn" --no-audit --no-fund shadcn@latest
+          echo "SHADCN_BIN=$RUNNER_TEMP/shadcn/node_modules/.bin/shadcn" >> "$GITHUB_ENV"
+          "$RUNNER_TEMP/shadcn/node_modules/.bin/shadcn" --version
+      - name: Verify fixtures
+        run: pnpm verify:fixtures
