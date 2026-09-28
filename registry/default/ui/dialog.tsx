@@ -69,6 +69,11 @@ interface DialogContentProps extends ComponentProps<typeof DialogPrimitive.Conte
   showCloseButton?: boolean;
   /** Accessible name of the close button. */
   closeLabel?: string;
+  /**
+   * Classes for the overlay behind the window: opacity, blur, z-index. The
+   * overlay is also `data-slot="dialog-overlay"` for styling from outside.
+   */
+  overlayClassName?: string;
 }
 
 /**
@@ -80,11 +85,12 @@ function DialogContent({
   children,
   showCloseButton = true,
   closeLabel = "Close",
+  overlayClassName,
   ...props
 }: DialogContentProps) {
   return (
     <DialogPortal>
-      <DialogOverlay />
+      <DialogOverlay className={overlayClassName} />
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(

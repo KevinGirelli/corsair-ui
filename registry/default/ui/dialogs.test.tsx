@@ -341,3 +341,43 @@ describe("Toast", () => {
     expect(screen.getByText("0 open")).toBeTruthy();
   });
 });
+
+describe("overlayClassName", () => {
+  it("styles the overlay of Dialog, AlertDialog and Sheet from their content", () => {
+    render(
+      <>
+        <Dialog open>
+          <DialogContent overlayClassName="bg-black/80 backdrop-blur-md">
+            <DialogTitle>Dialog</DialogTitle>
+          </DialogContent>
+        </Dialog>
+        <AlertDialog open>
+          <AlertDialogContent overlayClassName="bg-black/70">
+            <AlertDialogTitle>Alert</AlertDialogTitle>
+            <AlertDialogDescription>Sure?</AlertDialogDescription>
+          </AlertDialogContent>
+        </AlertDialog>
+        <Sheet open>
+          <SheetContent overlayClassName="backdrop-blur-sm">
+            <SheetTitle>Sheet</SheetTitle>
+            <SheetDescription>Panel.</SheetDescription>
+          </SheetContent>
+        </Sheet>
+      </>
+    );
+    const overlay = (slot: string) =>
+      document.querySelector<HTMLElement>(`[data-slot=${slot}]`)!.className;
+    // The class merges over the default tint instead of adding to it.
+    expect(overlay("dialog-overlay")).toContain("bg-black/80 backdrop-blur-md");
+    expect(overlay("dialog-overlay")).not.toContain("bg-black/50");
+    expect(overlay("alert-dialog-overlay")).toContain("bg-black/70");
+    expect(overlay("alert-dialog-overlay")).not.toContain("bg-black/50");
+    expect(overlay("sheet-overlay")).toContain("backdrop-blur-sm");
+    expect(overlay("sheet-overlay")).toContain("bg-black/50");
+    // The prop is not forwarded to the content element.
+    // Three modals are open at once, so query by slot: Radix hides the others from roles.
+    const content = document.querySelector("[data-slot=dialog-content]")!;
+    expect(content.hasAttribute("overlayclassname")).toBe(false);
+    expect(content.className).not.toContain("backdrop-blur-md");
+  });
+});
