@@ -5,7 +5,11 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/registry/default/lib/utils";
 
-/** Decorative by default (hidden from assistive tech); pass `decorative={false}` when it separates content semantically. */
+/**
+ * Decorative by default (hidden from assistive tech); pass `decorative={false}`
+ * when it separates content semantically. Its size comes from plain classes, so
+ * `className="w-8"` (or `h-4` on a vertical one) replaces the default length.
+ */
 function Separator({
   className,
   orientation = "horizontal",
@@ -19,8 +23,7 @@ function Separator({
       orientation={orientation}
       className={cn(
         "bg-border shrink-0",
-        "data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full",
-        "data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
+        orientation === "vertical" ? "h-full w-px" : "h-px w-full",
         className
       )}
       {...props}

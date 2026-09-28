@@ -51,6 +51,10 @@ interface ButtonProps extends ComponentProps<"button">, VariantProps<typeof butt
 /**
  * The icon sizes render a square button: give it an `aria-label`, since there
  * is no visible text to name it.
+ *
+ * Icons inside without a `size-*` class are set to `size-4`; give an icon its
+ * own `size-*` (`size-5`, `size-[18px]`) to change it. `w-*` / `h-*` alone are
+ * overridden.
  */
 function Button({
   className,

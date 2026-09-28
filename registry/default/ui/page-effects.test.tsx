@@ -189,6 +189,30 @@ describe("CustomCursor", () => {
     expect(cursor.dataset.state).toBe("hidden");
   });
 
+  it("a page-wide data-cursor on <body> shows its label without making the page interactive", () => {
+    installMatchMedia([FINE]);
+    document.body.setAttribute("data-cursor", "go");
+    try {
+      render(
+        <>
+          <p>Text</p>
+          <button type="button">Plain</button>
+          <CustomCursor labels={{ go: "Go" }} />
+        </>
+      );
+      const cursor = document.querySelector<HTMLElement>("[data-slot=custom-cursor]")!;
+      fireEvent.pointerMove(window, { clientX: 10, clientY: 10, pointerType: "mouse" });
+      fireEvent.pointerOver(screen.getByText("Text"));
+      expect(cursor.dataset.state).toBe("default");
+      expect(cursor.dataset.label).toBe("go");
+      fireEvent.pointerOver(screen.getByRole("button", { name: "Plain" }));
+      expect(cursor.dataset.state).toBe("hover");
+      fireEvent.pointerOver(screen.getByText("Text"));
+      expect(cursor.dataset.state).toBe("default");
+    } finally {
+      document.body.removeAttribute("data-cursor");
+    }
+  });
   it("can leave the system cursor alone", () => {
     installMatchMedia([FINE]);
     render(<CustomCursor hideNativeCursor={false} blend={false} />);

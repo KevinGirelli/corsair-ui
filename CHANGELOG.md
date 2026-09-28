@@ -2,6 +2,27 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.10.0
+
+Fixes from projects that migrated to Corsair UI. Nothing is removed or renamed.
+
+### Changed
+
+- Installing an item no longer upgrades packages the project already has. `lucide-react`, `@radix-ui/*`, `class-variance-authority`, `clsx` and `tailwind-merge` are listed without a version, which is what makes the shadcn CLI skip them when they are installed: a project on lucide-react 0.x stays on it, and its `package.json` is not rewritten with `^` ranges. Projects without them get the current release.
+- `separator`: its length is a plain class, so `className="w-8"` (or `h-4` when vertical) replaces the default without `data-[orientation=…]:`.
+
+### Added
+
+- `dialog`, `alert-dialog`, `sheet`: `overlayClassName` on the content, for the overlay's tint, blur or z-index without rebuilding it from the primitives.
+- `carousel`: `data-slot="carousel-dot-indicator"` on the visible part of each dot.
+- `copy-button`: `data-slot="copy-button-copy-icon"` and `"copy-button-check-icon"` on the icons.
+- `rating`: `size="xs"` (12px stars).
+- `youtube-embed`: `setVolume(0–100)` on the handle.
+
+### Fixed
+
+- `custom-cursor`: a `data-cursor` on `<html>` or `<body>` (a page-wide label) no longer makes the whole page count as interactive, which kept the ring in its hover state everywhere.
+
 ## 0.9.0
 
 The namespace is now `@corsair-ui` (it was `@corsair`), so the registry is not confused with the Corsair peripherals brand, which this project has no relation to. `@corsair-ui` is listed in the shadcn registry directory, so the CLI resolves it with no setup: `shadcn add @corsair-ui/<item>` works in any project with a `components.json`. The registry URL and the items stay the same.

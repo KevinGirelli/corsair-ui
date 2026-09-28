@@ -131,7 +131,8 @@ interface DockItemProps extends ComponentProps<"button"> {
 
 /**
  * One icon button or link in a Dock. `label` names it for screen readers
- * and shows as a tooltip on hover and on keyboard focus.
+ * and shows as a tooltip on hover and on keyboard focus. Icons without a
+ * `size-*` class are set to `size-5`; give one its own `size-*` to change it.
  */
 function DockItem({ label, asChild = false, className, type, ...props }: DockItemProps) {
   const position = useContext(DockContext);

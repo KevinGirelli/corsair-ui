@@ -6,7 +6,7 @@
       "type": "registry:lib",
       "title": "Utils",
       "description": "The cn() helper: merges class names and resolves conflicting Tailwind utilities.",
-      "dependencies": ["clsx@^2.1.1", "tailwind-merge@^3.7.0"],
+      "dependencies": ["clsx", "tailwind-merge"],
       "files": [
         {
           "path": "utils.ts",

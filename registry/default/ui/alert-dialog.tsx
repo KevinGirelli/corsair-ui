@@ -61,14 +61,19 @@ function AlertDialogOverlay({
   );
 }
 
+interface AlertDialogContentProps extends ComponentProps<typeof AlertDialogPrimitive.Content> {
+  /**
+   * Classes for the overlay behind the window: opacity, blur, z-index. The
+   * overlay is also `data-slot="alert-dialog-overlay"` for styling from outside.
+   */
+  overlayClassName?: string;
+}
+
 /** The window itself, rendered in a portal above an overlay. It needs an `AlertDialogTitle`. */
-function AlertDialogContent({
-  className,
-  ...props
-}: ComponentProps<typeof AlertDialogPrimitive.Content>) {
+function AlertDialogContent({ className, overlayClassName, ...props }: AlertDialogContentProps) {
   return (
     <AlertDialogPortal>
-      <AlertDialogOverlay />
+      <AlertDialogOverlay className={overlayClassName} />
       <AlertDialogPrimitive.Content
         data-slot="alert-dialog-content"
         className={cn(
@@ -173,4 +178,5 @@ export {
   AlertDialogPortal,
   AlertDialogTitle,
   AlertDialogTrigger,
+  type AlertDialogContentProps,
 };

@@ -90,6 +90,11 @@ interface SheetContentProps extends ComponentProps<typeof SheetPrimitive.Content
   showCloseButton?: boolean;
   /** Accessible name of the close button. */
   closeLabel?: string;
+  /**
+   * Classes for the overlay behind the panel: opacity, blur, z-index. The
+   * overlay is also `data-slot="sheet-overlay"` for styling from outside.
+   */
+  overlayClassName?: string;
 }
 
 /**
@@ -102,11 +107,12 @@ function SheetContent({
   side = "right",
   showCloseButton = true,
   closeLabel = "Close",
+  overlayClassName,
   ...props
 }: SheetContentProps) {
   return (
     <SheetPortal>
-      <SheetOverlay />
+      <SheetOverlay className={overlayClassName} />
       <SheetPrimitive.Content
         data-slot="sheet-content"
         data-side={side}
