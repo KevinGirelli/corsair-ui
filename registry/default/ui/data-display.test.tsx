@@ -61,6 +61,12 @@ describe("Rating", () => {
     expect(screen.queryByRole("radio")).toBeNull();
   });
 
+  it("has an extra small size for dense layouts", () => {
+    render(<Rating readOnly value={4} size="xs" />);
+    const rating = screen.getByRole("img", { name: "Rating: 4 out of 5" });
+    expect(rating.className).toContain("[&_[data-slot=rating-star]]:size-3");
+  });
+
   it("read-only: takes a custom label and value text", () => {
     render(
       <Rating

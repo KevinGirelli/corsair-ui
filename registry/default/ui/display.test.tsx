@@ -128,6 +128,24 @@ describe("small pieces", () => {
     expect(screen.getByRole("separator").getAttribute("aria-orientation")).toBe("vertical");
   });
 
+  it("a Separator takes a length from className, in either orientation", () => {
+    const { container } = render(
+      <>
+        <Separator className="w-8" />
+        <Separator orientation="vertical" className="h-4" />
+      </>
+    );
+    const [horizontal, vertical] = container.querySelectorAll("[data-slot=separator]");
+    expect(horizontal!.getAttribute("class")!.split(" ")).toEqual(
+      expect.arrayContaining(["h-px", "w-8"])
+    );
+    expect(horizontal!.getAttribute("class")).not.toContain("w-full");
+    expect(vertical!.getAttribute("class")!.split(" ")).toEqual(
+      expect.arrayContaining(["w-px", "h-4"])
+    );
+    expect(vertical!.getAttribute("class")).not.toContain("h-full");
+  });
+
   it("Textarea passes native props through", () => {
     render(<Textarea aria-label="Message" rows={6} />);
     expect(screen.getByRole("textbox", { name: "Message" }).getAttribute("rows")).toBe("6");

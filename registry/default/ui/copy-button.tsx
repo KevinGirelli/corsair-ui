@@ -31,6 +31,10 @@ interface CopyButtonProps extends Omit<
  * clipboard accepted the text. The button stays enabled while it shows the
  * check, so keyboard focus is never dropped.
  *
+ * `data-state` is `idle` or `copied`, and the icons are
+ * `data-slot="copy-button-copy-icon"` and `"copy-button-check-icon"`, e.g.
+ * `className="[&_[data-slot=copy-button-check-icon]]:text-success"`.
+ *
  * @example
  * <CopyButton value="pnpm dlx shadcn@latest add @corsair-ui/copy-button" />
  */
@@ -87,10 +91,12 @@ function CopyButton({
       >
         <CheckIcon
           aria-hidden="true"
+          data-slot="copy-button-check-icon"
           className={cn(icon, copied ? "scale-100 opacity-100" : "scale-50 opacity-0 blur-[2px]")}
         />
         <CopyIcon
           aria-hidden="true"
+          data-slot="copy-button-copy-icon"
           className={cn(icon, copied ? "scale-50 opacity-0 blur-[2px]" : "scale-100 opacity-100")}
         />
       </Button>

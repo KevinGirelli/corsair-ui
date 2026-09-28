@@ -546,6 +546,7 @@ function CarouselDots({
         >
           <span
             aria-hidden="true"
+            data-slot="carousel-dot-indicator"
             className="bg-foreground/25 group-data-[active=true]/dot:bg-foreground block size-2 rounded-full transition-colors motion-reduce:transition-none"
           />
         </button>

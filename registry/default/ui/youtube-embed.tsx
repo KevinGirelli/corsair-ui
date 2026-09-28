@@ -33,6 +33,8 @@ interface YouTubeEmbedHandle {
   pause(): void;
   mute(): void;
   unmute(): void;
+  /** Sets the volume, from 0 to 100. Browsers only play sound after the viewer has interacted with the page. */
+  setVolume(volume: number): void;
   /** Jumps to a time, in seconds. */
   seekTo(seconds: number): void;
   /** Loads the player without starting it (unless `autoplay` is on). */
@@ -126,7 +128,7 @@ interface YouTubeEmbedProps extends Omit<
   onPlay?: () => void;
   onPause?: () => void;
   onEnd?: () => void;
-  /** Receives the player controls: play, pause, mute, unmute, seekTo and load. */
+  /** Receives the player controls: play, pause, mute, unmute, setVolume, seekTo and load. */
   ref?: Ref<YouTubeEmbedHandle>;
 }
 
@@ -328,6 +330,8 @@ function YouTubeEmbed({
       pause: () => sendRef.current("pauseVideo"),
       mute: () => sendRef.current("mute"),
       unmute: () => sendRef.current("unMute"),
+      setVolume: (volume: number) =>
+        sendRef.current("setVolume", [Math.round(Math.min(Math.max(volume, 0), 100))]),
       seekTo: (seconds: number) => sendRef.current("seekTo", [seconds, true]),
       load: () => {
         if (!mounted) setActivation("load");

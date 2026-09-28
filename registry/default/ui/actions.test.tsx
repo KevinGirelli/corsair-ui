@@ -36,6 +36,13 @@ describe("CopyButton", () => {
     expect((button as HTMLButtonElement).disabled).toBe(false);
   });
 
+  it("names both icons with data-slot, so the copied one can be styled on its own", () => {
+    render(<CopyButton value="hello" />);
+    const button = screen.getByRole("button", { name: "Copy to clipboard" });
+    expect(button.querySelector("[data-slot=copy-button-copy-icon]")).not.toBeNull();
+    expect(button.querySelector("[data-slot=copy-button-check-icon]")).not.toBeNull();
+  });
+
   it("claims nothing when the browser refuses", async () => {
     const clipboard = stubClipboard(async () => {
       throw new Error("denied");

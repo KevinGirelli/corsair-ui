@@ -166,6 +166,8 @@ describe("YouTubeEmbed", () => {
     act(() => {
       ref.current!.pause();
       ref.current!.mute();
+      ref.current!.setVolume(50);
+      ref.current!.setVolume(140);
     });
     const commands = sent(post)
       .filter((message) => message.event === "command")
@@ -174,6 +176,8 @@ describe("YouTubeEmbed", () => {
       ["seekTo", [30, true]],
       ["pauseVideo", []],
       ["mute", []],
+      ["setVolume", [50]],
+      ["setVolume", [100]],
     ]);
   });
 
@@ -276,6 +280,14 @@ describe("Carousel", () => {
     ]);
     expect(items[0]?.getAttribute("aria-roledescription")).toBe("slide");
     expect(activeSlide()).toBe("Bow");
+  });
+  it("gives every dot a styleable indicator", () => {
+    render(<Gallery />);
+    const dots = document.querySelectorAll("[data-slot=carousel-dot]");
+    expect(dots).toHaveLength(3);
+    for (const dot of dots) {
+      expect(dot.querySelector(":scope > [data-slot=carousel-dot-indicator]")).not.toBeNull();
+    }
   });
 
   it("labels slides on the server", () => {

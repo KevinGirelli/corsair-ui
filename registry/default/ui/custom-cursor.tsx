@@ -131,7 +131,14 @@ function CursorFollower({
     };
     const onOver = (event: PointerEvent) => {
       const element = event.target instanceof Element ? event.target : null;
-      setHovering(Boolean(element?.closest(settings.current.interactiveSelector)));
+      const interactive = element?.closest(settings.current.interactiveSelector);
+      // A data-cursor on <html> or <body> sets a page-wide label; it does not make
+      // the whole page interactive.
+      setHovering(
+        Boolean(interactive) &&
+          interactive !== document.body &&
+          interactive !== document.documentElement
+      );
       setLabelKey(element?.closest("[data-cursor]")?.getAttribute("data-cursor") ?? null);
     };
     const onOut = (event: PointerEvent) => {

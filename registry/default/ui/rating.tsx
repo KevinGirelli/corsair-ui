@@ -9,6 +9,7 @@ import { cn } from "@/registry/default/lib/utils";
 const ratingVariants = cva("inline-flex w-fit items-center", {
   variants: {
     size: {
+      xs: "gap-0.5 [&_[data-slot=rating-star]]:size-3",
       sm: "gap-0.5 [&_[data-slot=rating-star]]:size-4",
       default: "gap-0.5 [&_[data-slot=rating-star]]:size-5",
       lg: "gap-1 [&_[data-slot=rating-star]]:size-6",
@@ -19,7 +20,7 @@ const ratingVariants = cva("inline-flex w-fit items-center", {
   },
 });
 
-type RatingSize = "sm" | "default" | "lg";
+type RatingSize = "xs" | "sm" | "default" | "lg";
 
 const defaultValueLabel = (value: number, max: number) => `${value} out of ${max}`;
 const defaultStarLabel = (stars: number) => `${stars} ${stars === 1 ? "star" : "stars"}`;
