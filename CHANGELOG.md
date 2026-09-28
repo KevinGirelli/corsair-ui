@@ -4,18 +4,12 @@
 
 ## 0.9.0
 
-The namespace is now `@corsair-ui` (it was `@corsair`), so the registry is not confused with the Corsair peripherals brand, which this project has no relation to. The registry URL and the items stay the same.
+The namespace is now `@corsair-ui` (it was `@corsair`), so the registry is not confused with the Corsair peripherals brand, which this project has no relation to. `@corsair-ui` is listed in the shadcn registry directory, so the CLI resolves it with no setup: `shadcn add @corsair-ui/<item>` works in any project with a `components.json`. The registry URL and the items stay the same.
 
 ### Changed
 
 - Items depend on each other through `@corsair-ui/<item>`.
-- Projects set up with `@corsair` add the new name once, then install with `@corsair-ui/<item>`:
-
-  ```bash
-  pnpm dlx shadcn@latest registry add "@corsair-ui=https://kevingirelli.github.io/corsair-ui/r/{name}.json"
-  ```
-
-  Code already installed does not change. The old `@corsair` entry in `components.json` can be removed.
+- No `registry add` step anymore. Projects set up with `@corsair` install with `@corsair-ui/<item>` from now on; code already installed does not change, and the old `@corsair` entry in `components.json` can be removed.
 
 ## 0.8.0
 
