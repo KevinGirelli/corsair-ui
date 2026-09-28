@@ -76,7 +76,7 @@
           "accent": "#262626",
           "accent-foreground": "#fafafa",
           "destructive": "#ef4444",
-          "destructive-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a",
           "success": "#4ade80",
           "warning": "#fbbf24",
           "border": "rgb(255 255 255 / 0.1)",

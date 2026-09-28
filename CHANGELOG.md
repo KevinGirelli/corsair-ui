@@ -2,6 +2,17 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.10.1
+
+Accessibility fixes found by running axe on every docs page.
+
+### Fixed
+
+- `theme`: in dark mode, `--destructive-foreground` is dark (`#0a0a0a`). White on the dark-mode red (`#ef4444`) was 3.8:1, under the 4.5:1 AA needs for button text; dark text is 5.3:1. The red itself stays, since it has to read as text on the dark background too. Already installed themes do not change; update the variable by hand to pick it up.
+- `command`: `CommandSeparator` is `role="none"`. A `separator` inside the listbox broke its structure (a listbox may only hold groups and options). It still hides while searching, unless `alwaysRender`.
+- `scroll-area`: the viewport takes keyboard focus, so it can be scrolled with the keys even when nothing inside is focusable.
+- `marquee`: with `prefers-reduced-motion` it becomes a box you scroll by hand; it is now also a focusable region named by the new `label` prop (default "Scrolling content"). While it moves it stays out of the tab order. It now depends on `use-media-query`.
+
 ## 0.10.0
 
 Fixes from projects that migrated to Corsair UI. Nothing is removed or renamed.

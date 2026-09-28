@@ -1,6 +1,6 @@
 "use client";
 
-import { Command as CommandPrimitive } from "cmdk";
+import { Command as CommandPrimitive, useCommandState } from "cmdk";
 import { SearchIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 
@@ -75,13 +75,24 @@ function CommandGroup({ className, ...props }: ComponentProps<typeof CommandPrim
   );
 }
 
-function CommandSeparator({
-  className,
-  ...props
-}: ComponentProps<typeof CommandPrimitive.Separator>) {
+interface CommandSeparatorProps extends ComponentProps<"div"> {
+  /** Keep it while the list is filtered; by default it hides during a search. */
+  alwaysRender?: boolean;
+}
+
+/**
+ * A line between groups. It is decorative (`role="none"`): a listbox may only
+ * contain groups and options, so a `separator` role inside it breaks the
+ * structure screen readers rely on.
+ */
+function CommandSeparator({ className, alwaysRender = false, ...props }: CommandSeparatorProps) {
+  const searching = useCommandState((state) => state.search !== "");
+  if (searching && !alwaysRender) return null;
   return (
-    <CommandPrimitive.Separator
+    <div
+      role="none"
       data-slot="command-separator"
+      cmdk-separator=""
       className={cn("bg-border -mx-1 h-px", className)}
       {...props}
     />

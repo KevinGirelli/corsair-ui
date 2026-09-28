@@ -8,12 +8,13 @@ import { FeatureGrid } from "@/registry/default/components/blocks/feature-grid";
 import { Hero } from "@/registry/default/components/blocks/hero";
 import { LogoCloud } from "@/registry/default/components/blocks/logo-cloud";
 import { Stats } from "@/registry/default/components/blocks/stats";
-import { installIntersectionObserver } from "@/test-utils/browser";
+import { installIntersectionObserver, installMatchMedia } from "@/test-utils/browser";
 
 // NumberTicker and Marquee watch the viewport.
 let io: ReturnType<typeof installIntersectionObserver>;
 
 beforeEach(() => {
+  installMatchMedia([]);
   io = installIntersectionObserver();
 });
 

@@ -39,6 +39,8 @@ function ScrollArea({
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
+        // Keyboard users can scroll it even when nothing inside takes focus.
+        tabIndex={0}
         className={cn(
           "size-full rounded-[inherit] outline-none",
           "transition-[color,box-shadow] motion-reduce:transition-none",

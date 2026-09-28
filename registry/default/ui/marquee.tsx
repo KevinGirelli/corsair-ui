@@ -1,8 +1,16 @@
 "use client";
 
-import { useMemo, type ComponentProps, type CSSProperties, type Ref } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  type ComponentProps,
+  type CSSProperties,
+  type Ref,
+} from "react";
 
 import { useInView } from "@/registry/default/hooks/use-in-view";
+import { useMediaQuery } from "@/registry/default/hooks/use-media-query";
 import { cn } from "@/registry/default/lib/utils";
 
 function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
@@ -32,6 +40,12 @@ interface MarqueeProps extends ComponentProps<"div"> {
    * at least as long as the marquee; raise it for short content in a wide one.
    */
   repeat?: number;
+  /**
+   * Names the marquee for screen readers when `prefers-reduced-motion` turns
+   * it into a box you scroll by hand: it then becomes a focusable region, so
+   * keyboard users can scroll it too.
+   */
+  label?: string;
 }
 
 /**
@@ -56,6 +70,7 @@ function Marquee({
   fade = true,
   fadeAmount = 10,
   repeat = 2,
+  label = "Scrolling content",
   className,
   style,
   ref,
@@ -63,7 +78,17 @@ function Marquee({
   ...props
 }: MarqueeProps) {
   const [observe, inView] = useInView<HTMLDivElement>({ rootMargin: "100px" });
-  const mergedRef = useMemo(() => mergeRefs(ref, observe), [ref, observe]);
+  const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const root = useRef<HTMLDivElement>(null);
+  const mergedRef = useMemo(() => mergeRefs(ref, observe, root), [ref, observe]);
+  // A scroll box has to be reachable from the keyboard. Set on the element, and
+  // only while it is one, so the moving marquee stays out of the tab order.
+  useEffect(() => {
+    const element = root.current;
+    if (!element) return;
+    if (reduced) element.tabIndex = 0;
+    else element.removeAttribute("tabindex");
+  }, [reduced]);
 
   const vertical = direction === "up" || direction === "down";
   const copies = Math.max(2, Math.floor(repeat));
@@ -77,6 +102,9 @@ function Marquee({
       ref={mergedRef}
       data-slot="marquee"
       data-direction={direction}
+      // Still, it scrolls by hand: a named region, focusable (set below) for the keyboard.
+      role={reduced ? "region" : undefined}
+      aria-label={reduced ? label : undefined}
       className={cn(
         "group/marquee flex overflow-hidden motion-reduce:overflow-auto",
         vertical && "flex-col",
