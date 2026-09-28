@@ -6,11 +6,7 @@
       "type": "registry:ui",
       "title": "Button",
       "description": "Triggers an action. Variants default, secondary, outline, ghost, destructive and link; sizes sm, default, lg and three square icon sizes. Supports asChild and a loading state.",
-      "dependencies": [
-        "@radix-ui/react-slot@^1.3.3",
-        "class-variance-authority@^0.7.1",
-        "lucide-react@^1.48.0"
-      ],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -24,7 +20,7 @@
       "type": "registry:ui",
       "title": "Spinner",
       "description": "Animated status indicator for work in progress, announced as Loading.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -38,7 +34,7 @@
       "type": "registry:ui",
       "title": "Badge",
       "description": "Short status or metadata label. Solid, secondary and outline styles, plus success, warning and destructive statuses shown as a coloured dot.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3", "class-variance-authority@^0.7.1"],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -52,7 +48,7 @@
       "type": "registry:ui",
       "title": "Label",
       "description": "Accessible name for a form control.",
-      "dependencies": ["@radix-ui/react-label@^2.1.15"],
+      "dependencies": ["@radix-ui/react-label"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -92,7 +88,7 @@
       "type": "registry:ui",
       "title": "Input Group",
       "description": "An input with icons, text or buttons attached on either side.",
-      "dependencies": ["class-variance-authority@^0.7.1"],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/input"],
       "files": [
         {
@@ -106,7 +102,7 @@
       "type": "registry:ui",
       "title": "Field",
       "description": "Layout for a control with its label, description and error, plus fieldset and group helpers. Independent of any form library.",
-      "dependencies": ["class-variance-authority@^0.7.1"],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/label"],
       "files": [
         {
@@ -134,7 +130,7 @@
       "type": "registry:ui",
       "title": "Checkbox",
       "description": "Checkbox with checked, unchecked and indeterminate states.",
-      "dependencies": ["@radix-ui/react-checkbox@^1.3.11", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-checkbox", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -148,7 +144,7 @@
       "type": "registry:ui",
       "title": "Radio Group",
       "description": "A set of options where exactly one can be selected.",
-      "dependencies": ["@radix-ui/react-radio-group@^1.4.7", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-radio-group", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -162,7 +158,7 @@
       "type": "registry:ui",
       "title": "Switch",
       "description": "On/off control for settings that apply immediately.",
-      "dependencies": ["@radix-ui/react-switch@^1.3.7"],
+      "dependencies": ["@radix-ui/react-switch"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -176,7 +172,7 @@
       "type": "registry:ui",
       "title": "Select",
       "description": "Pick one option from a list, with groups, labels and separators.",
-      "dependencies": ["@radix-ui/react-select@^2.3.7", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-select", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -190,7 +186,7 @@
       "type": "registry:ui",
       "title": "Separator",
       "description": "Horizontal or vertical divider.",
-      "dependencies": ["@radix-ui/react-separator@^1.1.15"],
+      "dependencies": ["@radix-ui/react-separator"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -217,7 +213,7 @@
       "type": "registry:ui",
       "title": "Alert",
       "description": "Callout for important messages on a neutral surface; default, success, warning and destructive tones colour the icon.",
-      "dependencies": ["class-variance-authority@^0.7.1"],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -244,7 +240,7 @@
       "type": "registry:ui",
       "title": "Popover",
       "description": "Floating panel anchored to a trigger, with header, title and description parts.",
-      "dependencies": ["@radix-ui/react-popover@^1.1.23"],
+      "dependencies": ["@radix-ui/react-popover"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -258,7 +254,7 @@
       "type": "registry:ui",
       "title": "Command",
       "description": "Searchable list navigated with the arrow keys; the base for comboboxes and command menus.",
-      "dependencies": ["cmdk@^1.1.1", "lucide-react@^1.48.0"],
+      "dependencies": ["cmdk@^1.1.1", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -272,7 +268,7 @@
       "type": "registry:ui",
       "title": "Calendar",
       "description": "Month grid for picking a date, several dates or a range, with dropdown captions and week numbers. Built on DayPicker.",
-      "dependencies": ["@daypicker/react@^10.0.1", "lucide-react@^1.48.0"],
+      "dependencies": ["@daypicker/react@^10.0.1", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
@@ -286,7 +282,7 @@
       "type": "registry:ui",
       "title": "Date Picker",
       "description": "DatePicker and DateRangePicker: a calendar in a popover behind a button that shows the chosen date or range.",
-      "dependencies": ["@daypicker/react@^10.0.1", "lucide-react@^1.48.0"],
+      "dependencies": ["@daypicker/react@^10.0.1", "lucide-react"],
       "registryDependencies": [
         "@corsair-ui/utils",
         "@corsair-ui/button",
@@ -305,7 +301,7 @@
       "type": "registry:ui",
       "title": "Combobox",
       "description": "A select with a search box, for long lists of options.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/command", "@corsair-ui/popover"],
       "files": [
         {
@@ -319,7 +315,7 @@
       "type": "registry:ui",
       "title": "Input OTP",
       "description": "One-time code input drawn as separate slots, with paste and autofill support.",
-      "dependencies": ["input-otp@^1.5.0", "lucide-react@^1.48.0"],
+      "dependencies": ["input-otp@^1.5.0", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -369,7 +365,7 @@
       "type": "registry:ui",
       "title": "Slider",
       "description": "Pick a number or a range by dragging or with the arrow keys, horizontal or vertical.",
-      "dependencies": ["@radix-ui/react-slider@^1.4.7"],
+      "dependencies": ["@radix-ui/react-slider"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -383,7 +379,7 @@
       "type": "registry:ui",
       "title": "Toggle",
       "description": "A button that stays pressed, in default and outline variants and three sizes.",
-      "dependencies": ["@radix-ui/react-toggle@^1.1.18", "class-variance-authority@^0.7.1"],
+      "dependencies": ["@radix-ui/react-toggle", "class-variance-authority"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -397,7 +393,7 @@
       "type": "registry:ui",
       "title": "Toggle Group",
       "description": "A set of toggles with single or multiple selection, joined or spaced apart.",
-      "dependencies": ["@radix-ui/react-toggle-group@^1.1.19", "class-variance-authority@^0.7.1"],
+      "dependencies": ["@radix-ui/react-toggle-group", "class-variance-authority"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/toggle"],
       "files": [
         {
@@ -411,7 +407,7 @@
       "type": "registry:ui",
       "title": "Number Input",
       "description": "Number field with decrement and increment buttons, min, max and step, following the spinbutton keyboard pattern.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": [
         "@corsair-ui/utils",
         "@corsair-ui/button",
@@ -429,7 +425,7 @@
       "type": "registry:ui",
       "title": "Password Input",
       "description": "Password field with a button that shows what was typed.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": [
         "@corsair-ui/utils",
         "@corsair-ui/button",
@@ -447,7 +443,7 @@
       "type": "registry:ui",
       "title": "Tooltip",
       "description": "A short label shown on hover and keyboard focus.",
-      "dependencies": ["@radix-ui/react-tooltip@^1.2.16"],
+      "dependencies": ["@radix-ui/react-tooltip"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -461,7 +457,7 @@
       "type": "registry:ui",
       "title": "Reveal",
       "description": "Fades and moves content into place when it scrolls into view, alone or staggered in a group. Visible without JavaScript.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "dependencies": ["@radix-ui/react-slot"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["motion"],
       "files": [
@@ -540,7 +536,7 @@
       "type": "registry:ui",
       "title": "Parallax",
       "description": "Drifts content at a different speed from the page as it scrolls past, with CSS scroll-driven animations and no JavaScript.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "dependencies": ["@radix-ui/react-slot"],
       "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["motion"],
       "files": [
@@ -591,7 +587,7 @@
       "type": "registry:ui",
       "title": "Spotlight",
       "description": "A soft light that follows the pointer across a surface and along its edge.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "dependencies": ["@radix-ui/react-slot"],
       "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["creative"],
       "files": [
@@ -726,7 +722,7 @@
       "type": "registry:ui",
       "title": "Copy Button",
       "description": "An icon button that copies a value and swaps to a check mark, announcing it to screen readers.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
@@ -740,7 +736,7 @@
       "type": "registry:ui",
       "title": "Dash Button",
       "description": "A pill button whose fill gives way to a dashed outline that marches on hover.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "dependencies": ["@radix-ui/react-slot"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
@@ -784,7 +780,7 @@
       "type": "registry:ui",
       "title": "Color Swatches",
       "description": "Pick one colour from a row of swatches: a radio group with arrow keys and form support.",
-      "dependencies": ["@radix-ui/react-radio-group@^1.4.7"],
+      "dependencies": ["@radix-ui/react-radio-group"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1275,7 +1271,7 @@
       "type": "registry:ui",
       "title": "Tweet Card",
       "description": "A post from X in your theme, with no embed script: a card, a server component that fetches by id, and a client one.",
-      "dependencies": ["react-tweet@^3.3.1", "lucide-react@^1.48.0"],
+      "dependencies": ["react-tweet@^3.3.1", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1293,7 +1289,7 @@
       "type": "registry:ui",
       "title": "Spotify Card",
       "description": "A track card with cover art, a link to Spotify and a preview clip that spins a record while it plays.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/spotify-track"],
       "files": [
         {
@@ -1335,7 +1331,7 @@
       "type": "registry:ui",
       "title": "Dialog",
       "description": "Modal window centred over the page, with a focus trap, overlay, close button, header, footer, title and description parts.",
-      "dependencies": ["@radix-ui/react-dialog@^1.1.23", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-dialog", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1349,7 +1345,7 @@
       "type": "registry:ui",
       "title": "Alert Dialog",
       "description": "Modal that asks the user to confirm or cancel before an action, with action and cancel buttons.",
-      "dependencies": ["@radix-ui/react-alert-dialog@^1.1.23"],
+      "dependencies": ["@radix-ui/react-alert-dialog"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
@@ -1363,11 +1359,7 @@
       "type": "registry:ui",
       "title": "Sheet",
       "description": "Dialog that slides in from any edge of the screen, for menus, filters and side panels.",
-      "dependencies": [
-        "@radix-ui/react-dialog@^1.1.23",
-        "class-variance-authority@^0.7.1",
-        "lucide-react@^1.48.0"
-      ],
+      "dependencies": ["@radix-ui/react-dialog", "class-variance-authority", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1381,7 +1373,7 @@
       "type": "registry:ui",
       "title": "Toast",
       "description": "Brief notifications shown with a toast() call and a Toaster mounted once, with variants, an optional action, swipe to dismiss and screen reader announcements.",
-      "dependencies": ["@radix-ui/react-toast@^1.2.23", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-toast", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1395,7 +1387,7 @@
       "type": "registry:ui",
       "title": "Nav Link",
       "description": "A navigation link that marks the current page with aria-current and data-active. Supports asChild for router links.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "dependencies": ["@radix-ui/react-slot"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1409,7 +1401,7 @@
       "type": "registry:ui",
       "title": "Site Header",
       "description": "A sticky page header with brand, navigation, actions and a sheet menu for small screens, flagging data-scrolled once the page scrolls.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": [
         "@corsair-ui/utils",
         "@corsair-ui/button",
@@ -1428,7 +1420,7 @@
       "type": "registry:ui",
       "title": "Dock",
       "description": "A floating bar of icon links pinned to the bottom or top of the viewport, with tooltips and an optional reveal after scrolling.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "dependencies": ["@radix-ui/react-slot"],
       "registryDependencies": [
         "@corsair-ui/utils",
         "@corsair-ui/tooltip",
@@ -1446,7 +1438,7 @@
       "type": "registry:ui",
       "title": "Tabs",
       "description": "Sections of content shown one at a time, with a segmented or underlined tab list, horizontal or vertical.",
-      "dependencies": ["@radix-ui/react-tabs@^1.1.21", "class-variance-authority@^0.7.1"],
+      "dependencies": ["@radix-ui/react-tabs", "class-variance-authority"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1460,7 +1452,7 @@
       "type": "registry:ui",
       "title": "Avatar",
       "description": "A round picture of a person with a fallback while it loads or when it fails, in three sizes, plus an overlapping group.",
-      "dependencies": ["@radix-ui/react-avatar@^1.2.6", "class-variance-authority@^0.7.1"],
+      "dependencies": ["@radix-ui/react-avatar", "class-variance-authority"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1474,11 +1466,7 @@
       "type": "registry:ui",
       "title": "Rating",
       "description": "Stars for giving a score as a radio group, or for showing one read-only with fractional fills.",
-      "dependencies": [
-        "@radix-ui/react-radio-group@^1.4.7",
-        "class-variance-authority@^0.7.1",
-        "lucide-react@^1.48.0"
-      ],
+      "dependencies": ["@radix-ui/react-radio-group", "class-variance-authority", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1492,7 +1480,7 @@
       "type": "registry:ui",
       "title": "Stat",
       "description": "Key figures as a description list: label, value and a caption with an optional trend arrow.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1533,7 +1521,7 @@
       "type": "registry:ui",
       "title": "Corner Frame",
       "description": "A box with bracket marks on its corners, in any size, thickness, colour and inset.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3"],
+      "dependencies": ["@radix-ui/react-slot"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1547,7 +1535,7 @@
       "type": "registry:ui",
       "title": "YouTube Embed",
       "description": "A YouTube video that costs one poster image until it is played, with player controls through its ref.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "files": [
         {
@@ -1561,7 +1549,7 @@
       "type": "registry:ui",
       "title": "Carousel",
       "description": "Slides on a native scroll-snap track, with keyboard steps, previous and next buttons, dots and an optional coverflow look.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
@@ -1915,7 +1903,7 @@
       "type": "registry:ui",
       "title": "Dropdown Menu",
       "description": "A menu of actions and options that opens from a button, with checkbox and radio items, labels, shortcuts and submenus.",
-      "dependencies": ["@radix-ui/react-dropdown-menu@^2.1.24", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1929,7 +1917,7 @@
       "type": "registry:ui",
       "title": "Context Menu",
       "description": "A menu of actions for an area of the page that opens on right click or long press, with checkbox and radio items, labels, shortcuts and submenus.",
-      "dependencies": ["@radix-ui/react-context-menu@^2.3.7", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-context-menu", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1944,9 +1932,9 @@
       "title": "Navigation Menu",
       "description": "Site navigation with links and triggers that open panels of links in a shared, animated viewport.",
       "dependencies": [
-        "@radix-ui/react-navigation-menu@^1.2.22",
-        "class-variance-authority@^0.7.1",
-        "lucide-react@^1.48.0"
+        "@radix-ui/react-navigation-menu",
+        "class-variance-authority",
+        "lucide-react"
       ],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
@@ -1961,7 +1949,7 @@
       "type": "registry:ui",
       "title": "Hover Card",
       "description": "A preview card that appears while a link is hovered or focused, for supplementary content.",
-      "dependencies": ["@radix-ui/react-hover-card@^1.1.23"],
+      "dependencies": ["@radix-ui/react-hover-card"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -1975,7 +1963,7 @@
       "type": "registry:ui",
       "title": "Accordion",
       "description": "Stacked sections that open and close under their headings, one or several at a time, with a height animation.",
-      "dependencies": ["@radix-ui/react-accordion@^1.2.20", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-accordion", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -2043,7 +2031,7 @@
       "type": "registry:ui",
       "title": "Collapsible",
       "description": "A region that a trigger button shows and hides, with a height animation.",
-      "dependencies": ["@radix-ui/react-collapsible@^1.1.20"],
+      "dependencies": ["@radix-ui/react-collapsible"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -2111,7 +2099,7 @@
       "type": "registry:ui",
       "title": "Progress",
       "description": "A progress bar for tasks with a known amount, or an indeterminate one when the amount is unknown.",
-      "dependencies": ["@radix-ui/react-progress@^1.1.16"],
+      "dependencies": ["@radix-ui/react-progress"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -2161,7 +2149,7 @@
       "type": "registry:ui",
       "title": "Scroll Area",
       "description": "A scrolling box with thin themed scrollbars that keeps native scrolling.",
-      "dependencies": ["@radix-ui/react-scroll-area@^1.2.18"],
+      "dependencies": ["@radix-ui/react-scroll-area"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -2175,7 +2163,7 @@
       "type": "registry:ui",
       "title": "Breadcrumb",
       "description": "The trail of links from the top of a site to the current page, with separators and an ellipsis.",
-      "dependencies": ["@radix-ui/react-slot@^1.3.3", "lucide-react@^1.48.0"],
+      "dependencies": ["@radix-ui/react-slot", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
@@ -2189,11 +2177,7 @@
       "type": "registry:ui",
       "title": "Pagination",
       "description": "Page links with previous and next, an ellipsis, and a helper that works out which page numbers to show.",
-      "dependencies": [
-        "@radix-ui/react-slot@^1.3.3",
-        "class-variance-authority@^0.7.1",
-        "lucide-react@^1.48.0"
-      ],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
       "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
@@ -2207,7 +2191,7 @@
       "type": "registry:ui",
       "title": "Table",
       "description": "A data table on native table elements, with a scroll container, selected rows and sortable column headers.",
-      "dependencies": ["lucide-react@^1.48.0"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
