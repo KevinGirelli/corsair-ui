@@ -11,6 +11,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/registry/default/ui/command";
 import {
   Popover,
@@ -70,6 +71,28 @@ describe("Command", () => {
 
     await userEvent.type(screen.getByPlaceholderText("Type a command"), "xyz");
     expect(screen.getByText("Nothing found.")).toBeTruthy();
+  });
+
+  it("keeps separators out of the listbox structure and hides them while searching", async () => {
+    render(
+      <Command label="Actions">
+        <CommandInput placeholder="Type a command" />
+        <CommandList>
+          <CommandGroup heading="Pages">
+            <CommandItem>Profile</CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Help">
+            <CommandItem>Docs</CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    );
+    const separator = () => document.querySelector("[data-slot=command-separator]");
+    expect(separator()?.getAttribute("role")).toBe("none");
+    expect(screen.queryByRole("separator")).toBeNull();
+    await userEvent.type(screen.getByPlaceholderText("Type a command"), "doc");
+    expect(separator()).toBeNull();
   });
 });
 

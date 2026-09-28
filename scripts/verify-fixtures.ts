@@ -11,6 +11,7 @@
  *   pnpm verify:fixtures                  every fixture
  *   pnpm verify:fixtures tailwind-v3      only the named fixture(s)
  *   pnpm verify:fixtures --keep           keep the temporary copies for inspection
+ *   SHADCN_BIN=… pnpm verify:fixtures     with another shadcn CLI
  */
 import { spawn } from "node:child_process";
 import {
@@ -29,7 +30,12 @@ import path from "node:path";
 const ROOT = process.cwd();
 const REGISTRY_OUTPUT = path.join(ROOT, "dist", "r");
 const FIXTURES_DIR = path.join(ROOT, "tests", "fixtures");
-const SHADCN = path.join(ROOT, "node_modules", ".bin", "shadcn");
+/**
+ * The CLI that builds and installs. The repo's pinned one by default;
+ * SHADCN_BIN points at another (the "shadcn latest" workflow uses the
+ * newest release, to catch CLI changes before users do).
+ */
+const SHADCN = process.env.SHADCN_BIN ?? path.join(ROOT, "node_modules", ".bin", "shadcn");
 
 /** The namespace items are installed with, and use to refer to each other. */
 const NAMESPACE = "@corsair-ui";

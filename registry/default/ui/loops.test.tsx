@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LightRays } from "@/registry/default/ui/light-rays";
 import { Marquee } from "@/registry/default/ui/marquee";
 import { WarpGradient } from "@/registry/default/ui/warp-gradient";
-import { installIntersectionObserver } from "@/test-utils/browser";
+import { installIntersectionObserver, installMatchMedia } from "@/test-utils/browser";
 
 // Items that keep moving: each one has to rest while it is off screen.
 
@@ -12,6 +12,7 @@ let io: ReturnType<typeof installIntersectionObserver>;
 
 beforeEach(() => {
   io = installIntersectionObserver();
+  installMatchMedia([]);
 });
 
 afterEach(() => {
@@ -41,6 +42,18 @@ describe("Marquee", () => {
     expect(track.style.animationPlayState).toBe("paused");
     act(() => io.intersect(root, true));
     expect(track.style.animationPlayState).toBe("");
+  });
+  it("is a plain moving strip, or a named region you can tab to with reduced motion", () => {
+    const { unmount } = render(<Marquee>Ports</Marquee>);
+    let root = document.querySelector<HTMLElement>("[data-slot=marquee]")!;
+    expect(root.hasAttribute("tabindex")).toBe(false);
+    expect(root.getAttribute("role")).toBeNull();
+    unmount();
+    installMatchMedia(["(prefers-reduced-motion: reduce)"]);
+    render(<Marquee label="Partner logos">Ports</Marquee>);
+    root = document.querySelector<HTMLElement>("[data-slot=marquee]")!;
+    expect(screen.getByRole("region", { name: "Partner logos" })).toBe(root);
+    expect(root.tabIndex).toBe(0);
   });
 });
 

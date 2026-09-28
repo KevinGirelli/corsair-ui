@@ -1187,7 +1187,11 @@
       "type": "registry:ui",
       "title": "Marquee",
       "description": "Content scrolling in a seamless loop, pausing on focus and off screen.",
-      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/use-in-view",
+        "@corsair-ui/use-media-query"
+      ],
       "categories": ["motion"],
       "files": [
         {

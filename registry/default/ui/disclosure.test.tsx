@@ -261,6 +261,8 @@ describe("ScrollArea", () => {
     const viewport = root.querySelector<HTMLElement>("[data-slot=scroll-area-viewport]")!;
     expect(viewport.contains(screen.getByText("Tag list"))).toBe(true);
     expect(viewport.className).toContain("focus-visible:ring-[3px]");
+    // Scrollable from the keyboard even with nothing focusable inside.
+    expect(viewport.tabIndex).toBe(0);
   });
   it("shows vertical and horizontal scrollbars with type always", () => {
     render(
