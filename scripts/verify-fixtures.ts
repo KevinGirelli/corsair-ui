@@ -1,6 +1,6 @@
 /**
  * Installs every registry item into throwaway copies of the fixture projects,
- * the same way someone using Corsair would (`shadcn add @corsair/<item>`), then
+ * the same way someone using Corsair would (`shadcn add @corsair-ui/<item>`), then
  * typechecks the installed code, compiles the project's CSS and checks that
  * the theme's utilities actually came out of it.
  *
@@ -32,7 +32,7 @@ const FIXTURES_DIR = path.join(ROOT, "tests", "fixtures");
 const SHADCN = path.join(ROOT, "node_modules", ".bin", "shadcn");
 
 /** The namespace items are installed with, and use to refer to each other. */
-const NAMESPACE = "@corsair";
+const NAMESPACE = "@corsair-ui";
 
 /**
  * Classes that only exist when the theme item's colours and radii were wired
@@ -164,7 +164,7 @@ function serveRegistry(): Promise<{ server: Server; baseUrl: string }> {
 /**
  * Points the namespace at the local server in the fixture's components.json,
  * the same one-line setup a consumer does with the published URL. Items and
- * the items they depend on (`@corsair/utils`) then all come from this build,
+ * the items they depend on (`@corsair-ui/utils`) then all come from this build,
  * so a new item is tested together with what it needs before it merges.
  */
 function useLocalRegistry(workdir: string, baseUrl: string) {

@@ -32,7 +32,7 @@ interface CopyButtonProps extends Omit<
  * check, so keyboard focus is never dropped.
  *
  * @example
- * <CopyButton value="pnpm dlx shadcn@latest add @corsair/copy-button" />
+ * <CopyButton value="pnpm dlx shadcn@latest add @corsair-ui/copy-button" />
  */
 function CopyButton({
   value,

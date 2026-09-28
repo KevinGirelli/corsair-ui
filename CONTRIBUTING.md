@@ -40,7 +40,7 @@ registry/default/
 ## Adding an item
 
 1. Put the source in the folder that matches what it is: `ui/` for primitives and form controls, `components/<area>/` for larger pieces, `hooks/`, or `lib/`.
-2. Add the item to that folder's `registry.json`: `name`, `type`, `title`, `description` and `files`. List npm packages in `dependencies` with a version range (`"motion@^12.0.0"`) and other Corsair items in `registryDependencies` with the namespace (`"@corsair/utils"`); a bare `"utils"` would pull shadcn's item instead. `verify:fixtures` points the namespace at the local build, so new items are tested together before they reach `main`. Motion and visual effects also get `"categories": ["motion"]` or `["creative"]`, which the docs site uses to group them. Blocks are `registry:block` items whose file has type `registry:component`; they install into the consumer's `components/blocks/`, render a complete example with no props, and never import another block.
+2. Add the item to that folder's `registry.json`: `name`, `type`, `title`, `description` and `files`. List npm packages in `dependencies` with a version range (`"motion@^12.0.0"`) and other Corsair items in `registryDependencies` with the namespace (`"@corsair-ui/utils"`); a bare `"utils"` would pull shadcn's item instead. `verify:fixtures` points the namespace at the local build, so new items are tested together before they reach `main`. Motion and visual effects also get `"categories": ["motion"]` or `["creative"]`, which the docs site uses to group them. Blocks are `registry:block` items whose file has type `registry:component`; they install into the consumer's `components/blocks/`, render a complete example with no props, and never import another block.
 3. Write tests next to the source (`*.test.ts` / `*.test.tsx`). They are never shipped: only the paths listed in `files` are.
 4. Run `pnpm registry:validate`, `pnpm check:tailwind` and `pnpm verify:fixtures` before opening the PR.
 
@@ -95,7 +95,7 @@ When an item needs CSS variables or keyframes, declare them for both versions in
 
 Code adapted from another project keeps its license notice in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
-Every merge to `main` that touches the registry is published to GitHub Pages by the "Publish registry" workflow, so `@corsair/<item>` always serves `main`. Releases are git tags (`v0.2.0`) with an entry in [CHANGELOG.md](./CHANGELOG.md); consumers can install a release with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
+Every merge to `main` that touches the registry is published to GitHub Pages by the "Publish registry" workflow, so `@corsair-ui/<item>` always serves `main`. Releases are git tags (`v0.2.0`) with an entry in [CHANGELOG.md](./CHANGELOG.md); consumers can install a release with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
 ## Pull requests
 

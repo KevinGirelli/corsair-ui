@@ -1,7 +1,7 @@
 name: Publish registry
 
 # Builds the registry JSON and serves it from GitHub Pages. That is what
-# `shadcn add @corsair/<item>` reads:
+# `shadcn add @corsair-ui/<item>` reads:
 # https://kevingirelli.github.io/corsair-ui/r/{name}.json
 on:
   push:

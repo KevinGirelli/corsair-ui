@@ -21,11 +21,15 @@ describe("CopyButton", () => {
   it("copies its value, shows a check and announces it", async () => {
     const clipboard = stubClipboard(async () => {});
     const onCopied = vi.fn();
-    render(<CopyButton value="pnpm dlx shadcn@latest add @corsair/button" onCopied={onCopied} />);
+    render(
+      <CopyButton value="pnpm dlx shadcn@latest add @corsair-ui/button" onCopied={onCopied} />
+    );
     const button = screen.getByRole("button", { name: "Copy to clipboard" });
     fireEvent.click(button);
     await waitFor(() => expect(button.getAttribute("data-state")).toBe("copied"));
-    expect(clipboard.writeText).toHaveBeenCalledWith("pnpm dlx shadcn@latest add @corsair/button");
+    expect(clipboard.writeText).toHaveBeenCalledWith(
+      "pnpm dlx shadcn@latest add @corsair-ui/button"
+    );
     expect(onCopied).toHaveBeenCalledOnce();
     expect(screen.getByRole("status").textContent).toBe("Copied");
     // Still enabled, so keyboard focus stays where it was.
