@@ -17,27 +17,27 @@ Early days: the foundation layer (theme, buttons, inputs, form layout, cards and
 
 Only the components, hooks and utilities, plus the tooling that keeps them honest. There is no website or demo app here; the documentation site is a separate project that consumes this registry like any other app would.
 
-`registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair` namespace points to. There is no server to run or package to publish.
+`registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair-ui` namespace points to. There is no server to run or package to publish.
 
 ## Using an item
 
 In a project that already has a `components.json` (run `shadcn init` first if it does not; it also sets up the animation utilities overlays use):
 
 ```bash
-# once per project: add the @corsair namespace to components.json
-pnpm dlx shadcn@latest registry add "@corsair=https://kevingirelli.github.io/corsair-ui/r/{name}.json"
+# once per project: add the @corsair-ui namespace to components.json
+pnpm dlx shadcn@latest registry add "@corsair-ui=https://kevingirelli.github.io/corsair-ui/r/{name}.json"
 
 # once per project: colours, radius and base styles
-pnpm dlx shadcn@latest add @corsair/theme
+pnpm dlx shadcn@latest add @corsair-ui/theme
 
 # then any item; it is copied into your project as source code
-pnpm dlx shadcn@latest add @corsair/button @corsair/field
+pnpm dlx shadcn@latest add @corsair-ui/button @corsair-ui/field
 
 # see everything that is available
-pnpm dlx shadcn@latest list @corsair
+pnpm dlx shadcn@latest list @corsair-ui
 ```
 
-`@corsair/<item>` always serves what is on `main`. To install a release instead, use the item's GitHub address with the tag, e.g. `KevinGirelli/corsair-ui/button#v0.2.0`; the Corsair items it depends on still come from `@corsair`.
+`@corsair-ui/<item>` always serves what is on `main`. To install a release instead, use the item's GitHub address with the tag, e.g. `KevinGirelli/corsair-ui/button#v0.2.0`; the Corsair items it depends on still come from `@corsair-ui`.
 
 Dark mode follows the `dark` class on `<html>`; to brand it, override `--primary`, `--primary-foreground` and `--ring` in your CSS. Items are generic on purpose: restyle them in your own project, through the theme variables, `className` and the `data-*` attributes every part exposes. `--radius: 0` gives square corners everywhere, and a page that paints its own background behind the content (a canvas, a fixed layer) can set `body { background: transparent; }` after the theme.
 

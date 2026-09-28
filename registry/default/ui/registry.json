@@ -11,7 +11,7 @@
         "class-variance-authority@^0.7.1",
         "lucide-react@^1.48.0"
       ],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "button.tsx",
@@ -25,7 +25,7 @@
       "title": "Spinner",
       "description": "Animated status indicator for work in progress, announced as Loading.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "spinner.tsx",
@@ -39,7 +39,7 @@
       "title": "Badge",
       "description": "Short status or metadata label. Solid, secondary and outline styles, plus success, warning and destructive statuses shown as a coloured dot.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3", "class-variance-authority@^0.7.1"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "badge.tsx",
@@ -53,7 +53,7 @@
       "title": "Label",
       "description": "Accessible name for a form control.",
       "dependencies": ["@radix-ui/react-label@^2.1.15"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "label.tsx",
@@ -66,7 +66,7 @@
       "type": "registry:ui",
       "title": "Input",
       "description": "Single-line text control. Its error state comes from aria-invalid, so any form library can drive it.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "input.tsx",
@@ -79,7 +79,7 @@
       "type": "registry:ui",
       "title": "Textarea",
       "description": "Multi-line text control with the same states as Input.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "textarea.tsx",
@@ -93,7 +93,7 @@
       "title": "Input Group",
       "description": "An input with icons, text or buttons attached on either side.",
       "dependencies": ["class-variance-authority@^0.7.1"],
-      "registryDependencies": ["@corsair/utils", "@corsair/input"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/input"],
       "files": [
         {
           "path": "input-group.tsx",
@@ -107,7 +107,7 @@
       "title": "Field",
       "description": "Layout for a control with its label, description and error, plus fieldset and group helpers. Independent of any form library.",
       "dependencies": ["class-variance-authority@^0.7.1"],
-      "registryDependencies": ["@corsair/utils", "@corsair/label"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/label"],
       "files": [
         {
           "path": "field.tsx",
@@ -121,7 +121,7 @@
       "title": "Form Field (react-hook-form)",
       "description": "FormField: a react-hook-form Controller laid out with Field, with the id, label and ARIA wiring done for you.",
       "dependencies": ["react-hook-form@^7.89.0"],
-      "registryDependencies": ["@corsair/field"],
+      "registryDependencies": ["@corsair-ui/field"],
       "files": [
         {
           "path": "form.tsx",
@@ -135,7 +135,7 @@
       "title": "Checkbox",
       "description": "Checkbox with checked, unchecked and indeterminate states.",
       "dependencies": ["@radix-ui/react-checkbox@^1.3.11", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "checkbox.tsx",
@@ -149,7 +149,7 @@
       "title": "Radio Group",
       "description": "A set of options where exactly one can be selected.",
       "dependencies": ["@radix-ui/react-radio-group@^1.4.7", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "radio-group.tsx",
@@ -163,7 +163,7 @@
       "title": "Switch",
       "description": "On/off control for settings that apply immediately.",
       "dependencies": ["@radix-ui/react-switch@^1.3.7"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "switch.tsx",
@@ -177,7 +177,7 @@
       "title": "Select",
       "description": "Pick one option from a list, with groups, labels and separators.",
       "dependencies": ["@radix-ui/react-select@^2.3.7", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "select.tsx",
@@ -191,7 +191,7 @@
       "title": "Separator",
       "description": "Horizontal or vertical divider.",
       "dependencies": ["@radix-ui/react-separator@^1.1.15"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "separator.tsx",
@@ -204,7 +204,7 @@
       "type": "registry:ui",
       "title": "Card",
       "description": "Container with header, title, description, action, content and footer parts.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "card.tsx",
@@ -218,7 +218,7 @@
       "title": "Alert",
       "description": "Callout for important messages on a neutral surface; default, success, warning and destructive tones colour the icon.",
       "dependencies": ["class-variance-authority@^0.7.1"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "alert.tsx",
@@ -231,7 +231,7 @@
       "type": "registry:ui",
       "title": "Skeleton",
       "description": "Placeholder shape shown while content loads.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "skeleton.tsx",
@@ -245,7 +245,7 @@
       "title": "Popover",
       "description": "Floating panel anchored to a trigger, with header, title and description parts.",
       "dependencies": ["@radix-ui/react-popover@^1.1.23"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "popover.tsx",
@@ -259,7 +259,7 @@
       "title": "Command",
       "description": "Searchable list navigated with the arrow keys; the base for comboboxes and command menus.",
       "dependencies": ["cmdk@^1.1.1", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "command.tsx",
@@ -273,7 +273,7 @@
       "title": "Calendar",
       "description": "Month grid for picking a date, several dates or a range, with dropdown captions and week numbers. Built on DayPicker.",
       "dependencies": ["@daypicker/react@^10.0.1", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
           "path": "calendar.tsx",
@@ -288,10 +288,10 @@
       "description": "DatePicker and DateRangePicker: a calendar in a popover behind a button that shows the chosen date or range.",
       "dependencies": ["@daypicker/react@^10.0.1", "lucide-react@^1.48.0"],
       "registryDependencies": [
-        "@corsair/utils",
-        "@corsair/button",
-        "@corsair/calendar",
-        "@corsair/popover"
+        "@corsair-ui/utils",
+        "@corsair-ui/button",
+        "@corsair-ui/calendar",
+        "@corsair-ui/popover"
       ],
       "files": [
         {
@@ -306,7 +306,7 @@
       "title": "Combobox",
       "description": "A select with a search box, for long lists of options.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils", "@corsair/command", "@corsair/popover"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/command", "@corsair-ui/popover"],
       "files": [
         {
           "path": "combobox.tsx",
@@ -320,7 +320,7 @@
       "title": "Input OTP",
       "description": "One-time code input drawn as separate slots, with paste and autofill support.",
       "dependencies": ["input-otp@^1.5.0", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "input-otp.tsx",
@@ -370,7 +370,7 @@
       "title": "Slider",
       "description": "Pick a number or a range by dragging or with the arrow keys, horizontal or vertical.",
       "dependencies": ["@radix-ui/react-slider@^1.4.7"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "slider.tsx",
@@ -384,7 +384,7 @@
       "title": "Toggle",
       "description": "A button that stays pressed, in default and outline variants and three sizes.",
       "dependencies": ["@radix-ui/react-toggle@^1.1.18", "class-variance-authority@^0.7.1"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "toggle.tsx",
@@ -398,7 +398,7 @@
       "title": "Toggle Group",
       "description": "A set of toggles with single or multiple selection, joined or spaced apart.",
       "dependencies": ["@radix-ui/react-toggle-group@^1.1.19", "class-variance-authority@^0.7.1"],
-      "registryDependencies": ["@corsair/utils", "@corsair/toggle"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/toggle"],
       "files": [
         {
           "path": "toggle-group.tsx",
@@ -412,7 +412,11 @@
       "title": "Number Input",
       "description": "Number field with decrement and increment buttons, min, max and step, following the spinbutton keyboard pattern.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils", "@corsair/button", "@corsair/input-group"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/button",
+        "@corsair-ui/input-group"
+      ],
       "files": [
         {
           "path": "number-input.tsx",
@@ -426,7 +430,11 @@
       "title": "Password Input",
       "description": "Password field with a button that shows what was typed.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils", "@corsair/button", "@corsair/input-group"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/button",
+        "@corsair-ui/input-group"
+      ],
       "files": [
         {
           "path": "password-input.tsx",
@@ -440,7 +448,7 @@
       "title": "Tooltip",
       "description": "A short label shown on hover and keyboard focus.",
       "dependencies": ["@radix-ui/react-tooltip@^1.2.16"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "tooltip.tsx",
@@ -454,7 +462,7 @@
       "title": "Reveal",
       "description": "Fades and moves content into place when it scrolls into view, alone or staggered in a group. Visible without JavaScript.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3"],
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["motion"],
       "files": [
         {
@@ -468,7 +476,7 @@
       "type": "registry:ui",
       "title": "Text Reveal",
       "description": "Reveals text word by word, when it comes into view or tied to the scroll position.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["motion", "text"],
       "files": [
         {
@@ -518,7 +526,7 @@
       "type": "registry:ui",
       "title": "Magnetic",
       "description": "Pulls its content toward the mouse while hovered and springs it back on leave.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["motion"],
       "files": [
         {
@@ -533,7 +541,7 @@
       "title": "Parallax",
       "description": "Drifts content at a different speed from the page as it scrolls past, with CSS scroll-driven animations and no JavaScript.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["motion"],
       "files": [
         {
@@ -584,7 +592,7 @@
       "title": "Spotlight",
       "description": "A soft light that follows the pointer across a surface and along its edge.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["creative"],
       "files": [
         {
@@ -598,7 +606,7 @@
       "type": "registry:ui",
       "title": "Animated Border",
       "description": "A border with a light travelling around it, paused off screen.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["creative"],
       "files": [
         {
@@ -612,7 +620,7 @@
       "type": "registry:ui",
       "title": "Aurora",
       "description": "Slow, soft light drifting behind its content, from three radial gradients.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["creative", "background"],
       "files": [
         {
@@ -668,7 +676,7 @@
       "type": "registry:ui",
       "title": "Signature",
       "description": "Draws SVG strokes as if by hand, with optional ink filling in behind the pen, on view or with the scroll.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["creative"],
       "files": [
         {
@@ -719,7 +727,7 @@
       "title": "Copy Button",
       "description": "An icon button that copies a value and swaps to a check mark, announcing it to screen readers.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
           "path": "copy-button.tsx",
@@ -733,7 +741,7 @@
       "title": "Dash Button",
       "description": "A pill button whose fill gives way to a dashed outline that marches on hover.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3"],
-      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
           "path": "dash-button.tsx",
@@ -777,7 +785,7 @@
       "title": "Color Swatches",
       "description": "Pick one colour from a row of swatches: a radio group with arrow keys and form support.",
       "dependencies": ["@radix-ui/react-radio-group@^1.4.7"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "color-swatches.tsx",
@@ -790,7 +798,7 @@
       "type": "registry:ui",
       "title": "Bars Spinner",
       "description": "Twelve bars around a hub fading in turn, announced as Loading. No JavaScript.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "bars-spinner.tsx",
@@ -839,7 +847,7 @@
       "type": "registry:ui",
       "title": "Shimmer Text",
       "description": "A band of light sweeping across text now and then, paused off screen.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["text"],
       "files": [
         {
@@ -889,7 +897,7 @@
       "type": "registry:ui",
       "title": "Blur Text",
       "description": "Text that comes into focus one character at a time, and can blur back out.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-entrance"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
       "categories": ["text"],
       "files": [
         {
@@ -953,7 +961,7 @@
       "type": "registry:ui",
       "title": "Slide Text",
       "description": "Words, characters or lines rising into place from below their own baseline.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-entrance"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
       "categories": ["text"],
       "files": [
         {
@@ -997,7 +1005,7 @@
       "type": "registry:ui",
       "title": "Dissolve Text",
       "description": "Words or characters surfacing at scattered moments, the same on server and client.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-entrance"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
       "categories": ["text"],
       "files": [
         {
@@ -1041,7 +1049,7 @@
       "type": "registry:ui",
       "title": "Highlight Text",
       "description": "A marker that slides in behind a phrase, or a hand-drawn line drawn under it.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-entrance"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
       "categories": ["text"],
       "files": [
         {
@@ -1103,7 +1111,7 @@
       "type": "registry:ui",
       "title": "Scramble Text",
       "description": "Text that decodes itself: noise sweeps across, then each character locks in.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-entrance"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
       "categories": ["text"],
       "files": [
         {
@@ -1117,7 +1125,7 @@
       "type": "registry:ui",
       "title": "Wave Text",
       "description": "Bands of colour washing through text like a swell, on one CSS animation.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-entrance"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
       "categories": ["text"],
       "files": [
         {
@@ -1169,7 +1177,7 @@
       "description": "Writes any text in any font as a signature: outlines drawn by the pen, then inked.",
       "dependencies": ["opentype.js@^2.0.0"],
       "devDependencies": ["@types/opentype.js@^1.3.10"],
-      "registryDependencies": ["@corsair/signature"],
+      "registryDependencies": ["@corsair-ui/signature"],
       "categories": ["text"],
       "files": [
         {
@@ -1183,7 +1191,7 @@
       "type": "registry:ui",
       "title": "Marquee",
       "description": "Content scrolling in a seamless loop, pausing on focus and off screen.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["motion"],
       "files": [
         {
@@ -1239,7 +1247,7 @@
       "type": "registry:ui",
       "title": "Line Chart",
       "description": "One series as a line, with a cursor that snaps to points; a slider for keyboards and screen readers.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "line-chart.tsx",
@@ -1254,7 +1262,7 @@
       "description": "A crisp SVG QR code in dots, rounded or square modules. Renders on the server.",
       "dependencies": ["qrcode@^1.5.4"],
       "devDependencies": ["@types/qrcode@^1.5.6"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "qr-code.tsx",
@@ -1268,7 +1276,7 @@
       "title": "Tweet Card",
       "description": "A post from X in your theme, with no embed script: a card, a server component that fetches by id, and a client one.",
       "dependencies": ["react-tweet@^3.3.1", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "tweet-card.tsx",
@@ -1286,7 +1294,7 @@
       "title": "Spotify Card",
       "description": "A track card with cover art, a link to Spotify and a preview clip that spins a record while it plays.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils", "@corsair/spotify-track"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/spotify-track"],
       "files": [
         {
           "path": "spotify-card.tsx",
@@ -1299,7 +1307,7 @@
       "type": "registry:ui",
       "title": "Light Rays",
       "description": "Soft beams of light falling from above, from a small WebGL2 shader.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["background"],
       "files": [
         {
@@ -1313,7 +1321,7 @@
       "type": "registry:ui",
       "title": "Warp Gradient",
       "description": "A liquid field of colour carried along by layered noise, from one WebGL2 shader.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["background"],
       "files": [
         {
@@ -1328,7 +1336,7 @@
       "title": "Dialog",
       "description": "Modal window centred over the page, with a focus trap, overlay, close button, header, footer, title and description parts.",
       "dependencies": ["@radix-ui/react-dialog@^1.1.23", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "dialog.tsx",
@@ -1342,7 +1350,7 @@
       "title": "Alert Dialog",
       "description": "Modal that asks the user to confirm or cancel before an action, with action and cancel buttons.",
       "dependencies": ["@radix-ui/react-alert-dialog@^1.1.23"],
-      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
           "path": "alert-dialog.tsx",
@@ -1360,7 +1368,7 @@
         "class-variance-authority@^0.7.1",
         "lucide-react@^1.48.0"
       ],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "sheet.tsx",
@@ -1374,7 +1382,7 @@
       "title": "Toast",
       "description": "Brief notifications shown with a toast() call and a Toaster mounted once, with variants, an optional action, swipe to dismiss and screen reader announcements.",
       "dependencies": ["@radix-ui/react-toast@^1.2.23", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "toast.tsx",
@@ -1388,7 +1396,7 @@
       "title": "Nav Link",
       "description": "A navigation link that marks the current page with aria-current and data-active. Supports asChild for router links.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "nav-link.tsx",
@@ -1403,10 +1411,10 @@
       "description": "A sticky page header with brand, navigation, actions and a sheet menu for small screens, flagging data-scrolled once the page scrolls.",
       "dependencies": ["lucide-react@^1.48.0"],
       "registryDependencies": [
-        "@corsair/utils",
-        "@corsair/button",
-        "@corsair/sheet",
-        "@corsair/use-in-view"
+        "@corsair-ui/utils",
+        "@corsair-ui/button",
+        "@corsair-ui/sheet",
+        "@corsair-ui/use-in-view"
       ],
       "files": [
         {
@@ -1421,7 +1429,11 @@
       "title": "Dock",
       "description": "A floating bar of icon links pinned to the bottom or top of the viewport, with tooltips and an optional reveal after scrolling.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3"],
-      "registryDependencies": ["@corsair/utils", "@corsair/tooltip", "@corsair/use-in-view"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/tooltip",
+        "@corsair-ui/use-in-view"
+      ],
       "files": [
         {
           "path": "dock.tsx",
@@ -1435,7 +1447,7 @@
       "title": "Tabs",
       "description": "Sections of content shown one at a time, with a segmented or underlined tab list, horizontal or vertical.",
       "dependencies": ["@radix-ui/react-tabs@^1.1.21", "class-variance-authority@^0.7.1"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "tabs.tsx",
@@ -1449,7 +1461,7 @@
       "title": "Avatar",
       "description": "A round picture of a person with a fallback while it loads or when it fails, in three sizes, plus an overlapping group.",
       "dependencies": ["@radix-ui/react-avatar@^1.2.6", "class-variance-authority@^0.7.1"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "avatar.tsx",
@@ -1467,7 +1479,7 @@
         "class-variance-authority@^0.7.1",
         "lucide-react@^1.48.0"
       ],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "rating.tsx",
@@ -1481,7 +1493,7 @@
       "title": "Stat",
       "description": "Key figures as a description list: label, value and a caption with an optional trend arrow.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "stat.tsx",
@@ -1494,7 +1506,7 @@
       "type": "registry:ui",
       "title": "Number Ticker",
       "description": "A number that counts up to its value when it comes into view, formatted for the locale.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-entrance"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
       "categories": ["text"],
       "files": [
         {
@@ -1508,7 +1520,7 @@
       "type": "registry:ui",
       "title": "Code Block",
       "description": "A block of code with an optional caption, a language label and a copy button.",
-      "registryDependencies": ["@corsair/utils", "@corsair/copy-button"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/copy-button"],
       "files": [
         {
           "path": "code-block.tsx",
@@ -1522,7 +1534,7 @@
       "title": "Corner Frame",
       "description": "A box with bracket marks on its corners, in any size, thickness, colour and inset.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "corner-frame.tsx",
@@ -1536,7 +1548,7 @@
       "title": "YouTube Embed",
       "description": "A YouTube video that costs one poster image until it is played, with player controls through its ref.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "files": [
         {
           "path": "youtube-embed.tsx",
@@ -1550,7 +1562,7 @@
       "title": "Carousel",
       "description": "Slides on a native scroll-snap track, with keyboard steps, previous and next buttons, dots and an optional coverflow look.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
           "path": "carousel.tsx",
@@ -1563,7 +1575,7 @@
       "type": "registry:ui",
       "title": "Preloader",
       "description": "A full-screen cover that counts to 100 on first load, waits for your content to be ready, then fades out.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["motion"],
       "files": [
         {
@@ -1577,7 +1589,7 @@
       "type": "registry:ui",
       "title": "Custom Cursor",
       "description": "A dot and a trailing ring that follow a mouse pointer, growing over interactive elements and showing labels.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-media-query"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-media-query"],
       "categories": ["motion"],
       "files": [
         {
@@ -1591,7 +1603,7 @@
       "type": "registry:ui",
       "title": "Scroll Progress",
       "description": "A reading progress bar that fills as the page scrolls, with CSS scroll-driven animations and no JavaScript.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["motion"],
       "files": [
         {
@@ -1642,7 +1654,7 @@
       "title": "Smooth Scroll",
       "description": "Smooth wheel and trackpad scrolling for the page, off with reduced motion, with a scrollTo hook that works either way.",
       "dependencies": ["lenis@^1.3.26"],
-      "registryDependencies": ["@corsair/use-media-query"],
+      "registryDependencies": ["@corsair-ui/use-media-query"],
       "categories": ["motion"],
       "files": [
         {
@@ -1675,7 +1687,7 @@
       "type": "registry:ui",
       "title": "Grain",
       "description": "Film grain over a surface, from a tile of SVG noise, with an optional stepped jitter.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["creative", "background"],
       "files": [
         {
@@ -1773,7 +1785,7 @@
       "type": "registry:ui",
       "title": "Hover Reveal",
       "description": "A second layer seen through a soft circle that follows the pointer.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["creative"],
       "files": [
         {
@@ -1787,7 +1799,7 @@
       "type": "registry:ui",
       "title": "Particles",
       "description": "Dots drifting slowly across a surface, laid out from a seed and moved with CSS alone.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["motion", "background"],
       "files": [
         {
@@ -1875,7 +1887,7 @@
       "type": "registry:ui",
       "title": "Topography",
       "description": "Contour lines like a topographic map over slowly shifting terrain, from one WebGL2 shader.",
-      "registryDependencies": ["@corsair/utils", "@corsair/use-in-view"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-in-view"],
       "categories": ["creative", "background"],
       "files": [
         {
@@ -1889,7 +1901,7 @@
       "type": "registry:ui",
       "title": "Roll Text",
       "description": "Characters that roll up to a copy of themselves on hover or keyboard focus.",
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "categories": ["text"],
       "files": [
         {
@@ -1904,7 +1916,7 @@
       "title": "Dropdown Menu",
       "description": "A menu of actions and options that opens from a button, with checkbox and radio items, labels, shortcuts and submenus.",
       "dependencies": ["@radix-ui/react-dropdown-menu@^2.1.24", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "dropdown-menu.tsx",
@@ -1918,7 +1930,7 @@
       "title": "Context Menu",
       "description": "A menu of actions for an area of the page that opens on right click or long press, with checkbox and radio items, labels, shortcuts and submenus.",
       "dependencies": ["@radix-ui/react-context-menu@^2.3.7", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "context-menu.tsx",
@@ -1936,7 +1948,7 @@
         "class-variance-authority@^0.7.1",
         "lucide-react@^1.48.0"
       ],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "navigation-menu.tsx",
@@ -1950,7 +1962,7 @@
       "title": "Hover Card",
       "description": "A preview card that appears while a link is hovered or focused, for supplementary content.",
       "dependencies": ["@radix-ui/react-hover-card@^1.1.23"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "hover-card.tsx",
@@ -1964,7 +1976,7 @@
       "title": "Accordion",
       "description": "Stacked sections that open and close under their headings, one or several at a time, with a height animation.",
       "dependencies": ["@radix-ui/react-accordion@^1.2.20", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "accordion.tsx",
@@ -2032,7 +2044,7 @@
       "title": "Collapsible",
       "description": "A region that a trigger button shows and hides, with a height animation.",
       "dependencies": ["@radix-ui/react-collapsible@^1.1.20"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "collapsible.tsx",
@@ -2100,7 +2112,7 @@
       "title": "Progress",
       "description": "A progress bar for tasks with a known amount, or an indeterminate one when the amount is unknown.",
       "dependencies": ["@radix-ui/react-progress@^1.1.16"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "progress.tsx",
@@ -2150,7 +2162,7 @@
       "title": "Scroll Area",
       "description": "A scrolling box with thin themed scrollbars that keeps native scrolling.",
       "dependencies": ["@radix-ui/react-scroll-area@^1.2.18"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "scroll-area.tsx",
@@ -2164,7 +2176,7 @@
       "title": "Breadcrumb",
       "description": "The trail of links from the top of a site to the current page, with separators and an ellipsis.",
       "dependencies": ["@radix-ui/react-slot@^1.3.3", "lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "breadcrumb.tsx",
@@ -2182,7 +2194,7 @@
         "class-variance-authority@^0.7.1",
         "lucide-react@^1.48.0"
       ],
-      "registryDependencies": ["@corsair/utils", "@corsair/button"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
       "files": [
         {
           "path": "pagination.tsx",
@@ -2196,7 +2208,7 @@
       "title": "Table",
       "description": "A data table on native table elements, with a scroll container, selected rows and sortable column headers.",
       "dependencies": ["lucide-react@^1.48.0"],
-      "registryDependencies": ["@corsair/utils"],
+      "registryDependencies": ["@corsair-ui/utils"],
       "files": [
         {
           "path": "table.tsx",

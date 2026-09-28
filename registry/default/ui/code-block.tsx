@@ -31,7 +31,7 @@ interface CodeBlockProps extends Omit<ComponentProps<"figure">, "children" | "ti
  * "Copied" once the text is on the clipboard. It animates nothing.
  *
  * @example
- * <CodeBlock title="Install" language="bash" code="pnpm dlx shadcn@latest add @corsair/code-block" />
+ * <CodeBlock title="Install" language="bash" code="pnpm dlx shadcn@latest add @corsair-ui/code-block" />
  */
 function CodeBlock({
   code,
