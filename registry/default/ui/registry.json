@@ -2274,6 +2274,61 @@
       ]
     },
     {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "A key or key combination shown as a small keycap, alone or in a group.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "What a list, table or page shows when it has nothing in it yet, with an icon, title, description and actions.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "The steps of a multi-step flow with complete, current and upcoming states, horizontal or vertical.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "stepper.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "A vertical list of events with a coloured dot for each status and a line joining them.",
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "timeline.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "resizable",
       "type": "registry:ui",
       "title": "Resizable",
