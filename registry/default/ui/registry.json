@@ -2203,6 +2203,55 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "An application sidebar that collapses to icons or off canvas on desktop and opens as a sheet on mobile, with a keyboard shortcut.",
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/button",
+        "@corsair-ui/separator",
+        "@corsair-ui/sheet",
+        "@corsair-ui/tooltip",
+        "@corsair-ui/use-media-query"
+      ],
+      "files": [
+        {
+          "path": "sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A bottom sheet dialog for phones that can also be dragged down to close.",
+      "dependencies": ["@radix-ui/react-dialog"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Panels resized by dragging or with the keyboard, side by side or stacked.",
+      "dependencies": ["lucide-react", "react-resizable-panels@^4.14.1"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "resizable.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
