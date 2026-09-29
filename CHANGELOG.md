@@ -2,6 +2,16 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.14.0
+
+Three creative pieces: a marquee you can grab, type that turns in 3D, and a background that changes colour with the scroll. Nothing from earlier releases changes unless you opt in.
+
+### Added
+
+- `flip-text`: kinetic type in 3D. Characters or words turn into place around their horizontal axis, one after another, each with its own perspective, rolling like a drum, standing up from the baseline or dropping from the top. `angle`, `perspective`, `origin`, `from` and the same `trigger`, `play` and timing props as `slide-text`. Screen readers get the text in one piece, and reduced motion shows it as is.
+- `scroll-background`: a background that blends from one colour to the next as you scroll, on the element crossing the viewport (`view`), the page (`root`) or the nearest scroller. Each colour is a layer that fades in over its own stretch of a CSS scroll timeline, so there is no JavaScript and no scroll listener, and it works in server components. Browsers without scroll timelines keep the first colour.
+- `marquee`: `draggable` lets the pointer grab the loop and drag it either way, and it carries on from where it is let go. The drag seeks the same CSS animation, so the loop stays seamless, hover and focus still pause it, and there are no scroll listeners. A press that moves less than 5 px is still a click, so links inside keep working, and the click that ends a drag is swallowed. Touch pans across the loop drag it; the page still scrolls the other way. With reduced motion the marquee stays a scroll box and the option does nothing.
+
 ## 0.13.0
 
 Charts beyond the line, and the application pages built from 0.12.0. Nothing from earlier releases changes.

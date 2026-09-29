@@ -50,8 +50,8 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 - **Menus:** dropdown-menu, context-menu, navigation-menu
 - **Navigation:** site-header, nav-link, dock, tabs, carousel, breadcrumb, pagination
 - **Disclosure:** accordion, collapsible, scroll-area
-- **Text:** text-reveal, blur-text, slide-text, dissolve-text, highlight-text, scramble-text, shimmer-text, wave-text, text-signature, roll-text, number-ticker
-- **Motion:** reveal, magnetic, parallax, marquee, preloader, custom-cursor, scroll-progress, smooth-scroll
+- **Text:** text-reveal, blur-text, slide-text, flip-text, dissolve-text, highlight-text, scramble-text, shimmer-text, wave-text, text-signature, roll-text, number-ticker
+- **Motion:** reveal, magnetic, parallax, marquee, preloader, custom-cursor, scroll-progress, scroll-background, smooth-scroll
 - **Creative:** spotlight, animated-border, signature, hover-reveal, grain, corner-frame
 - **Backgrounds:** aurora, light-rays, warp-gradient, topography, particles
 - **Data and embeds:** line-chart, bar-chart, area-chart, donut-chart, qr-code, tweet-card, spotify-card (with `getSpotifyTrack` for the server), youtube-embed, code-block
