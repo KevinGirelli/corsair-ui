@@ -2,6 +2,18 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.11.0
+
+Theme presets, and a theme editor on the docs site that writes the variables for any other palette.
+
+### Added
+
+- `theme-blue`, `theme-violet`, `theme-rose`, `theme-emerald`, `theme-amber`: the theme with a brand colour on a neutral base (slate, zinc or stone) and a radius, for light and dark mode. Each one installs `theme` first and then sets the colours, so `shadcn add @corsair-ui/theme-blue` is the whole setup. Every text pair (text, muted text on the background and on muted surfaces, primary and destructive buttons, cards) meets WCAG AA in both modes.
+
+### Fixed
+
+- `theme`: light-mode `--muted-foreground` is `#6f6f6f` (was `#737373`), which reaches 4.5:1 on the muted surface too (4.6:1; it was 4.3:1), so inactive tabs and text on muted chips meet AA. On white it goes from 4.7:1 to 5.0:1. Installed themes do not change; update the variable to pick it up.
+
 ## 0.10.1
 
 Accessibility fixes found by running axe on every docs page.
