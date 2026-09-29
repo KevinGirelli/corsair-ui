@@ -1693,6 +1693,56 @@
       }
     },
     {
+      "name": "scroll-background",
+      "type": "registry:ui",
+      "title": "Scroll Background",
+      "description": "A background that blends from one colour to the next as you scroll, with CSS scroll-driven animations and no JavaScript.",
+      "registryDependencies": ["@corsair-ui/utils"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "scroll-background.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-scroll-background": "scroll-background linear both"
+        }
+      },
+      "css": {
+        "@keyframes scroll-background": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "scroll-background": {
+                  "from": {
+                    "opacity": "0"
+                  },
+                  "to": {
+                    "opacity": "1"
+                  }
+                }
+              },
+              "animation": {
+                "scroll-background": "scroll-background linear both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "smooth-scroll",
       "type": "registry:ui",
       "title": "Smooth Scroll",

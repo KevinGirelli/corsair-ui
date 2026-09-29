@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { CustomCursor } from "@/registry/default/ui/custom-cursor";
 import { Preloader, PreloaderBar } from "@/registry/default/ui/preloader";
+import { ScrollBackground } from "@/registry/default/ui/scroll-background";
 import { ScrollProgress } from "@/registry/default/ui/scroll-progress";
 import { SmoothScroll, useSmoothScroll } from "@/registry/default/ui/smooth-scroll";
 import { flushFrames, installMatchMedia } from "@/test-utils/browser";
@@ -241,6 +242,40 @@ describe("ScrollProgress", () => {
     expect(html).toContain("bottom-0");
     expect(html).toContain("h-1");
     expect(html).not.toContain("h-[3px]");
+  });
+});
+
+describe("ScrollBackground", () => {
+  it("starts on the first colour and fades each next one in over its share of the crossing", () => {
+    const html = renderToString(
+      <ScrollBackground colors={["#000000", "#111111", "#222222", "#333333"]}>
+        <p>Deck</p>
+      </ScrollBackground>
+    );
+    expect(html).toContain("background-color:#000000");
+    expect(html).toContain('aria-hidden="true"');
+    expect(html.match(/data-slot="scroll-background-layer"/g)).toHaveLength(3);
+    expect(html).toContain("animation-timeline:view()");
+    expect(html).toContain("animation-range:cover 0% cover 33.33%");
+    expect(html).toContain("animation-range:cover 33.33% cover 66.67%");
+    expect(html).toContain("animation-range:cover 66.67% cover 100%");
+    expect(html).toContain("supports-[animation-timeline:scroll()]:animate-scroll-background");
+    expect(html).toContain("<p>Deck</p>");
+  });
+
+  it("can follow the page's scroll or a contained crossing", () => {
+    const page = renderToString(<ScrollBackground timeline="root" colors={["red", "blue"]} />);
+    expect(page).toContain("animation-timeline:scroll(root)");
+    expect(page).toContain("animation-range:0% 100%");
+    const contained = renderToString(<ScrollBackground range="contain" colors={["red", "blue"]} />);
+    expect(contained).toContain("animation-range:contain 0% contain 100%");
+  });
+
+  it("is a plain background with a single colour", () => {
+    render(<ScrollBackground colors={["tomato"]}>Still</ScrollBackground>);
+    const root = document.querySelector<HTMLElement>("[data-slot=scroll-background]")!;
+    expect(root.style.backgroundColor).toBe("tomato");
+    expect(root.querySelectorAll("[data-slot=scroll-background-layer]")).toHaveLength(0);
   });
 });
 
