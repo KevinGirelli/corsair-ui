@@ -221,6 +221,57 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "dashboard",
+      "type": "registry:block",
+      "title": "Dashboard",
+      "description": "An application page with a collapsible sidebar, a header, stat cards, a line chart and a recent-activity table.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/avatar",
+        "@corsair-ui/badge",
+        "@corsair-ui/button",
+        "@corsair-ui/card",
+        "@corsair-ui/data-table",
+        "@corsair-ui/line-chart",
+        "@corsair-ui/separator",
+        "@corsair-ui/sidebar",
+        "@corsair-ui/stat"
+      ],
+      "files": [
+        {
+          "path": "dashboard.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "type": "registry:block",
+      "title": "Settings",
+      "description": "An account settings page with tabs for a profile form, a password change and delete-account dialog, and notification switches.",
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/use-media-query",
+        "@corsair-ui/alert-dialog",
+        "@corsair-ui/avatar",
+        "@corsair-ui/button",
+        "@corsair-ui/card",
+        "@corsair-ui/field",
+        "@corsair-ui/input",
+        "@corsair-ui/password-input",
+        "@corsair-ui/switch",
+        "@corsair-ui/tabs",
+        "@corsair-ui/textarea"
+      ],
+      "files": [
+        {
+          "path": "settings.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
