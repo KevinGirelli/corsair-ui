@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { LightRays } from "@/registry/default/ui/light-rays";
@@ -54,6 +54,92 @@ describe("Marquee", () => {
     root = document.querySelector<HTMLElement>("[data-slot=marquee]")!;
     expect(screen.getByRole("region", { name: "Partner logos" })).toBe(root);
     expect(root.tabIndex).toBe(0);
+  });
+});
+
+describe("Marquee draggable", () => {
+  // jsdom runs no CSS animations: stand in for the loop's, 20 s long, on a
+  // track of two 400 px copies.
+  function withLoop(currentTime = 1000) {
+    const animation = {
+      animationName: "marquee-x",
+      currentTime,
+      effect: { getComputedTiming: () => ({ duration: 20000 }) },
+    };
+    const track = document.querySelector<HTMLElement>("[data-slot=marquee-track]")!;
+    Object.assign(track, { getAnimations: () => [animation] });
+    vi.spyOn(track, "getBoundingClientRect").mockReturnValue({ width: 800, height: 40 } as DOMRect);
+    return animation;
+  }
+
+  function root() {
+    return document.querySelector<HTMLElement>("[data-slot=marquee]")!;
+  }
+
+  it("seeks the loop with the pointer and holds it while dragged", () => {
+    render(<Marquee draggable>Ports</Marquee>);
+    const loop = withLoop();
+    expect(root().className).toContain("motion-safe:touch-pan-y");
+    fireEvent.pointerDown(root(), { pointerId: 1, button: 0, clientX: 200 });
+    fireEvent.pointerMove(root(), { pointerId: 1, clientX: 197 });
+    // Under the threshold: still a click, nothing moved.
+    expect(loop.currentTime).toBe(1000);
+    expect(root().hasAttribute("data-dragging")).toBe(false);
+    fireEvent.pointerMove(root(), { pointerId: 1, clientX: 100 });
+    // 100 px of a 400 px copy is a quarter of the loop; dragging left runs it forwards.
+    expect(loop.currentTime).toBe(6000);
+    expect(root().getAttribute("data-dragging")).toBe("true");
+    fireEvent.pointerMove(root(), { pointerId: 1, clientX: 400 });
+    // Back past the start wraps around to the end of the loop.
+    expect(loop.currentTime).toBe(11000);
+    fireEvent.pointerUp(root(), { pointerId: 1, clientX: 400 });
+    expect(root().hasAttribute("data-dragging")).toBe(false);
+  });
+
+  it("runs the other way for a reversed marquee", () => {
+    render(
+      <Marquee draggable direction="right">
+        Ports
+      </Marquee>
+    );
+    const loop = withLoop();
+    fireEvent.pointerDown(root(), { pointerId: 1, button: 0, clientX: 200 });
+    fireEvent.pointerMove(root(), { pointerId: 1, clientX: 100 });
+    expect(loop.currentTime).toBe(16000);
+  });
+
+  it("keeps clicks on links, and swallows the one that ends a drag", () => {
+    const visit = vi.fn((event: React.MouseEvent) => event.preventDefault());
+    render(
+      <Marquee draggable>
+        <a href="#havana" onClick={visit}>
+          Havana
+        </a>
+      </Marquee>
+    );
+    withLoop();
+    const link = screen.getByRole("link", { name: "Havana" });
+    fireEvent.pointerDown(link, { pointerId: 1, button: 0, clientX: 50 });
+    fireEvent.pointerUp(link, { pointerId: 1, clientX: 52 });
+    fireEvent.click(link);
+    expect(visit).toHaveBeenCalledTimes(1);
+
+    fireEvent.pointerDown(link, { pointerId: 1, button: 0, clientX: 50 });
+    fireEvent.pointerMove(link, { pointerId: 1, clientX: 150 });
+    fireEvent.pointerUp(link, { pointerId: 1, clientX: 150 });
+    fireEvent.click(link);
+    expect(visit).toHaveBeenCalledTimes(1);
+  });
+
+  it("leaves the pointer alone when not draggable", () => {
+    const onPointerDown = vi.fn();
+    render(<Marquee onPointerDown={onPointerDown}>Ports</Marquee>);
+    const loop = withLoop();
+    fireEvent.pointerDown(root(), { pointerId: 1, button: 0, clientX: 200 });
+    fireEvent.pointerMove(root(), { pointerId: 1, clientX: 100 });
+    expect(onPointerDown).toHaveBeenCalledTimes(1);
+    expect(loop.currentTime).toBe(1000);
+    expect(root().className).not.toContain("cursor-grab");
   });
 });
 

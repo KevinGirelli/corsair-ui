@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { BlurText } from "@/registry/default/ui/blur-text";
 import { DissolveText } from "@/registry/default/ui/dissolve-text";
+import { FlipText } from "@/registry/default/ui/flip-text";
 import { HighlightText } from "@/registry/default/ui/highlight-text";
 import { ScrambleText } from "@/registry/default/ui/scramble-text";
 import { ShimmerText } from "@/registry/default/ui/shimmer-text";
@@ -194,6 +195,64 @@ describe("SlideText", () => {
     const lines = pieces(document.body, "slide-text-piece");
     expect(lines.map((line) => line.textContent)).toEqual(["First line", "Second line"]);
     expect(document.querySelector("[data-slot=slide-text]")?.className).toContain("flex-col");
+  });
+});
+
+describe("FlipText", () => {
+  it("turns characters in from the centre out, reading as one piece", () => {
+    render(
+      <FlipText from="center" stagger={10}>
+        abcde
+      </FlipText>
+    );
+    const root = document.querySelector<HTMLElement>("[data-slot=flip-text]")!;
+    const characters = pieces(root, "flip-text-piece");
+    expect(characters.map((piece) => piece.style.animationDelay)).toEqual([
+      "20ms",
+      "10ms",
+      "0ms",
+      "10ms",
+      "20ms",
+    ]);
+    expect(characters[0]?.className).toContain("motion-safe:animate-flip-text");
+    expect(characters[0]?.parentElement?.getAttribute("aria-hidden")).toBe("true");
+    expect(root.querySelector(".sr-only")?.textContent).toBe("abcde");
+  });
+
+  it("sets its angle, depth and axis, and splits by words", () => {
+    render(
+      <FlipText split="words" angle={75} perspective={300} origin="bottom">
+        Hoist the colours
+      </FlipText>
+    );
+    const root = document.querySelector<HTMLElement>("[data-slot=flip-text]")!;
+    expect(root.style.getPropertyValue("--flip-text-angle")).toBe("75deg");
+    expect(root.style.getPropertyValue("--flip-text-perspective")).toBe("300px");
+    const words = pieces(root, "flip-text-piece");
+    expect(words.map((word) => word.textContent)).toEqual(["Hoist", "the", "colours"]);
+    expect(words[0]?.style.transformOrigin).toBe("50% 100%");
+  });
+
+  it("holds until played, then reports when the last piece lands", () => {
+    const onDone = vi.fn();
+    const { rerender } = render(
+      <FlipText play={false} onAnimationComplete={onDone}>
+        Ahoy
+      </FlipText>
+    );
+    const root = document.querySelector<HTMLElement>("[data-slot=flip-text]")!;
+    expect(root.dataset.state).toBe("armed");
+    expect(pieces(root, "flip-text-piece")[0]?.style.animationPlayState).toBe("paused");
+    rerender(
+      <FlipText play onAnimationComplete={onDone}>
+        Ahoy
+      </FlipText>
+    );
+    const characters = pieces(root, "flip-text-piece");
+    animationEnd(characters[0]!);
+    expect(onDone).not.toHaveBeenCalled();
+    animationEnd(characters[3]!);
+    expect(onDone).toHaveBeenCalledTimes(1);
   });
 });
 

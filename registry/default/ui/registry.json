@@ -997,6 +997,58 @@
       }
     },
     {
+      "name": "flip-text",
+      "type": "registry:ui",
+      "title": "Flip Text",
+      "description": "Kinetic type in 3D: characters or words turning into place around their horizontal axis, one after another.",
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
+      "categories": ["text"],
+      "files": [
+        {
+          "path": "flip-text.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-flip-text": "flip-text 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both"
+        }
+      },
+      "css": {
+        "@keyframes flip-text": {
+          "from": {
+            "opacity": "0",
+            "transform": "perspective(var(--flip-text-perspective, 600px)) rotateX(var(--flip-text-angle, -90deg))"
+          },
+          "to": {
+            "transform": "perspective(var(--flip-text-perspective, 600px)) rotateX(0deg)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "flip-text": {
+                  "from": {
+                    "opacity": "0",
+                    "transform": "perspective(var(--flip-text-perspective, 600px)) rotateX(var(--flip-text-angle, -90deg))"
+                  },
+                  "to": {
+                    "transform": "perspective(var(--flip-text-perspective, 600px)) rotateX(0deg)"
+                  }
+                }
+              },
+              "animation": {
+                "flip-text": "flip-text 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "dissolve-text",
       "type": "registry:ui",
       "title": "Dissolve Text",
@@ -1186,7 +1238,7 @@
       "name": "marquee",
       "type": "registry:ui",
       "title": "Marquee",
-      "description": "Content scrolling in a seamless loop, pausing on focus and off screen.",
+      "description": "Content scrolling in a seamless loop, pausing on focus and off screen, and draggable by the pointer.",
       "registryDependencies": [
         "@corsair-ui/utils",
         "@corsair-ui/use-in-view",
@@ -1634,6 +1686,56 @@
               },
               "animation": {
                 "scroll-progress": "scroll-progress linear both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scroll-background",
+      "type": "registry:ui",
+      "title": "Scroll Background",
+      "description": "A background that blends from one colour to the next as you scroll, with CSS scroll-driven animations and no JavaScript.",
+      "registryDependencies": ["@corsair-ui/utils"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "scroll-background.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-scroll-background": "scroll-background linear both"
+        }
+      },
+      "css": {
+        "@keyframes scroll-background": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "scroll-background": {
+                  "from": {
+                    "opacity": "0"
+                  },
+                  "to": {
+                    "opacity": "1"
+                  }
+                }
+              },
+              "animation": {
+                "scroll-background": "scroll-background linear both"
               }
             }
           }
