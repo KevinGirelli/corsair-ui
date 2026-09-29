@@ -6,6 +6,9 @@ import {
   useRef,
   type ComponentProps,
   type CSSProperties,
+  type DragEvent,
+  type MouseEvent,
+  type PointerEvent,
   type Ref,
 } from "react";
 
@@ -22,7 +25,10 @@ function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
   };
 }
 
-interface MarqueeProps extends ComponentProps<"div"> {
+/** How far, in px, the pointer moves before a press becomes a drag, so taps and clicks on links still work. */
+const DRAG_THRESHOLD = 5;
+
+interface MarqueeProps extends Omit<ComponentProps<"div">, "draggable"> {
   /** Which way the content travels. */
   direction?: "left" | "right" | "up" | "down";
   /** Seconds for the content to travel its own length. */
@@ -46,6 +52,20 @@ interface MarqueeProps extends ComponentProps<"div"> {
    * keyboard users can scroll it too.
    */
   label?: string;
+  /**
+   * Let the pointer grab the loop and drag it either way; it carries on from
+   * where it is let go. A press that moves less than a few pixels is still a
+   * click, so links inside keep working. With `prefers-reduced-motion` the
+   * marquee is a scroll box instead, and this does nothing.
+   */
+  draggable?: boolean;
+}
+
+/** The loop's CSS animation on the track, where the browser supports looking it up. */
+function loopAnimation(track: HTMLElement | null) {
+  return track
+    ?.getAnimations?.()
+    .find((animation) => (animation as CSSAnimation).animationName?.startsWith("marquee"));
 }
 
 /**
@@ -54,6 +74,8 @@ interface MarqueeProps extends ComponentProps<"div"> {
  * seamless are hidden from screen readers and cannot take focus; the loop
  * stops while a link inside has keyboard focus, and pauses off screen.
  * With `prefers-reduced-motion` it holds still and scrolls by hand instead.
+ * With `draggable`, the pointer can grab the loop: dragging seeks the same
+ * CSS animation, so the loop stays seamless and there are no scroll listeners.
  *
  * @example
  * <Marquee pauseOnHover gap="3rem">
@@ -71,10 +93,17 @@ function Marquee({
   fadeAmount = 10,
   repeat = 2,
   label = "Scrolling content",
+  draggable = false,
   className,
   style,
   ref,
   children,
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
+  onPointerCancel,
+  onClickCapture,
+  onDragStart,
   ...props
 }: MarqueeProps) {
   const [observe, inView] = useInView<HTMLDivElement>({ rootMargin: "100px" });
@@ -91,7 +120,93 @@ function Marquee({
   }, [reduced]);
 
   const vertical = direction === "up" || direction === "down";
+  const reversed = direction === "right" || direction === "down";
   const copies = Math.max(2, Math.floor(repeat));
+
+  const track = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ pointerId: number; start: number; last: number; moving: boolean }>(null);
+  // Set when a drag ends, so the click the browser fires after it does not follow a link.
+  const dragged = useRef(false);
+  const position = (event: PointerEvent<HTMLElement>) => (vertical ? event.clientY : event.clientX);
+
+  // Moves the loop by `distance` px by seeking its animation. Setting the
+  // time (rather than calling pause or play) keeps CSS in charge of pausing.
+  const seek = (distance: number) => {
+    const animation = loopAnimation(track.current);
+    if (!animation || !track.current) return;
+    const box = track.current.getBoundingClientRect();
+    const length = (vertical ? box.height : box.width) / copies;
+    const period = Number(animation.effect?.getComputedTiming().duration);
+    if (!length || !period) return;
+    // Forwards, the track moves towards the start as time runs; reversed, away from it.
+    const time =
+      Number(animation.currentTime ?? 0) + (distance / length) * period * (reversed ? 1 : -1);
+    animation.currentTime = ((time % period) + period) % period;
+  };
+
+  const endDrag = (event: PointerEvent<HTMLDivElement>, cancelled: boolean) => {
+    const current = drag.current;
+    if (!current || current.pointerId !== event.pointerId) return;
+    drag.current = null;
+    if (!current.moving) return;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    event.currentTarget.removeAttribute("data-dragging");
+    dragged.current = !cancelled;
+  };
+
+  const dragHandlers = draggable
+    ? {
+        onPointerDown(event: PointerEvent<HTMLDivElement>) {
+          onPointerDown?.(event);
+          dragged.current = false;
+          if (event.defaultPrevented || event.button !== 0 || drag.current) return;
+          const start = position(event);
+          drag.current = { pointerId: event.pointerId, start, last: start, moving: false };
+        },
+        onPointerMove(event: PointerEvent<HTMLDivElement>) {
+          onPointerMove?.(event);
+          const current = drag.current;
+          if (!current || current.pointerId !== event.pointerId) return;
+          const now = position(event);
+          if (!current.moving) {
+            if (Math.abs(now - current.start) < DRAG_THRESHOLD) return;
+            // Only now, so a plain click still lands on the link under the pointer.
+            current.moving = true;
+            event.currentTarget.setPointerCapture(event.pointerId);
+            event.currentTarget.setAttribute("data-dragging", "true");
+            // Pressing a link focuses it, and focus inside pauses the loop; a drag is not a visit.
+            const focused = document.activeElement;
+            if (focused instanceof HTMLElement && event.currentTarget.contains(focused)) {
+              focused.blur();
+            }
+          }
+          seek(now - current.last);
+          current.last = now;
+        },
+        onPointerUp(event: PointerEvent<HTMLDivElement>) {
+          onPointerUp?.(event);
+          endDrag(event, false);
+        },
+        onPointerCancel(event: PointerEvent<HTMLDivElement>) {
+          onPointerCancel?.(event);
+          endDrag(event, true);
+        },
+        onClickCapture(event: MouseEvent<HTMLDivElement>) {
+          onClickCapture?.(event);
+          if (!dragged.current) return;
+          dragged.current = false;
+          event.preventDefault();
+          event.stopPropagation();
+        },
+        // Links and images would otherwise start a native drag and steal the pointer.
+        onDragStart(event: DragEvent<HTMLDivElement>) {
+          onDragStart?.(event);
+          event.preventDefault();
+        },
+      }
+    : { onPointerDown, onPointerMove, onPointerUp, onPointerCancel, onClickCapture, onDragStart };
   const edge = Math.min(Math.max(fadeAmount, 0), 50);
   const mask = fade
     ? `linear-gradient(to ${vertical ? "bottom" : "right"}, transparent, #000 ${edge}%, #000 ${100 - edge}%, transparent)`
@@ -102,12 +217,17 @@ function Marquee({
       ref={mergedRef}
       data-slot="marquee"
       data-direction={direction}
+      data-draggable={draggable ? "" : undefined}
       // Still, it scrolls by hand: a named region, focusable (set below) for the keyboard.
       role={reduced ? "region" : undefined}
       aria-label={reduced ? label : undefined}
       className={cn(
         "group/marquee flex overflow-hidden motion-reduce:overflow-auto",
         vertical && "flex-col",
+        // Touch pans across the loop go to the drag; the page still scrolls the other way.
+        draggable && "motion-safe:cursor-grab motion-safe:select-none",
+        draggable && (vertical ? "motion-safe:touch-pan-x" : "motion-safe:touch-pan-y"),
+        draggable && "data-[dragging=true]:cursor-grabbing",
         className
       )}
       style={
@@ -120,11 +240,15 @@ function Marquee({
         } as CSSProperties
       }
       {...props}
+      {...dragHandlers}
     >
       <div
+        ref={track}
         data-slot="marquee-track"
         className={cn(
           "flex w-max shrink-0 group-focus-within/marquee:[animation-play-state:paused]",
+          // Held while dragged; the drag moves it by seeking the animation.
+          "group-data-[dragging=true]/marquee:[animation-play-state:paused]",
           vertical
             ? "motion-safe:animate-marquee-y h-max w-full flex-col"
             : "motion-safe:animate-marquee-x",
@@ -133,7 +257,7 @@ function Marquee({
         style={{
           // Each loop moves the track by one copy of the content.
           animationDuration: `${duration}s`,
-          animationDirection: direction === "right" || direction === "down" ? "reverse" : undefined,
+          animationDirection: reversed ? "reverse" : undefined,
           // Inline only when off screen, so hover and focus can still pause it.
           animationPlayState: inView ? undefined : "paused",
         }}

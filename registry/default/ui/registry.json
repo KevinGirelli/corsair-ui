@@ -1186,7 +1186,7 @@
       "name": "marquee",
       "type": "registry:ui",
       "title": "Marquee",
-      "description": "Content scrolling in a seamless loop, pausing on focus and off screen.",
+      "description": "Content scrolling in a seamless loop, pausing on focus and off screen, and draggable by the pointer.",
       "registryDependencies": [
         "@corsair-ui/utils",
         "@corsair-ui/use-in-view",
