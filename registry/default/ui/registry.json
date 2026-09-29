@@ -2341,6 +2341,45 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "bar-chart",
+      "type": "registry:ui",
+      "title": "Bar Chart",
+      "description": "One series as vertical or horizontal bars that grow in on first view, with a keyboard slider over the bars.",
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
+      "files": [
+        {
+          "path": "bar-chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "area-chart",
+      "type": "registry:ui",
+      "title": "Area Chart",
+      "description": "One or more series as gradient-filled areas, stacked or overlapping, with a legend and a keyboard slider over the points.",
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
+      "files": [
+        {
+          "path": "area-chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "donut-chart",
+      "type": "registry:ui",
+      "title": "Donut Chart",
+      "description": "Parts of a whole as a ring with the total in the middle and a keyboard-navigable legend of values and shares.",
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
+      "files": [
+        {
+          "path": "donut-chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
