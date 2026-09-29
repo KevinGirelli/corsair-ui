@@ -2,6 +2,23 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.13.0
+
+Charts beyond the line, and the application pages built from 0.12.0. Nothing from earlier releases changes.
+
+### Added
+
+- Charts, hand-written SVG like `line-chart`, each a keyboard slider (or, for the donut, a legend of toggle buttons) that screen readers hear value by value, animating in once in view and still with reduced motion:
+  - `bar-chart`: vertical or horizontal bars, negative values below a zero line, rounded ends and optional values on the bars.
+  - `area-chart`: one or more series, overlapping or stacked, with gradient fills and a legend.
+  - `donut-chart`: parts of a whole with a legend of values and shares; the total, or the highlighted part, in the hole.
+  - Default colours follow the theme: the primary colour, then lighter mixes of it with the background.
+- Blocks:
+  - `login-form` and `signup-form`: sign-in and sign-up cards with native validation, password reveal, optional providers and the same `onSubmit` status pattern as `contact-form`.
+  - `not-found`: a 404 section with a decorative code, a real `<h1>` and actions.
+  - `dashboard`: an application page on `sidebar`, with stat cards, a `line-chart` card and a `data-table` card.
+  - `settings`: profile, password with a delete-account dialog, and notification switches in tabs that stand vertically from 768px.
+
 ## 0.12.0
 
 Application pieces: the shell around an app and the parts dashboards and settings pages are made of. Nothing from earlier releases changes.
