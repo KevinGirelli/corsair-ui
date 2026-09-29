@@ -57,7 +57,7 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 - **Form layout:** field (no form library needed), form (react-hook-form)
 - **Display:** card, alert, separator, skeleton, avatar, rating, stat, progress, table
 - **Blocks:** hero, feature-grid, stats, logo-cloud, pricing, testimonials, faq, cta, contact-form, newsletter, site-footer
-- **Foundations:** theme, utils (`cn`), use-media-query, use-in-view, use-entrance
+- **Foundations:** theme (plus the presets theme-blue, theme-violet, theme-rose, theme-emerald and theme-amber), utils (`cn`), use-media-query, use-in-view, use-entrance
 
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
 
