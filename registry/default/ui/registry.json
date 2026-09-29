@@ -2203,6 +2203,144 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "An application sidebar that collapses to icons or off canvas on desktop and opens as a sheet on mobile, with a keyboard shortcut.",
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/button",
+        "@corsair-ui/separator",
+        "@corsair-ui/sheet",
+        "@corsair-ui/tooltip",
+        "@corsair-ui/use-media-query"
+      ],
+      "files": [
+        {
+          "path": "sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A bottom sheet dialog for phones that can also be dragged down to close.",
+      "dependencies": ["@radix-ui/react-dialog"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "A table with sortable headers, a text filter, pagination and row selection, built on TanStack Table v9.",
+      "dependencies": ["@tanstack/react-table@^9.2.4"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/table",
+        "@corsair-ui/pagination",
+        "@corsair-ui/checkbox",
+        "@corsair-ui/input"
+      ],
+      "files": [
+        {
+          "path": "data-table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropzone",
+      "type": "registry:ui",
+      "title": "Dropzone",
+      "description": "A file drop area on a native file input that checks type, size and count, and lists the chosen files.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
+      "files": [
+        {
+          "path": "dropzone.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "A key or key combination shown as a small keycap, alone or in a group.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "What a list, table or page shows when it has nothing in it yet, with an icon, title, description and actions.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "The steps of a multi-step flow with complete, current and upcoming states, horizontal or vertical.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "stepper.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "A vertical list of events with a coloured dot for each status and a line joining them.",
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "timeline.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Panels resized by dragging or with the keyboard, side by side or stacked.",
+      "dependencies": ["lucide-react", "react-resizable-panels@^4.14.1"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "files": [
+        {
+          "path": "resizable.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
