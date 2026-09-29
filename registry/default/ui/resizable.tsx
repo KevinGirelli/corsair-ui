@@ -35,6 +35,7 @@ interface ResizablePanelGroupProps extends Omit<ResizablePrimitive.GroupProps, "
 function ResizablePanelGroup({
   className,
   orientation = "horizontal",
+  style,
   ref,
   ...props
 }: ResizablePanelGroupProps) {
@@ -45,6 +46,9 @@ function ResizablePanelGroup({
       orientation={orientation}
       elementRef={ref}
       className={cn("size-full", className)}
+      // The library sets width and height to 100% inline, which would beat a
+      // size given in className (h-64); size-full above is the same default.
+      style={{ width: undefined, height: undefined, ...style }}
       {...props}
     />
   );

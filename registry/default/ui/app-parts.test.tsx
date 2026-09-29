@@ -335,4 +335,18 @@ describe("Resizable", () => {
     expect(separator.getAttribute("aria-orientation")).toBe("horizontal");
     expect(separator.querySelector('[data-slot="resizable-handle-grip"]')).toBeNull();
   });
+  it("takes its size from className, not an inline 100%", () => {
+    const groupRef = createRef<HTMLDivElement>();
+    render(
+      <ResizablePanelGroup ref={groupRef} className="h-64">
+        <ResizablePanel>One</ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel>Two</ResizablePanel>
+      </ResizablePanelGroup>
+    );
+    const group = groupRef.current!;
+    expect(group.style.height).toBe("");
+    expect(group.style.width).toBe("");
+    expect(group.className).toContain("h-64");
+  });
 });
