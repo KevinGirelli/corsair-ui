@@ -2240,6 +2240,40 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "A table with sortable headers, a text filter, pagination and row selection, built on TanStack Table v9.",
+      "dependencies": ["@tanstack/react-table@^9.2.4"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/table",
+        "@corsair-ui/pagination",
+        "@corsair-ui/checkbox",
+        "@corsair-ui/input"
+      ],
+      "files": [
+        {
+          "path": "data-table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropzone",
+      "type": "registry:ui",
+      "title": "Dropzone",
+      "description": "A file drop area on a native file input that checks type, size and count, and lists the chosen files.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button"],
+      "files": [
+        {
+          "path": "dropzone.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "resizable",
       "type": "registry:ui",
       "title": "Resizable",
