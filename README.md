@@ -44,8 +44,9 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 
 - **Actions:** button, copy-button, dash-button, badge, spinner, bars-spinner
 - **Form controls:** label, input, textarea, input-group, checkbox, radio-group, switch, select, color-swatches
-- **Richer inputs:** calendar, date-picker (single date and range), combobox, input-otp, slider, number-input, password-input, toggle, toggle-group
+- **Richer inputs:** calendar, date-picker (single date and range), combobox, input-otp, slider, number-input, password-input, toggle, toggle-group, dropzone
 - **Overlays:** dialog, alert-dialog, sheet, popover, hover-card, command, tooltip, toast
+- **App shell:** sidebar, drawer, resizable
 - **Menus:** dropdown-menu, context-menu, navigation-menu
 - **Navigation:** site-header, nav-link, dock, tabs, carousel, breadcrumb, pagination
 - **Disclosure:** accordion, collapsible, scroll-area
@@ -55,7 +56,7 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 - **Backgrounds:** aurora, light-rays, warp-gradient, topography, particles
 - **Data and embeds:** line-chart, qr-code, tweet-card, spotify-card (with `getSpotifyTrack` for the server), youtube-embed, code-block
 - **Form layout:** field (no form library needed), form (react-hook-form)
-- **Display:** card, alert, separator, skeleton, avatar, rating, stat, progress, table
+- **Display:** card, alert, separator, skeleton, avatar, rating, stat, progress, table, data-table, timeline, empty-state, kbd, stepper
 - **Blocks:** hero, feature-grid, stats, logo-cloud, pricing, testimonials, faq, cta, contact-form, newsletter, site-footer
 - **Foundations:** theme (plus the presets theme-blue, theme-violet, theme-rose, theme-emerald and theme-amber), utils (`cn`), use-media-query, use-in-view, use-entrance
 

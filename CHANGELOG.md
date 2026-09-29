@@ -2,6 +2,25 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.12.0
+
+Application pieces: the shell around an app and the parts dashboards and settings pages are made of. Nothing from earlier releases changes.
+
+### Added
+
+- Shell:
+  - `sidebar`: an application sidebar that collapses to icons (with tooltips) or off canvas, becomes a sheet below 768px, and toggles with ⌘B / Ctrl+B. `SidebarProvider`, `useSidebar`, menus with `asChild` links and an active page.
+  - `drawer`: a bottom sheet for phones on the Radix dialog, dragged down by its handle or header to close, with a spring back that reduced motion turns off.
+  - `resizable`: panels resized by dragging or the arrow keys, on `react-resizable-panels`.
+- Data and input:
+  - `data-table`: sorting, a text filter, pagination and row selection on TanStack Table v9, rendered with `table`, `pagination` and `checkbox`, with a live region for the selection and row counts.
+  - `dropzone`: drop or pick files on a native file input, checked against `accept`, `maxSize` and `maxFiles`, listed with their size and a remove button, and submitted with forms.
+- Small parts:
+  - `stepper`: the steps of a flow in a named `<nav>`, with `aria-current="step"` and optional buttons to move between steps.
+  - `timeline`: events in an ordered list, with a status colour and a `<time>`.
+  - `empty-state`: icon, title, description and actions for an empty view.
+  - `kbd`: keyboard keys and shortcuts.
+
 ## 0.11.0
 
 Theme presets, and a theme editor on the docs site that writes the variables for any other palette.
