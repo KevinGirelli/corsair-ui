@@ -20,7 +20,30 @@ interface ScrollBackgroundProps extends ComponentProps<"div"> {
    * "contain" while the element fills the viewport (or fits inside it).
    */
   range?: "cover" | "contain";
+  /**
+   * Where each colour is reached, in percent of the timeline, one per
+   * colour and in increasing order: `[0, 5, 14, 65, 100]`. The blend into a
+   * colour runs from the stop before it to its own. Without it the colours
+   * are spread evenly.
+   */
+  stops?: number[];
 }
+
+/** Evenly spread stops from 0 to 100, or the given ones clamped and kept in order. */
+function resolveStops(count: number, stops?: number[]) {
+  if (!stops || stops.length !== count) {
+    return Array.from({ length: count }, (_, index) =>
+      count > 1 ? (index / (count - 1)) * 100 : 0
+    );
+  }
+  let floor = 0;
+  return stops.map((stop) => {
+    floor = Math.min(Math.max(stop, floor), 100);
+    return floor;
+  });
+}
+
+const percent = (value: number) => `${Math.round(value * 100) / 100}%`;
 
 const DEFAULT_COLORS = [
   "var(--background)",
@@ -40,6 +63,10 @@ const DEFAULT_COLORS = [
  * It follows the nearest scroll container, and `overflow: hidden` makes one
  * that never scrolls. Clip with `overflow: clip` (`overflow-clip`) instead.
  *
+ * For a background behind the whole page, give it no children and fix it in
+ * place: `<ScrollBackground timeline="root" className="fixed inset-0 -z-10" />`.
+ * A colour can come back later in the list: each layer covers the ones before.
+ *
  * @example
  * <ScrollBackground colors={["#0b1d2a", "#12344d", "#1f5f7a"]} className="text-white">
  *   <section className="min-h-svh">…</section>
@@ -49,19 +76,20 @@ function ScrollBackground({
   colors = DEFAULT_COLORS,
   timeline = "view",
   range = "cover",
+  stops,
   className,
   style,
   children,
   ...props
 }: ScrollBackgroundProps) {
   const [base, ...rest] = colors;
-  const segments = rest.length;
+  const reached = resolveStops(colors.length, stops);
   const animationTimeline =
     timeline === "view" ? "view()" : timeline === "nearest" ? "scroll(nearest)" : "scroll(root)";
-  // Layer i fades in over the i-th equal stretch of the timeline.
+  // Layer i (colour i + 1) fades in between the stop before its colour and its own.
   const stretch = (index: number) => {
-    const start = `${Math.round((index / segments) * 10000) / 100}%`;
-    const end = `${Math.round(((index + 1) / segments) * 10000) / 100}%`;
+    const start = percent(reached[index]!);
+    const end = percent(reached[index + 1]!);
     return timeline === "view" ? `${range} ${start} ${range} ${end}` : `${start} ${end}`;
   };
 
