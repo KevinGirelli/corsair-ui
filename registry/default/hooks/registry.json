@@ -37,6 +37,18 @@
           "type": "registry:hook"
         }
       ]
+    },
+    {
+      "name": "use-scroll-spy",
+      "type": "registry:hook",
+      "title": "useScrollSpy",
+      "description": "The id of the section on screen, for a table of contents, from one IntersectionObserver. SSR-safe, keeps the last section between two.",
+      "files": [
+        {
+          "path": "use-scroll-spy.ts",
+          "type": "registry:hook"
+        }
+      ]
     }
   ]
 }
