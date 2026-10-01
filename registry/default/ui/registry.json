@@ -403,6 +403,20 @@
       ]
     },
     {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "description": "A switch between two or more options with one thumb that slides to the active one, in three sizes. Never empty.",
+      "dependencies": ["@radix-ui/react-toggle-group", "class-variance-authority"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-media-query"],
+      "files": [
+        {
+          "path": "segmented-control.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "number-input",
       "type": "registry:ui",
       "title": "Number Input",
