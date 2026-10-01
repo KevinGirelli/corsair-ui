@@ -1673,6 +1673,34 @@
       ]
     },
     {
+      "name": "phone-frame",
+      "type": "registry:ui",
+      "title": "Phone Frame",
+      "description": "A generic phone drawn in CSS around a screenshot or any content, with an island, a notch or no cut-out, that scales with its width.",
+      "registryDependencies": ["@corsair-ui/utils"],
+      "categories": ["creative"],
+      "files": [
+        {
+          "path": "phone-frame.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "browser-frame",
+      "type": "registry:ui",
+      "title": "Browser Frame",
+      "description": "A browser window drawn in CSS around a page or a screenshot, with window dots, an address field and optional actions.",
+      "registryDependencies": ["@corsair-ui/utils"],
+      "categories": ["creative"],
+      "files": [
+        {
+          "path": "browser-frame.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "youtube-embed",
       "type": "registry:ui",
       "title": "YouTube Embed",
