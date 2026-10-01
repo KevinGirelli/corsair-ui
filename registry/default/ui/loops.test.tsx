@@ -57,6 +57,20 @@ describe("Marquee", () => {
   });
 });
 
+describe("Marquee paused", () => {
+  it("holds still while paused from outside, even on screen", () => {
+    const { rerender } = render(<Marquee paused>Ports</Marquee>);
+    const root = document.querySelector("[data-slot=marquee]")!;
+    const track = document.querySelector<HTMLElement>("[data-slot=marquee-track]")!;
+    act(() => io.intersect(root, true));
+    expect(track.style.animationPlayState).toBe("paused");
+    expect(root.hasAttribute("data-paused")).toBe(true);
+    rerender(<Marquee>Ports</Marquee>);
+    expect(track.style.animationPlayState).toBe("");
+    expect(root.hasAttribute("data-paused")).toBe(false);
+  });
+});
+
 describe("Marquee draggable", () => {
   // jsdom runs no CSS animations: stand in for the loop's, 20 s long, on a
   // track of two 400 px copies.

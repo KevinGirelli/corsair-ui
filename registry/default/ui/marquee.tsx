@@ -37,6 +37,11 @@ interface MarqueeProps extends Omit<ComponentProps<"div">, "draggable"> {
   gap?: string;
   /** Hold still while the pointer is over it. */
   pauseOnHover?: boolean;
+  /**
+   * Hold it still from outside, for example while a dialog opened from it
+   * is up. It carries on from the same place once this is false again.
+   */
+  paused?: boolean;
   /** Fade the content out at both edges. */
   fade?: boolean;
   /** How much of each edge the fade covers, in percent. */
@@ -89,6 +94,7 @@ function Marquee({
   duration = 20,
   gap = "1rem",
   pauseOnHover = false,
+  paused = false,
   fade = true,
   fadeAmount = 10,
   repeat = 2,
@@ -217,6 +223,7 @@ function Marquee({
       ref={mergedRef}
       data-slot="marquee"
       data-direction={direction}
+      data-paused={paused ? "" : undefined}
       data-draggable={draggable ? "" : undefined}
       // Still, it scrolls by hand: a named region, focusable (set below) for the keyboard.
       role={reduced ? "region" : undefined}
@@ -258,8 +265,8 @@ function Marquee({
           // Each loop moves the track by one copy of the content.
           animationDuration: `${duration}s`,
           animationDirection: reversed ? "reverse" : undefined,
-          // Inline only when off screen, so hover and focus can still pause it.
-          animationPlayState: inView ? undefined : "paused",
+          // Inline only when held or off screen, so hover and focus can still pause it.
+          animationPlayState: paused || !inView ? "paused" : undefined,
         }}
       >
         {Array.from({ length: copies }, (_, copy) => (

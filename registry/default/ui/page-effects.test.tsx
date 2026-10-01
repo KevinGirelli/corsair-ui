@@ -158,6 +158,21 @@ describe("CustomCursor", () => {
     expect(document.documentElement.hasAttribute("data-custom-cursor")).toBe(false);
   });
 
+  it("draws its children and gives them the pointer's position", async () => {
+    installMatchMedia([FINE]);
+    render(
+      <CustomCursor dotSize={0}>
+        <div data-testid="crosshair" />
+      </CustomCursor>
+    );
+    const cursor = document.querySelector<HTMLElement>("[data-slot=custom-cursor]")!;
+    expect(cursor.querySelector("[data-testid=crosshair]")).not.toBeNull();
+    fireEvent.pointerMove(window, { clientX: 64, clientY: 32, pointerType: "mouse" });
+    await act(flushFrames);
+    expect(cursor.style.getPropertyValue("--cursor-x")).toBe("64px");
+    expect(cursor.style.getPropertyValue("--cursor-y")).toBe("32px");
+  });
+
   it("grows over interactive elements, shows labels, reacts to presses and hides outside the window", () => {
     installMatchMedia([FINE]);
     render(
@@ -269,6 +284,24 @@ describe("ScrollBackground", () => {
     expect(page).toContain("animation-range:0% 100%");
     const contained = renderToString(<ScrollBackground range="contain" colors={["red", "blue"]} />);
     expect(contained).toContain("animation-range:contain 0% contain 100%");
+  });
+
+  it("reaches each colour at its own stop, kept in order", () => {
+    const html = renderToString(
+      <ScrollBackground timeline="root" colors={["a", "b", "c", "d"]} stops={[0, 5, 3, 120]} />
+    );
+    // 3 comes after 5, so it is held at 5; 120 is clamped to 100.
+    expect(html).toContain("animation-range:0% 5%");
+    expect(html).toContain("animation-range:5% 5%");
+    expect(html).toContain("animation-range:5% 100%");
+  });
+
+  it("spreads the colours evenly when the stops do not match them", () => {
+    const html = renderToString(
+      <ScrollBackground timeline="root" colors={["a", "b", "c"]} stops={[0, 10]} />
+    );
+    expect(html).toContain("animation-range:0% 50%");
+    expect(html).toContain("animation-range:50% 100%");
   });
 
   it("is a plain background with a single colour", () => {

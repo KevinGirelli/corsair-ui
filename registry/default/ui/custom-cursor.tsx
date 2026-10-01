@@ -14,7 +14,7 @@ const HIDE_NATIVE_CURSOR =
 
 type CustomCursorState = "default" | "hover" | "pressed" | "hidden";
 
-interface CustomCursorProps extends Omit<ComponentProps<"div">, "children"> {
+interface CustomCursorProps extends ComponentProps<"div"> {
   /** Diameter of the ring at rest, in px. */
   size?: number;
   /** Diameter of the ring over something interactive, in px. */
@@ -31,6 +31,13 @@ interface CustomCursorProps extends Omit<ComponentProps<"div">, "children"> {
   interactiveSelector?: string;
   /** Content shown inside the ring over an element with `data-cursor="<key>"`. */
   labels?: Record<string, ReactNode>;
+  /**
+   * Extra decoration drawn with the cursor, such as crosshair lines. The
+   * root sets `--cursor-x` and `--cursor-y` to the pointer's position in px
+   * on every move, and `data-state` for hover and press, so children can
+   * follow it with CSS alone.
+   */
+  children?: ReactNode;
 }
 
 /**
@@ -42,11 +49,19 @@ interface CustomCursorProps extends Omit<ComponentProps<"div">, "children"> {
  * hidden from screen readers, never takes pointer events, and moves by
  * writing transforms once per frame, stopping when the pointer rests.
  * `data-state` is "default", "hover", "pressed", or "hidden" while the
- * pointer is outside the window.
+ * pointer is outside the window. Children are drawn with it, and can follow
+ * the pointer through `--cursor-x` and `--cursor-y`.
  *
  * @example
  * <CustomCursor labels={{ view: "View" }} />
  * <a href="/work/1" data-cursor="view">…</a>
+ *
+ * @example
+ * // A crosshair: lines across the window that meet at the pointer.
+ * <CustomCursor>
+ *   <div className="fixed inset-y-0 left-[var(--cursor-x)] w-px bg-current opacity-30" />
+ *   <div className="fixed inset-x-0 top-[var(--cursor-y)] h-px bg-current opacity-30" />
+ * </CustomCursor>
  */
 function CustomCursor(props: CustomCursorProps) {
   const fine = useMediaQuery("(hover: hover) and (pointer: fine)");
@@ -65,8 +80,10 @@ function CursorFollower({
   interactiveSelector = INTERACTIVE,
   labels,
   className,
+  children,
   ...props
 }: CustomCursorProps) {
+  const root = useRef<HTMLDivElement>(null);
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -93,6 +110,9 @@ function CursorFollower({
     let frame = 0;
 
     const place = () => {
+      // The exact pointer, for children that draw more than the dot and ring.
+      root.current?.style.setProperty("--cursor-x", `${target.x}px`);
+      root.current?.style.setProperty("--cursor-y", `${target.y}px`);
       if (dot.current) {
         dot.current.style.transform = `translate3d(${target.x}px, ${target.y}px, 0) translate(-50%, -50%)`;
       }
@@ -185,6 +205,7 @@ function CursorFollower({
 
   return createPortal(
     <div
+      ref={root}
       aria-hidden="true"
       data-slot="custom-cursor"
       data-state={state}
@@ -223,6 +244,7 @@ function CursorFollower({
           style={{ width: dotSize, height: dotSize, opacity: hovering ? 0 : 1 }}
         />
       ) : null}
+      {children}
     </div>,
     document.body
   );
