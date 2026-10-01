@@ -1063,6 +1063,78 @@
       }
     },
     {
+      "name": "split-flap",
+      "type": "registry:ui",
+      "title": "Split Flap",
+      "description": "A split-flap board: when the value changes, only the characters that changed flip, like a departure board.",
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/use-in-view",
+        "@corsair-ui/use-media-query"
+      ],
+      "categories": ["text"],
+      "files": [
+        {
+          "path": "split-flap.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-split-flap-top": "split-flap-top 150ms ease-in both",
+          "animate-split-flap-bottom": "split-flap-bottom 150ms ease-out both"
+        }
+      },
+      "css": {
+        "@keyframes split-flap-top": {
+          "from": {
+            "transform": "perspective(var(--split-flap-perspective, 400px)) rotateX(0deg)"
+          },
+          "to": {
+            "transform": "perspective(var(--split-flap-perspective, 400px)) rotateX(-90deg)"
+          }
+        },
+        "@keyframes split-flap-bottom": {
+          "from": {
+            "transform": "perspective(var(--split-flap-perspective, 400px)) rotateX(90deg)"
+          },
+          "to": {
+            "transform": "perspective(var(--split-flap-perspective, 400px)) rotateX(0deg)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "split-flap-top": {
+                  "from": {
+                    "transform": "perspective(var(--split-flap-perspective, 400px)) rotateX(0deg)"
+                  },
+                  "to": {
+                    "transform": "perspective(var(--split-flap-perspective, 400px)) rotateX(-90deg)"
+                  }
+                },
+                "split-flap-bottom": {
+                  "from": {
+                    "transform": "perspective(var(--split-flap-perspective, 400px)) rotateX(90deg)"
+                  },
+                  "to": {
+                    "transform": "perspective(var(--split-flap-perspective, 400px)) rotateX(0deg)"
+                  }
+                }
+              },
+              "animation": {
+                "split-flap-top": "split-flap-top 150ms ease-in both",
+                "split-flap-bottom": "split-flap-bottom 150ms ease-out both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "dissolve-text",
       "type": "registry:ui",
       "title": "Dissolve Text",
