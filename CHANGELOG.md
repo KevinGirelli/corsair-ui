@@ -2,6 +2,21 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.15.0
+
+The pieces a product landing page repeats: a nav that follows the reader, a switch with a sliding thumb, a board whose characters flip, and frames for phone and browser screenshots. Nothing from earlier releases changes unless you opt in.
+
+### Added
+
+- `use-scroll-spy`: the id of the section on screen, for a table of contents or a page nav that follows the reader. One IntersectionObserver watches every id (no scroll listeners), and an inline array of the same ids does not rebuild it. `rootMargin` sets the line that decides the active section (the middle of the viewport by default), and `defaultValue` is the answer on the server and until a section is reached; between two sections it keeps the last one. Server HTML and hydration agree, and browsers without IntersectionObserver keep `defaultValue` or the first id.
+- `segmented-control`: a switch between two or more options ("For players | For venues") with one thumb that slides to the active item, on the Radix toggle group: one Tab stop, arrow keys between items, and it never goes empty when the active item is pressed again. `value` / `defaultValue` / `onValueChange`, `size`, `thumbClassName`, and `duration` and `easing` for the slide. The thumb moves by transform only (FLIP) and jumps when the control or a label resizes; until it is measured the active item paints the pill itself, so server HTML shows no flash or layout shift. Reduced motion makes the thumb jump.
+- `split-flap`: a split-flap board, like the departure boards in stations and airports. When `value` changes, only the characters that changed flip: the top half of the old one falls away and the bottom half of the new one drops into place, cell after cell (`stagger`, `from`), optionally stepping through a `cycle` of characters on the way. `length` and `pad` reserve a fixed number of `1ch` cells so nothing around it moves, and `cellClassName` turns the cells into tiles. The server HTML already shows the value, the first render never flips, and changes swap in place while off screen or with reduced motion. Screen readers get the value in one piece, announced with `live="polite"`.
+- `phone-frame`: a generic phone drawn in CSS around a screenshot or any content, with no brand. Set the width with a class and the bezel, corners and cut-out scale with it (container units); `aspect` (default `9 / 19.5`) reserves the box at first paint. `notch` (`island`, `notch` or `none`), `bezel`, `radius`, `buttons` and `screenClassName`. The body, cut-out and side buttons are hidden from screen readers while the content keeps its own semantics. A server component with no motion, so it sits inside parallax, magnetic or tilt wrappers.
+- `browser-frame`: a browser window drawn in CSS around a page or a screenshot: window dots, an address field showing `url` as text, optional `actions` at the right and a viewport for the children. `aspect` reserves the window's box and lets the viewport fill what the bar leaves; without it the content sets the height. The dots are hidden from screen readers, the address too unless `announceUrl` is set, and the bar is hidden as a whole only when it has no `actions`. A server component with no motion.
+- `scroll-background`: `stops` sets where each colour is reached, in percent of the timeline (`[0, 5, 14, 65, 100]`), instead of spreading them evenly. Stops are clamped to 0–100 and kept in order, and a list that does not match the colours falls back to even spacing. A colour can come back later in the list, and the docs show it fixed behind a whole page.
+- `custom-cursor`: `children` are drawn with the cursor, such as crosshair lines across the window. The root sets `--cursor-x` and `--cursor-y` to the pointer's position on every move, so they can follow it with CSS alone.
+- `marquee`: `paused` holds the loop still from outside, for example while a dialog opened from it is up, and it carries on from the same place afterwards. The root has `data-paused` meanwhile.
+
 ## 0.14.0
 
 Three creative pieces: a marquee you can grab, type that turns in 3D, and a background that changes colour with the scroll. Nothing from earlier releases changes unless you opt in.

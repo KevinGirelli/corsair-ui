@@ -44,21 +44,21 @@ Every item is checked against both **Tailwind CSS 3.4** and **Tailwind CSS 4**, 
 
 - **Actions:** button, copy-button, dash-button, badge, spinner, bars-spinner
 - **Form controls:** label, input, textarea, input-group, checkbox, radio-group, switch, select, color-swatches
-- **Richer inputs:** calendar, date-picker (single date and range), combobox, input-otp, slider, number-input, password-input, toggle, toggle-group, dropzone
+- **Richer inputs:** calendar, date-picker (single date and range), combobox, input-otp, slider, number-input, password-input, toggle, toggle-group, segmented-control, dropzone
 - **Overlays:** dialog, alert-dialog, sheet, popover, hover-card, command, tooltip, toast
 - **App shell:** sidebar, drawer, resizable
 - **Menus:** dropdown-menu, context-menu, navigation-menu
 - **Navigation:** site-header, nav-link, dock, tabs, carousel, breadcrumb, pagination
 - **Disclosure:** accordion, collapsible, scroll-area
-- **Text:** text-reveal, blur-text, slide-text, flip-text, dissolve-text, highlight-text, scramble-text, shimmer-text, wave-text, text-signature, roll-text, number-ticker
+- **Text:** text-reveal, blur-text, slide-text, flip-text, split-flap, dissolve-text, highlight-text, scramble-text, shimmer-text, wave-text, text-signature, roll-text, number-ticker
 - **Motion:** reveal, magnetic, parallax, marquee, preloader, custom-cursor, scroll-progress, scroll-background, smooth-scroll
-- **Creative:** spotlight, animated-border, signature, hover-reveal, grain, corner-frame
+- **Creative:** spotlight, animated-border, signature, hover-reveal, grain, corner-frame, phone-frame, browser-frame
 - **Backgrounds:** aurora, light-rays, warp-gradient, topography, particles
 - **Data and embeds:** line-chart, bar-chart, area-chart, donut-chart, qr-code, tweet-card, spotify-card (with `getSpotifyTrack` for the server), youtube-embed, code-block
 - **Form layout:** field (no form library needed), form (react-hook-form)
 - **Display:** card, alert, separator, skeleton, avatar, rating, stat, progress, table, data-table, timeline, empty-state, kbd, stepper
 - **Blocks:** hero, feature-grid, stats, logo-cloud, pricing, testimonials, faq, cta, contact-form, newsletter, site-footer, login-form, signup-form, not-found, dashboard, settings
-- **Foundations:** theme (plus the presets theme-blue, theme-violet, theme-rose, theme-emerald and theme-amber), utils (`cn`), use-media-query, use-in-view, use-entrance
+- **Foundations:** theme (plus the presets theme-blue, theme-violet, theme-rose, theme-emerald and theme-amber), utils (`cn`), use-media-query, use-in-view, use-entrance, use-scroll-spy
 
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
 
