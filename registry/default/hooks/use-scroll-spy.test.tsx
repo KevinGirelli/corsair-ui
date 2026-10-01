@@ -126,3 +126,24 @@ describe("useScrollSpy", () => {
     expect(active()).toBe("intro");
   });
 });
+
+describe("useScrollSpy root", () => {
+  it("watches the sections inside the given scroll box", () => {
+    const Observer = globalThis.IntersectionObserver;
+    const options: (IntersectionObserverInit | undefined)[] = [];
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class extends Observer {
+        constructor(callback: IntersectionObserverCallback, init?: IntersectionObserverInit) {
+          super(callback, init);
+          options.push(init);
+        }
+      }
+    );
+    const box = document.createElement("div");
+    render(<Page ids={["a", "b"]} options={{ root: box, rootMargin: "0px" }} />);
+    expect(options.at(-1)?.root).toBe(box);
+    act(() => io.intersect(section("b"), true));
+    expect(active()).toBe("b");
+  });
+});
