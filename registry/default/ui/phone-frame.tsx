@@ -113,7 +113,7 @@ function PhoneFrame({
           <span
             aria-hidden="true"
             data-slot="phone-frame-notch"
-            className="bg-card pointer-events-none absolute top-0 left-1/2 z-10 h-[6.5cqw] w-[42cqw] -translate-x-1/2 rounded-b-[4.5cqw]"
+            className="bg-card border-border pointer-events-none absolute top-0 left-1/2 z-10 h-[6.5cqw] w-[42cqw] -translate-x-1/2 rounded-b-[4.5cqw] border border-t-0"
           />
         )}
       </div>
