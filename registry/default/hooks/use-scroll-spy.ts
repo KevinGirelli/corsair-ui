@@ -9,6 +9,12 @@ export interface UseScrollSpyOptions {
   rootMargin?: string;
   /** The active id on the server and before any section has been reached. */
   defaultValue?: string;
+  /**
+   * A scrolling element to watch the sections in, instead of the viewport,
+   * for a table of contents inside a scroll box. `rootMargin` then applies
+   * to it. Pass the element (from state or a callback ref), not a ref object.
+   */
+  root?: Element | null;
 }
 
 // Joins ids into one dependency, so an inline array does not rebuild the observer on every render.
@@ -45,7 +51,7 @@ const subscribe = () => () => {};
  */
 export function useScrollSpy(
   ids: string[],
-  { rootMargin = "-50% 0px -50% 0px", defaultValue }: UseScrollSpyOptions = {}
+  { rootMargin = "-50% 0px -50% 0px", defaultValue, root }: UseScrollSpyOptions = {}
 ): string | undefined {
   const [active, setActive] = useState<string | undefined>(defaultValue);
   // True on the server and while hydrating, so both render `defaultValue`.
@@ -79,11 +85,11 @@ export function useScrollSpy(
         // None on the line: between sections or above the first, keep the last one.
         if (first !== undefined) setActive(first);
       },
-      { rootMargin }
+      { root: root ?? null, rootMargin }
     );
     for (const element of idOf.keys()) observer.observe(element);
     return () => observer.disconnect();
-  }, [key, rootMargin]);
+  }, [key, rootMargin, root]);
 
   if (active === undefined && !supported) return ids[0];
   return active;
