@@ -209,6 +209,21 @@
       ]
     },
     {
+      "name": "flip-card",
+      "type": "registry:ui",
+      "title": "Flip Card",
+      "description": "A card with two faces that turns over in 3D on hover, from a trigger, or from a prop.",
+      "dependencies": ["@radix-ui/react-slot"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-media-query"],
+      "categories": ["creative"],
+      "files": [
+        {
+          "path": "flip-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
