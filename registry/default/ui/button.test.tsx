@@ -82,6 +82,9 @@ describe("Button", () => {
       "mb-[4px]",
       "before:translate-y-[4px]",
       "before:brightness-75",
+      "before:-z-20",
+      "after:bg-primary",
+      "after:-z-10",
       "active:translate-y-[4px]",
       "active:before:translate-y-0",
     ]) {

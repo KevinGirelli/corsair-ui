@@ -24,13 +24,16 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20",
         link: "text-primary underline-offset-4 hover:underline",
-        // A face on a 4 px base that it sinks into while pressed. The base is a
-        // pseudo-element, so only the face's transform moves; mb-[4px] keeps
-        // the base clear of whatever sits below.
+        // A face on a 4 px base that it sinks into while pressed. Both are
+        // pseudo-elements in the button's own stacking context, below the
+        // label: only the button's transform moves, and the base is moved
+        // back so it stays put. mb-[4px] keeps it clear of what sits below.
         raised: [
-          "bg-primary text-primary-foreground relative isolate mb-[4px] hover:brightness-105",
+          "text-primary-foreground relative isolate mb-[4px] bg-transparent hover:brightness-105",
           "transition-[color,background-color,border-color,box-shadow,opacity,transform,translate] duration-100",
-          "before:bg-primary before:absolute before:inset-0 before:-z-10 before:translate-y-[4px] before:rounded-[inherit] before:brightness-75",
+          // The face (::after) sits on the base (::before), both under the label.
+          "after:bg-primary after:absolute after:inset-0 after:-z-10 after:rounded-[inherit]",
+          "before:bg-primary before:absolute before:inset-0 before:-z-20 before:translate-y-[4px] before:rounded-[inherit] before:brightness-75",
           "active:translate-y-[4px] active:before:translate-y-0",
         ],
       },
