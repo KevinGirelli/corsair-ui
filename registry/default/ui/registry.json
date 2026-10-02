@@ -1857,6 +1857,56 @@
       }
     },
     {
+      "name": "scroll-scene",
+      "type": "registry:ui",
+      "title": "Scroll Scene",
+      "description": "A scrollytelling scene: a stage pinned beside steps, crossfading to the slide of the step on screen, with a 0 to 1 scroll progress variable for scrubbing.",
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-scroll-spy"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "scroll-scene.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-scroll-scene-progress": "scroll-scene-progress linear both"
+        }
+      },
+      "css": {
+        "@keyframes scroll-scene-progress": {
+          "from": {
+            "--scroll-scene-progress": "0"
+          },
+          "to": {
+            "--scroll-scene-progress": "1"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "scroll-scene-progress": {
+                  "from": {
+                    "--scroll-scene-progress": "0"
+                  },
+                  "to": {
+                    "--scroll-scene-progress": "1"
+                  }
+                }
+              },
+              "animation": {
+                "scroll-scene-progress": "scroll-scene-progress linear both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "smooth-scroll",
       "type": "registry:ui",
       "title": "Smooth Scroll",
