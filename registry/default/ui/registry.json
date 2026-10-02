@@ -2045,6 +2045,20 @@
       }
     },
     {
+      "name": "wipe-transition",
+      "type": "registry:ui",
+      "title": "Wipe Transition",
+      "description": "Switches content behind a band that sweeps across it, swapping while covered, with a crossfade for phones and reduced motion.",
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-media-query"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "wipe-transition.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "smooth-scroll",
       "type": "registry:ui",
       "title": "Smooth Scroll",
