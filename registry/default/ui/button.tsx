@@ -24,6 +24,15 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20",
         link: "text-primary underline-offset-4 hover:underline",
+        // A face on a 4 px base that it sinks into while pressed. The base is a
+        // pseudo-element, so only the face's transform moves; mb-[4px] keeps
+        // the base clear of whatever sits below.
+        raised: [
+          "bg-primary text-primary-foreground relative isolate mb-[4px] hover:brightness-105",
+          "transition-[color,background-color,border-color,box-shadow,opacity,transform,translate] duration-100",
+          "before:bg-primary before:absolute before:inset-0 before:-z-10 before:translate-y-[4px] before:rounded-[inherit] before:brightness-75",
+          "active:translate-y-[4px] active:before:translate-y-0",
+        ],
       },
       size: {
         sm: "h-8 gap-1.5 px-3 has-[>svg]:px-2.5",
@@ -49,6 +58,11 @@ interface ButtonProps extends ComponentProps<"button">, VariantProps<typeof butt
 }
 
 /**
+ * `variant="raised"` stands on a 4 px base, darker than the face, and sinks
+ * into it while pressed, like a key. It takes 4 px of margin below for the
+ * base. With `prefers-reduced-motion` the press still moves, without a
+ * transition.
+ *
  * The icon sizes render a square button: give it an `aria-label`, since there
  * is no visible text to name it.
  *
