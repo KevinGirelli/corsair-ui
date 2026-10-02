@@ -65,4 +65,40 @@ describe("Button", () => {
     expect(link.getAttribute("aria-disabled")).toBe("true");
     expect(link.hasAttribute("disabled")).toBe(false);
   });
+
+  it("stands on a base it sinks into with the raised variant, and leaves the others alone", () => {
+    render(
+      <>
+        <Button variant="raised">Join</Button>
+        <Button>Save</Button>
+        <Button asChild variant="raised">
+          <a href="/join">Join the crew</a>
+        </Button>
+      </>
+    );
+    const raised = screen.getByRole("button", { name: "Join" });
+    expect(raised.dataset.variant).toBe("raised");
+    for (const name of [
+      "mb-[4px]",
+      "before:translate-y-[4px]",
+      "before:brightness-75",
+      "before:-z-20",
+      "after:bg-primary",
+      "after:-z-10",
+      "active:translate-y-[4px]",
+      "active:before:translate-y-0",
+    ]) {
+      expect(raised.className).toContain(name);
+    }
+    // Only the face's transform moves: no transition of size or shadow offsets.
+    expect(raised.className).toContain(
+      "transition-[color,background-color,border-color,box-shadow,opacity,transform,translate]"
+    );
+    const plain = screen.getByRole("button", { name: "Save" });
+    expect(plain.className).not.toContain("before:");
+    expect(plain.className).not.toContain("mb-[4px]");
+    expect(screen.getByRole("link", { name: "Join the crew" }).className).toContain(
+      "active:translate-y-[4px]"
+    );
+  });
 });

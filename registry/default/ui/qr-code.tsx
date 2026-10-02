@@ -5,6 +5,7 @@ import type { ComponentProps, ReactNode } from "react";
 // encoder in the browser bundle.
 
 import { cn } from "@/registry/default/lib/utils";
+import { QRCodeReveal } from "@/registry/default/ui/qr-code-reveal";
 
 /** The three 7×7 corner squares scanners lock on to. */
 function inFinder(row: number, column: number, size: number) {
@@ -37,6 +38,15 @@ interface QRCodeProps extends Omit<ComponentProps<"svg">, "children"> {
   color?: string;
   /** Colour behind the modules. */
   background?: string;
+  /**
+   * Opt-in: the modules draw themselves from the centre outwards, on first
+   * paint ("load") or when the code scrolls into view ("in-view"). The
+   * background never animates, and with `prefers-reduced-motion` the code
+   * simply shows. Leave it unset for a plain server-only image.
+   */
+  reveal?: "load" | "in-view";
+  /** How long the reveal takes, in ms. */
+  revealDuration?: number;
 }
 
 /**
@@ -47,6 +57,9 @@ interface QRCodeProps extends Omit<ComponentProps<"svg">, "children"> {
  *
  * @example
  * <QRCode value="https://github.com/KevinGirelli/corsair-ui" size={180} />
+ *
+ * @example
+ * <QRCode value="https://github.com/KevinGirelli/corsair-ui" reveal="in-view" />
  */
 function QRCode({
   value,
@@ -56,6 +69,8 @@ function QRCode({
   margin = 2,
   color = "#0b0b0c",
   background = "#ffffff",
+  reveal,
+  revealDuration = 800,
   className,
   "aria-label": label,
   ...props
@@ -101,6 +116,21 @@ function QRCode({
     [quiet, quiet + count - 7],
   ] as const;
   const square = variant === "squares";
+  const modulesGroup = (
+    <g fill={color}>
+      {corners.map(([x, y]) => (
+        <g key={`${x}-${y}`}>
+          {/* The ring: an outer square with the inner one cut out. */}
+          <path
+            fillRule="evenodd"
+            d={`${roundedRect(x, y, 7, square ? 0 : 2.2)}${roundedRect(x + 1, y + 1, 5, square ? 0 : 1.4)}`}
+          />
+          <path d={roundedRect(x + 2, y + 2, 3, square ? 0 : 1)} />
+        </g>
+      ))}
+      {shapes}
+    </g>
+  );
 
   return (
     <svg
@@ -115,19 +145,13 @@ function QRCode({
       {...props}
     >
       <rect width={total} height={total} rx={square ? 0 : Math.min(quiet, 2)} fill={background} />
-      <g fill={color}>
-        {corners.map(([x, y]) => (
-          <g key={`${x}-${y}`}>
-            {/* The ring: an outer square with the inner one cut out. */}
-            <path
-              fillRule="evenodd"
-              d={`${roundedRect(x, y, 7, square ? 0 : 2.2)}${roundedRect(x + 1, y + 1, 5, square ? 0 : 1.4)}`}
-            />
-            <path d={roundedRect(x + 2, y + 2, 3, square ? 0 : 1)} />
-          </g>
-        ))}
-        {shapes}
-      </g>
+      {reveal ? (
+        <QRCodeReveal total={total} trigger={reveal} duration={revealDuration}>
+          {modulesGroup}
+        </QRCodeReveal>
+      ) : (
+        modulesGroup
+      )}
     </svg>
   );
 }

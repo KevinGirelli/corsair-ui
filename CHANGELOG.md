@@ -2,6 +2,17 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## 0.17.0
+
+The finishing touches of a product page: a band that sweeps the page from one side to the other, a stamp that slams down, a button that sinks like a key and a QR code that draws itself. Everything new is opt in; nothing from earlier releases changes.
+
+### Added
+
+- `wipe-transition`: switches content behind a band that sweeps across it, for "for players / for venues" pages, tabs, languages or themes. When `transitionKey` changes, the cover travels in (`direction`), the old children stay until it covers them, the new ones render underneath, `onCovered` runs (a good moment to scroll to the top), and the cover travels out; `onComplete` follows. `cover`, `duration`, `easing`, `fixed` to cover the viewport for whole pages, and `mode="fade"` for a crossfade on phones. Web Animations API on `transform` and `opacity` only; keys that change mid-run are queued so it always ends on the latest. The root is `aria-busy` while it runs, and focus that was inside the old content moves to the content wrapper instead of dropping to the page. Reduced motion always crossfades, over `reducedDuration` (150 ms).
+- `stamp`: a rubber stamp ("Sold out", "Paid") that slams onto the page, starting large and transparent and landing rotated with a small overshoot. `rotate`, `from`, `trigger` (`load` / `in-view`), `once`, `play`, `delay`, `duration`, `onAnimationComplete`, `as`. Content stays readable; server HTML and reduced motion show the stamp already in place.
+- `button`: `variant="raised"`, opt in: the face stands on a 4 px base, darker than it, and sinks into it while pressed, like a key. The base is a pseudo-element, so only the face's transform moves, and the button keeps 4 px of margin below for it. Works with `asChild` and every size; the other variants do not change.
+- `qr-code`: `reveal` ("load" or "in-view") lets the code draw itself from the centre outwards, through a growing circular mask over the dark modules only, so the background and quiet zone never move; `revealDuration` sets the time (800 ms). It only animates transform, server HTML and reduced motion show the complete, scannable code, and without `reveal` the markup is unchanged and stays server-only (the reveal lives in a small client part, `qr-code-reveal.tsx`).
+
 ## 0.16.0
 
 Scrollytelling and the motion a product page shows its product with: a stage pinned beside steps, a screenshot that straightens as you scroll, a beam travelling through a flow, and cards that turn over. Nothing from earlier releases changes.
