@@ -209,6 +209,21 @@
       ]
     },
     {
+      "name": "flip-card",
+      "type": "registry:ui",
+      "title": "Flip Card",
+      "description": "A card with two faces that turns over in 3D on hover, from a trigger, or from a prop.",
+      "dependencies": ["@radix-ui/react-slot"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-media-query"],
+      "categories": ["creative"],
+      "files": [
+        {
+          "path": "flip-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
@@ -597,6 +612,57 @@
       }
     },
     {
+      "name": "tilt-scroll",
+      "type": "registry:ui",
+      "title": "Tilt Scroll",
+      "description": "Content that starts tilted back in perspective and straightens as you scroll, with CSS scroll-driven animations and no JavaScript.",
+      "dependencies": ["@radix-ui/react-slot"],
+      "registryDependencies": ["@corsair-ui/utils"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "tilt-scroll.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-tilt-scroll": "tilt-scroll linear both"
+        }
+      },
+      "css": {
+        "@keyframes tilt-scroll": {
+          "from": {
+            "transform": "perspective(var(--tilt-scroll-perspective, 1200px)) rotateX(var(--tilt-scroll-angle, 20deg)) scale(var(--tilt-scroll-scale, 0.9))"
+          },
+          "to": {
+            "transform": "perspective(var(--tilt-scroll-perspective, 1200px)) rotateX(0deg) scale(1)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "tilt-scroll": {
+                  "from": {
+                    "transform": "perspective(var(--tilt-scroll-perspective, 1200px)) rotateX(var(--tilt-scroll-angle, 20deg)) scale(var(--tilt-scroll-scale, 0.9))"
+                  },
+                  "to": {
+                    "transform": "perspective(var(--tilt-scroll-perspective, 1200px)) rotateX(0deg) scale(1)"
+                  }
+                }
+              },
+              "animation": {
+                "tilt-scroll": "tilt-scroll linear both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "spotlight",
       "type": "registry:ui",
       "title": "Spotlight",
@@ -725,6 +791,78 @@
               },
               "animation": {
                 "signature-draw": "signature-draw linear both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "path-beam",
+      "type": "registry:ui",
+      "title": "Path Beam",
+      "description": "A beam of light travelling along the paths of a flow diagram, one after another, on view, with the scroll or from your own progress.",
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/use-in-view",
+        "@corsair-ui/use-media-query"
+      ],
+      "categories": ["creative"],
+      "files": [
+        {
+          "path": "path-beam.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-path-beam": "path-beam 1.2s ease-in-out both",
+          "animate-path-beam-progress": "path-beam-progress linear both"
+        }
+      },
+      "css": {
+        "@keyframes path-beam": {
+          "from": {
+            "stroke-dashoffset": "var(--path-beam-length, 0.2)"
+          },
+          "to": {
+            "stroke-dashoffset": "-1"
+          }
+        },
+        "@keyframes path-beam-progress": {
+          "from": {
+            "--path-beam-progress": "0"
+          },
+          "to": {
+            "--path-beam-progress": "1"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "path-beam": {
+                  "from": {
+                    "stroke-dashoffset": "var(--path-beam-length, 0.2)"
+                  },
+                  "to": {
+                    "stroke-dashoffset": "-1"
+                  }
+                },
+                "path-beam-progress": {
+                  "from": {
+                    "--path-beam-progress": "0"
+                  },
+                  "to": {
+                    "--path-beam-progress": "1"
+                  }
+                }
+              },
+              "animation": {
+                "path-beam": "path-beam 1.2s ease-in-out both",
+                "path-beam-progress": "path-beam-progress linear both"
               }
             }
           }
@@ -1850,6 +1988,56 @@
               },
               "animation": {
                 "scroll-background": "scroll-background linear both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scroll-scene",
+      "type": "registry:ui",
+      "title": "Scroll Scene",
+      "description": "A scrollytelling scene: a stage pinned beside steps, crossfading to the slide of the step on screen, with a 0 to 1 scroll progress variable for scrubbing.",
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-scroll-spy"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "scroll-scene.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-scroll-scene-progress": "scroll-scene-progress linear both"
+        }
+      },
+      "css": {
+        "@keyframes scroll-scene-progress": {
+          "from": {
+            "--scroll-scene-progress": "0"
+          },
+          "to": {
+            "--scroll-scene-progress": "1"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "scroll-scene-progress": {
+                  "from": {
+                    "--scroll-scene-progress": "0"
+                  },
+                  "to": {
+                    "--scroll-scene-progress": "1"
+                  }
+                }
+              },
+              "animation": {
+                "scroll-scene-progress": "scroll-scene-progress linear both"
               }
             }
           }
