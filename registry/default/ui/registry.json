@@ -224,6 +224,68 @@
       ]
     },
     {
+      "name": "stamp",
+      "type": "registry:ui",
+      "title": "Stamp",
+      "description": "A rubber stamp that slams onto the page: it starts large and transparent and lands rotated with a small overshoot.",
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "stamp.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-stamp": "stamp 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both"
+        }
+      },
+      "css": {
+        "@keyframes stamp": {
+          "from": {
+            "opacity": "0",
+            "transform": "rotate(var(--stamp-rotate, -8deg)) scale(var(--stamp-from, 1.6))"
+          },
+          "70%": {
+            "opacity": "1",
+            "transform": "rotate(var(--stamp-rotate, -8deg)) scale(0.96)"
+          },
+          "to": {
+            "opacity": "1",
+            "transform": "rotate(var(--stamp-rotate, -8deg)) scale(1)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "stamp": {
+                  "from": {
+                    "opacity": "0",
+                    "transform": "rotate(var(--stamp-rotate, -8deg)) scale(var(--stamp-from, 1.6))"
+                  },
+                  "70%": {
+                    "opacity": "1",
+                    "transform": "rotate(var(--stamp-rotate, -8deg)) scale(0.96)"
+                  },
+                  "to": {
+                    "opacity": "1",
+                    "transform": "rotate(var(--stamp-rotate, -8deg)) scale(1)"
+                  }
+                }
+              },
+              "animation": {
+                "stamp": "stamp 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
