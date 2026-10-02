@@ -1597,16 +1597,56 @@
       "name": "qr-code",
       "type": "registry:ui",
       "title": "QR Code",
-      "description": "A crisp SVG QR code in dots, rounded or square modules. Renders on the server.",
+      "description": "A crisp SVG QR code in dots, rounded or square modules. Renders on the server, and can draw itself in.",
       "dependencies": ["qrcode@^1.5.4"],
       "devDependencies": ["@types/qrcode@^1.5.6"],
-      "registryDependencies": ["@corsair-ui/utils"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/use-entrance"],
       "files": [
         {
           "path": "qr-code.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "qr-code-reveal.tsx",
+          "type": "registry:ui"
         }
-      ]
+      ],
+      "cssVars": {
+        "theme": {
+          "animate-qr-code-reveal": "qr-code-reveal 800ms cubic-bezier(0.16, 1, 0.3, 1) both"
+        }
+      },
+      "css": {
+        "@keyframes qr-code-reveal": {
+          "from": {
+            "transform": "scale(0)"
+          },
+          "to": {
+            "transform": "scale(1)"
+          }
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "qr-code-reveal": {
+                  "from": {
+                    "transform": "scale(0)"
+                  },
+                  "to": {
+                    "transform": "scale(1)"
+                  }
+                }
+              },
+              "animation": {
+                "qr-code-reveal": "qr-code-reveal 800ms cubic-bezier(0.16, 1, 0.3, 1) both"
+              }
+            }
+          }
+        }
+      }
     },
     {
       "name": "tweet-card",

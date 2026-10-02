@@ -1,4 +1,5 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { hydrateRoot } from "react-dom/client";
 import { renderToString } from "react-dom/server";
 import type { Tweet } from "react-tweet/api";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -8,6 +9,7 @@ import { LineChart } from "@/registry/default/ui/line-chart";
 import { QRCode } from "@/registry/default/ui/qr-code";
 import { SpotifyCard } from "@/registry/default/ui/spotify-card";
 import { TweetCard } from "@/registry/default/ui/tweet-card";
+import { installIntersectionObserver, installMatchMedia } from "@/test-utils/browser";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -82,6 +84,70 @@ describe("QRCode", () => {
     expect(container.querySelector("svg")?.getAttribute("shape-rendering")).toBe("crispEdges");
     rerender(<QRCode value={"x".repeat(5000)} errorCorrection="H" />);
     expect(container.querySelector("svg")).toBeNull();
+  });
+
+  it("draws no mask by default", () => {
+    const html = renderToString(<QRCode value="corsair" />);
+    expect(html).not.toContain("<mask");
+    expect(html).not.toContain("animate-qr-code-reveal");
+  });
+
+  it("masks only the modules with a growing circle when reveal is set", () => {
+    const { container } = render(
+      <>
+        <QRCode value="corsair" reveal="load" revealDuration={1200} />
+        <QRCode value="corsair" reveal="load" />
+      </>
+    );
+    const [first, second] = [...container.querySelectorAll("svg")];
+    const mask = first!.querySelector("mask")!;
+    const id = mask.getAttribute("id")!;
+    expect(id).toMatch(/^[\w-]+$/);
+    expect(second!.querySelector("mask")!.getAttribute("id")).not.toBe(id);
+    expect(first!.querySelector(`[mask="url(#${id})"]`)?.querySelector("path")).not.toBeNull();
+    // The background rect sits outside the mask, so the quiet zone always shows.
+    expect(first!.firstElementChild?.tagName.toLowerCase()).toBe("rect");
+    expect(first!.firstElementChild?.closest("[mask]")).toBeNull();
+    const shape = mask.querySelector<SVGCircleElement>("[data-slot=qr-code-reveal-shape]")!;
+    expect(shape.getAttribute("class")).toContain("motion-safe:animate-qr-code-reveal");
+    expect(shape.style.animationDuration).toBe("1200ms");
+    expect(shape.style.animationPlayState).toBe("");
+  });
+
+  it("keeps the full mask in server HTML for in-view, then arms and plays it", async () => {
+    const io = installIntersectionObserver();
+    const html = renderToString(<QRCode value="corsair" reveal="in-view" />);
+    expect(html).toContain("<mask");
+    expect(html).not.toContain("animate-qr-code-reveal");
+    expect(html).not.toContain("paused");
+
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    document.body.append(container);
+    await act(async () => {
+      hydrateRoot(container, <QRCode value="corsair" reveal="in-view" />);
+    });
+    const group = container.querySelector("[data-slot=qr-code-reveal]")!;
+    const shape = container.querySelector<SVGCircleElement>("[data-slot=qr-code-reveal-shape]")!;
+    expect(group.getAttribute("data-state")).toBe("static");
+    act(() => io.intersect(group, false));
+    expect(group.getAttribute("data-state")).toBe("armed");
+    expect(shape.style.animationPlayState).toBe("paused");
+    act(() => io.intersect(group, true));
+    expect(group.getAttribute("data-state")).toBe("play");
+    expect(shape.style.animationPlayState).toBe("");
+    container.remove();
+  });
+
+  it("leaves reduced motion to motion-safe, so the code shows complete", () => {
+    installMatchMedia(["(prefers-reduced-motion: reduce)"]);
+    const { container } = render(<QRCode value="corsair" reveal="load" />);
+    const shape = container.querySelector("[data-slot=qr-code-reveal-shape]")!;
+    expect(shape.getAttribute("class")).not.toMatch(/(^|\s)animate-qr-code-reveal/);
+    expect(shape.getAttribute("class")).toContain("motion-safe:animate-qr-code-reveal");
+    expect(Number(shape.getAttribute("r"))).toBeGreaterThanOrEqual(
+      Number(shape.getAttribute("cx")) * Math.SQRT2 - 1e-9
+    );
   });
 });
 
