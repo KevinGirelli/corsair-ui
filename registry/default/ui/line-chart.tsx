@@ -28,6 +28,8 @@ interface Point {
 }
 
 const n = (value: number) => Math.round(value * 100) / 100;
+/** A length in the drawing's units as a share of the plot's width. */
+const cqw = (value: number) => `${n((value / WIDTH) * 100)}cqw`;
 
 /** Straight segments; the stroke's round joins soften the corners. */
 function linearPath(points: Point[]) {
@@ -251,10 +253,13 @@ function LineChart({
   const valueText =
     formatValueText?.(point.value, index) ?? `${label ? `${label}: ` : ""}${formatted}`;
 
-  // Positions in px, for transforms: they move on the compositor.
-  const scale = width / WIDTH;
-  const cursorX = point.x * scale;
-  const cursorY = point.y * scale;
+  // Positions for transforms, so they move on the compositor. In container
+  // units of the plot (its width is 100cqw, its height a third of that), so
+  // they are right before the plot is measured too: the server render and the
+  // first paint place nothing past the plot's edge, which on a phone would
+  // widen the page.
+  const cursorX = cqw(point.x);
+  const cursorY = cqw(point.y);
   const flip = point.x > WIDTH / 2;
   const transition = animated ? `transform 220ms ${EASE}` : undefined;
 
@@ -276,7 +281,8 @@ function LineChart({
         aria-valuetext={valueText}
         aria-orientation="horizontal"
         data-slot="line-chart-plot"
-        className="focus-visible:ring-ring/50 relative aspect-[3/1] w-full touch-pan-y rounded-md outline-none focus-visible:ring-[3px]"
+        // A size container: the cursor, dot and tooltip are placed in its cqw.
+        className="focus-visible:ring-ring/50 [container-type:inline-size] relative aspect-[3/1] w-full touch-pan-y rounded-md outline-none focus-visible:ring-[3px]"
         onPointerMove={onPointer}
         onPointerDown={onPointer}
         onKeyDown={onKeyDown}
@@ -338,14 +344,14 @@ function LineChart({
           aria-hidden="true"
           data-slot="line-chart-cursor"
           className="bg-border pointer-events-none absolute top-[11%] left-0 h-[86%] w-px motion-reduce:!transition-none"
-          style={{ transform: `translate3d(${cursorX}px, 0, 0)`, transition }}
+          style={{ transform: `translate3d(${cursorX}, 0, 0)`, transition }}
         />
         {showDot ? (
           <div
             aria-hidden="true"
             data-slot="line-chart-dot"
             className="pointer-events-none absolute top-0 left-0 -mt-1.5 -ml-1.5 size-3 rounded-full bg-[color:var(--line-chart-color)] shadow-[0_0_0_2px_var(--background)] motion-reduce:!transition-none"
-            style={{ transform: `translate3d(${cursorX}px, ${cursorY}px, 0)`, transition }}
+            style={{ transform: `translate3d(${cursorX}, ${cursorY}, 0)`, transition }}
           />
         ) : null}
         {/* A zero-size anchor rides on the point; the card hangs off its side. */}
@@ -353,7 +359,7 @@ function LineChart({
           aria-hidden="true"
           data-slot="line-chart-tooltip-anchor"
           className="pointer-events-none absolute top-0 left-0 z-10 size-0 motion-reduce:!transition-none"
-          style={{ transform: `translate3d(${cursorX}px, ${cursorY}px, 0)`, transition }}
+          style={{ transform: `translate3d(${cursorX}, ${cursorY}, 0)`, transition }}
         >
           <div
             data-slot="line-chart-tooltip"

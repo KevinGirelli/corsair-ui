@@ -134,7 +134,10 @@ function Stepper({
       <ol
         data-slot="stepper-list"
         data-orientation={orientation}
-        className={cn("flex", orientation === "vertical" ? "flex-col" : "items-center gap-2")}
+        className={cn(
+          "flex",
+          orientation === "vertical" ? "flex-col" : "items-center gap-1.5 sm:gap-2"
+        )}
       >
         <StepperContext.Provider value={{ value, setValue, orientation, linear, labels }}>
           {children}
@@ -163,7 +166,11 @@ function StepperItem({ step, className, ...props }: StepperItemProps) {
           "group/stepper-item",
           orientation === "vertical"
             ? "relative flex flex-col pb-6 last:pb-0"
-            : "flex items-center gap-2 [&:not(:last-child)]:flex-1",
+            : // On small screens steps start from their content's width, as only
+              // the current one shows its title, and the lines share what is left.
+              "flex items-center gap-1.5 sm:gap-2 [&:not(:last-child)]:flex-1 max-sm:[&:not(:last-child)]:flex-auto",
+          // The step that gives way when even that does not fit: its title is cut short.
+          orientation === "horizontal" && state === "current" && "min-w-0",
           className
         )}
         {...props}
@@ -198,7 +205,7 @@ function StepperTrigger({
           if (!event.defaultPrevented) setValue(step);
         }}
         className={cn(
-          "inline-flex cursor-pointer items-center gap-2 rounded-md text-left",
+          "inline-flex min-w-0 cursor-pointer items-center gap-2 rounded-md text-left",
           "transition-[color,box-shadow] outline-none motion-reduce:transition-none",
           "focus-visible:ring-ring/50 focus-visible:ring-[3px]",
           "disabled:cursor-not-allowed disabled:opacity-50",
@@ -248,12 +255,21 @@ function StepperIndicator({ className, children, ...props }: ComponentProps<"spa
   );
 }
 
+/**
+ * The step's name. In a horizontal Stepper on small screens only the current
+ * step shows its title, cut short if it still does not fit, so the row fits
+ * a phone; the others are still read out, and still name their `StepperTrigger`.
+ */
 function StepperTitle({ className, ...props }: ComponentProps<"span">) {
+  const stepper = useContext(StepperContext);
+  const item = useContext(StepperItemContext);
+  const horizontal = stepper?.orientation === "horizontal" && item !== null;
   return (
     <span
       data-slot="stepper-title"
       className={cn(
         "group-data-[state=upcoming]/stepper-item:text-muted-foreground block text-sm font-medium",
+        horizontal && (item.state === "current" ? "max-sm:truncate" : "max-sm:sr-only"),
         className
       )}
       {...props}
@@ -287,7 +303,7 @@ function StepperSeparator({ className, ...props }: ComponentProps<"span">) {
         "group-data-[state=complete]/stepper-item:bg-primary transition-colors motion-reduce:transition-none",
         orientation === "vertical"
           ? "absolute top-10 bottom-2 left-[calc(1rem-0.5px)] w-px"
-          : "h-px min-w-4 flex-1",
+          : "h-px min-w-2 flex-1 sm:min-w-4",
         className
       )}
       {...props}
