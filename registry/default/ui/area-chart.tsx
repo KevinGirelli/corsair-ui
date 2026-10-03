@@ -29,6 +29,8 @@ interface Point {
 }
 
 const n = (value: number) => Math.round(value * 100) / 100;
+/** A length in the drawing's units as a share of the plot's width. */
+const cqw = (value: number) => `${n((value / WIDTH) * 100)}cqw`;
 
 /** Straight segments; the stroke's round joins soften the corners. */
 function linearPath(points: Point[]) {
@@ -314,10 +316,13 @@ function AreaChart({
       .map((layer, at) => `${layer.name} ${numbers.format(current[at]!)}`)
       .join(", ")}`;
 
-  // Positions in px, for transforms: they move on the compositor.
-  const scale = width / WIDTH;
+  // Positions for transforms, so they move on the compositor. In container
+  // units of the plot (its width is 100cqw, its height a third of that), so
+  // they are right before the plot is measured too: the server render and the
+  // first paint place nothing past the plot's edge, which on a phone would
+  // widen the page.
   const x = layers[0]!.points[index]!.x;
-  const cursorX = x * scale;
+  const cursorX = cqw(x);
   const highest = Math.min(...layers.map((layer) => layer.points[index]!.y));
   const flip = x > WIDTH / 2;
   const transition = animated ? `transform 220ms ${EASE}` : undefined;
@@ -343,7 +348,8 @@ function AreaChart({
         aria-orientation="horizontal"
         data-slot="area-chart-plot"
         data-state={entrance}
-        className="focus-visible:ring-ring/50 relative aspect-[3/1] w-full touch-pan-y rounded-md outline-none focus-visible:ring-[3px]"
+        // A size container: the cursor, dots and tooltip are placed in its cqw.
+        className="focus-visible:ring-ring/50 [container-type:inline-size] relative aspect-[3/1] w-full touch-pan-y rounded-md outline-none focus-visible:ring-[3px]"
         onPointerMove={onPointer}
         onPointerDown={onPointer}
         onKeyDown={onKeyDown}
@@ -410,7 +416,7 @@ function AreaChart({
             "bg-border pointer-events-none absolute top-[11%] left-0 h-[86%] w-px motion-reduce:!transition-none",
             hidden
           )}
-          style={{ transform: `translate3d(${n(cursorX)}px, 0, 0)`, transition }}
+          style={{ transform: `translate3d(${cursorX}, 0, 0)`, transition }}
         />
         {showDot
           ? layers.map((layer, at) => (
@@ -424,7 +430,7 @@ function AreaChart({
                 )}
                 style={{
                   backgroundColor: layer.color,
-                  transform: `translate3d(${n(cursorX)}px, ${n(layer.points[index]!.y * scale)}px, 0)`,
+                  transform: `translate3d(${cursorX}, ${cqw(layer.points[index]!.y)}, 0)`,
                   transition,
                 }}
               />
@@ -439,7 +445,7 @@ function AreaChart({
             hidden
           )}
           style={{
-            transform: `translate3d(${n(cursorX)}px, ${n(highest * scale)}px, 0)`,
+            transform: `translate3d(${cursorX}, ${cqw(highest)}, 0)`,
             transition,
           }}
         >

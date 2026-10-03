@@ -265,6 +265,11 @@ function BarChart({
   const tipY = vertical ? bar.tip : bar.center;
   const flip = tipX > width / 2;
   const anchorX = vertical ? tipX + (flip ? -1 : 1) * (bar.thickness / 2) : tipX;
+  // In container units of the plot (its width is 100cqw), so the anchor is
+  // right before the plot is measured too: the server render and the first
+  // paint place nothing past the plot's edge, which on a phone would widen
+  // the page. A horizontal chart's height is fixed in px, so its y stays in px.
+  const anchor = `${n((anchorX / width) * 100)}cqw, ${vertical ? `${n((tipY / width) * 100)}cqw` : `${n(tipY)}px`}`;
   const glide = animated ? `transform 220ms ${EASE}` : undefined;
   const stagger = Math.min(60, 480 / bars.length);
 
@@ -306,8 +311,9 @@ function BarChart({
         data-slot="bar-chart-plot"
         data-state={entrance}
         data-engaged={engaged ? "" : undefined}
+        // A size container: the tooltip is placed in its cqw.
         className={cn(
-          "focus-visible:ring-ring/50 relative w-full rounded-md outline-none focus-visible:ring-[3px]",
+          "focus-visible:ring-ring/50 [container-type:inline-size] relative w-full rounded-md outline-none focus-visible:ring-[3px]",
           vertical ? "aspect-[3/1] touch-pan-y" : "touch-pan-x"
         )}
         style={vertical ? undefined : { height: ROW * bars.length }}
@@ -388,7 +394,7 @@ function BarChart({
           aria-hidden="true"
           data-slot="bar-chart-tooltip-anchor"
           className="pointer-events-none absolute top-0 left-0 z-10 size-0 motion-reduce:!transition-none"
-          style={{ transform: `translate3d(${n(anchorX)}px, ${n(tipY)}px, 0)`, transition: glide }}
+          style={{ transform: `translate3d(${anchor}, 0)`, transition: glide }}
         >
           <div
             data-slot="bar-chart-tooltip"
