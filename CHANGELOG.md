@@ -12,6 +12,8 @@ Corsair goes to phones: a React Native registry, and the first animated variatio
   - `theme`: the web theme's colours for light and dark mode, radii from one value, type sizes, font families per weight (custom fonts in React Native ignore `fontWeight`), shadows as `boxShadow` and springs for Animated and Reanimated. `useTheme()` follows the device, `ThemeProvider` forces a scheme, and `withAlpha()` stands in for opacity modifiers.
   - `haptics`: `haptic("selection" | "light" | "success" …)` on expo-haptics, fire-and-forget and silent on the web, with `setHapticsEnabled()` for an app-wide setting.
   - `use-reduced-motion`: the device's Reduce Motion setting, followed live.
+  - `text` (headings announced as such; containers pass their label colour to it), `button` (every web variant including `raised`, sizes with a 44 px touch area, `loading`), `badge`, `card`, `separator`, `avatar` (with `AvatarGroup`), `alert`, `input`, `empty-state` and `spinner`.
+  - `skeleton`, `progress`, `switch`, `checkbox` and `segmented-control`, animated on the native thread and still with Reduce Motion.
 - Variations: animated takes on a component with the same props, marked with `meta.variantOf` in the registry. The first is `wave-rating`: sweeping a finger (or a pen or mouse) across the stars lifts them in a wave that crests under it, a tip shows the score, and letting go pops the chosen star; on phones each star ticks with a vibration where the browser allows it. It keeps the rating's radio group, its form support and its read-only image, and holds still with reduced motion.
 
 ### Changed

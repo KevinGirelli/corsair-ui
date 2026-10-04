@@ -8,8 +8,8 @@
 <h1 align="center">Corsair UI</h1>
 
 <p align="center">
-  <strong>Open-source React components, motion effects and page blocks for shadcn/ui and Tailwind CSS.</strong><br />
-  145 accessible items you install as source code with the shadcn CLI, checked against Tailwind CSS 3.4 and 4.
+  <strong>Open-source React components, motion effects and page blocks for shadcn/ui and Tailwind CSS, and their React Native counterparts for Expo.</strong><br />
+  145 accessible web items checked against Tailwind CSS 3.4 and 4, plus 18 React Native items checked against Expo SDK 54 and 57, all installed as source code with the shadcn CLI.
 </p>
 
 <p align="center">
@@ -45,6 +45,44 @@ pnpm dlx shadcn@latest add @corsair-ui/button @corsair-ui/split-flap @corsair-ui
 
 No account, package or config: `@corsair-ui` is listed in the [shadcn registry directory](https://ui.shadcn.com/docs/directory), so the CLI finds it. Every item has a page with live examples, its API and accessibility notes at [corsairui.vercel.app/docs](https://corsairui.vercel.app/docs).
 
+### React Native (Expo)
+
+The same components for apps, with the same names, variants and colours, written for touch and checked on Expo SDK 54 and 57. In an Expo app, add a `components.json` that points the `@corsair-native` namespace at the registry and maps the aliases to your folders (with `"@/*": ["./src/*"]` in `tsconfig.json`):
+
+```json
+{
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks",
+    "utils": "@/lib/utils"
+  },
+  "registries": {
+    "@corsair-native": "https://kevingirelli.github.io/corsair-ui/r/native/{name}.json"
+  }
+}
+```
+
+Then install the native modules your Expo SDK expects, and the items:
+
+```bash
+npx expo install expo-haptics
+pnpm dlx shadcn@latest add @corsair-native/button @corsair-native/card @corsair-native/switch
+```
+
+Colours, radii, type and springs live in `lib/theme.ts`, copied with the first item: edit it to brand the app. Components follow the device's light or dark mode; `ThemeProvider` forces one.
+
 ## Why Corsair UI
 
 - **The code is yours.** Items land in your project as plain React and Tailwind code, like shadcn/ui: change anything, keep no dependency on this repository.
@@ -53,6 +91,7 @@ No account, package or config: `@corsair-ui` is listed in the [shadcn registry d
 - **Accessible by default.** Radix primitives for behaviour, strict `eslint-plugin-jsx-a11y`, keyboard support, and axe run on every docs page.
 - **Motion with a reason.** Only `transform` and `opacity` animate, scroll effects use CSS scroll-driven animations instead of scroll listeners, loops pause off screen, and `prefers-reduced-motion` is respected everywhere.
 - **Themes.** A theme editor and five presets with WCAG AA contrast in light and dark mode.
+- **On phones too.** Corsair Native has the same components for React Native: 44 px touch targets, haptics, screen reader patterns that iOS and Android expect, and motion on the native thread.
 - **Variations with more motion.** Some components come in an animated take with the same props, like `wave-rating`, whose stars rise in a wave under your finger. Swap one for the other by name.
 - **Ready for AI assistants.** `llms.txt`, Markdown docs for every item, and the shadcn MCP server work out of the box.
 
@@ -105,6 +144,13 @@ Every name links to its docs page, with live examples.
 - **Blocks:** [hero](https://corsairui.vercel.app/docs/hero), [feature-grid](https://corsairui.vercel.app/docs/feature-grid), [stats](https://corsairui.vercel.app/docs/stats), [logo-cloud](https://corsairui.vercel.app/docs/logo-cloud), [pricing](https://corsairui.vercel.app/docs/pricing), [testimonials](https://corsairui.vercel.app/docs/testimonials), [faq](https://corsairui.vercel.app/docs/faq), [cta](https://corsairui.vercel.app/docs/cta), [contact-form](https://corsairui.vercel.app/docs/contact-form), [newsletter](https://corsairui.vercel.app/docs/newsletter), [site-footer](https://corsairui.vercel.app/docs/site-footer), [login-form](https://corsairui.vercel.app/docs/login-form), [signup-form](https://corsairui.vercel.app/docs/signup-form), [not-found](https://corsairui.vercel.app/docs/not-found), [dashboard](https://corsairui.vercel.app/docs/dashboard), [settings](https://corsairui.vercel.app/docs/settings)
 - **Foundations:** [theme](https://corsairui.vercel.app/docs/theme) (plus the presets [theme-blue](https://corsairui.vercel.app/docs/theme-blue), [theme-violet](https://corsairui.vercel.app/docs/theme-violet), [theme-rose](https://corsairui.vercel.app/docs/theme-rose), [theme-emerald](https://corsairui.vercel.app/docs/theme-emerald) and [theme-amber](https://corsairui.vercel.app/docs/theme-amber)), [utils](https://corsairui.vercel.app/docs/utils) (`cn`), [use-media-query](https://corsairui.vercel.app/docs/use-media-query), [use-in-view](https://corsairui.vercel.app/docs/use-in-view), [use-entrance](https://corsairui.vercel.app/docs/use-entrance), [use-scroll-spy](https://corsairui.vercel.app/docs/use-scroll-spy)
 
+React Native, as `@corsair-native/<item>` ([docs](https://corsairui.vercel.app/native)):
+
+- **Foundations:** theme (colours, radii, type, fonts, shadows and springs, with `useTheme()` and `withAlpha()`), haptics, use-reduced-motion
+- **Actions and text:** text, button (with `raised`), badge, spinner
+- **Form controls:** input, checkbox, switch, segmented-control
+- **Display:** card, alert, avatar, separator, skeleton, progress, empty-state
+
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
 
 ## Repository layout
@@ -119,7 +165,7 @@ registry/default/
   lib/                     plain utilities
 registry/native/
   registry.json            entry point of the React Native registry
-  hooks/ lib/              React Native items (lib/theme.ts holds the tokens)
+  ui/ hooks/ lib/          React Native items (lib/theme.ts holds the tokens)
   package.json             the harness that tests them: Expo SDK 57, Jest, Testing Library
 scripts/                   Tailwind compatibility check and fixture runners
 tests/fixtures/            minimal Tailwind 3 and 4 projects items get installed into

@@ -4,7 +4,7 @@ Parts of Corsair UI are adapted from the projects below. Their licenses apply to
 
 ## shadcn/ui
 
-The structure, part names and much of the styling of the components in `registry/default/ui` (Button, Badge, Label, Input, Textarea, Input Group, Field, Checkbox, Radio Group, Switch, Select, Separator, Card, Alert, Skeleton, Popover, Command, Calendar, Input OTP, Slider, Toggle, Toggle Group, Tooltip) are adapted from [shadcn/ui](https://github.com/shadcn-ui/ui).
+The structure, part names and much of the styling of the components in `registry/default/ui` (Button, Badge, Label, Input, Textarea, Input Group, Field, Checkbox, Radio Group, Switch, Select, Separator, Card, Alert, Skeleton, Popover, Command, Calendar, Input OTP, Slider, Toggle, Toggle Group, Tooltip) are adapted from [shadcn/ui](https://github.com/shadcn-ui/ui). Their React Native counterparts in `registry/native/ui` keep those part names and variants.
 
 ```text
 MIT License
