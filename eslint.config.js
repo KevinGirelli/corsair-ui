@@ -71,6 +71,11 @@ export default tseslint.config(
     rules: { "@typescript-eslint/no-require-imports": "off" },
   },
   {
+    // These render the gallery with react-native-web in jsdom, so they drive a DOM.
+    files: ["registry/native/**/*.web.test.tsx"],
+    rules: { "no-restricted-globals": "off" },
+  },
+  {
     // CLI scripts report through stdout on purpose.
     files: ["scripts/**/*.ts"],
     rules: { "no-console": "off" },

@@ -98,7 +98,7 @@ Colours, radii, type and springs live in `lib/theme.ts`, copied with the first i
 
 ## What lives in this repository
 
-Only the components, hooks and utilities, plus the tooling that keeps them honest. There is no website or demo app here; the documentation site is a separate project that consumes this registry like any other app would.
+Only the components, hooks and utilities, plus the tooling that keeps them honest. There is no website here; the documentation site is a separate project that consumes this registry like any other app would. The one app is the React Native gallery, a screen per native item, whose web build is published with the registry for the site to show inside a phone frame.
 
 `registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair-ui` namespace points to. The namespace is listed in the [shadcn registry directory](https://ui.shadcn.com/docs/directory), so the CLI finds it without any setup. There is no server to run or package to publish. The React Native items have their own registry, `registry/native/registry.json`, published next to it at `https://kevingirelli.github.io/corsair-ui/r/native/{name}.json` for the `@corsair-native` namespace.
 
@@ -169,6 +169,7 @@ registry/native/
   registry.json            entry point of the React Native registry
   ui/ hooks/ lib/          React Native items (lib/theme.ts holds the tokens)
   package.json             the harness that tests them: Expo SDK 57, Jest, Testing Library
+  gallery/                 an Expo app with a demo of every item, for phones and the docs
 scripts/                   Tailwind compatibility check and fixture runners
 tests/fixtures/            minimal Tailwind 3 and 4 projects items get installed into
 tests/native-fixtures/     minimal Expo SDK 54 and 57 apps the React Native items get installed into
@@ -190,12 +191,15 @@ pnpm verify:fixtures    # install every item into the fixtures and build them
 
 # React Native
 pnpm native:install     # the harness's dependencies (npm, in registry/native)
-pnpm native:test        # Jest with jest-expo and React Native Testing Library
+pnpm native:test        # Jest: the items with Testing Library, the gallery under react-native-web
 pnpm native:typecheck
 pnpm registry:native:validate
 pnpm registry:native:build   # into dist/registry/r/native
+pnpm native:preview     # the gallery's web build, into dist/registry/native-preview
 pnpm verify:native      # install every item into Expo SDK 54 and 57 apps, typecheck, bundle for Android and web
 ```
+
+To try the React Native items on a phone, run `npx expo start` in `registry/native` and open the gallery in Expo Go.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add an item and the rules components follow.
 

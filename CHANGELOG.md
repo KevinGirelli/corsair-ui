@@ -4,7 +4,7 @@
 
 ## Unreleased
 
-Corsair goes to phones: a React Native registry, and the first animated variation of a component. Nothing from earlier releases changes unless you opt in.
+Corsair goes to phones: a React Native registry with the components an app needs every day, and the first animated variation of a component, on both platforms. Nothing from earlier releases changes unless you opt in.
 
 ### Added
 
@@ -17,6 +17,8 @@ Corsair goes to phones: a React Native registry, and the first animated variatio
   - `rating`: tapped, or adjusted by screen readers as one control, the way iOS and Android expect; read-only with fractional fills.
   - `toast`: `toast()` from anywhere and a `Toaster` at the top or bottom edge, clear of the safe area; three at a time, announced once, paused while touched or in the background, swiped away.
   - `drawer`: a bottom sheet in a Modal that springs up, follows a drag down to close, rises above the iOS keyboard, keeps screen readers inside, and closes with the back button, the escape gesture or the overlay.
+  - Every item also runs in Expo's web target, on react-native-web; the toasts become a live region there.
+- A gallery app with a screen for every React Native item: `npx expo start` in `registry/native` to try them on a phone. Its web build is published at `https://kevingirelli.github.io/corsair-ui/native-preview/`, where the docs site embeds one item at a time with `?item=<name>`.
 - Variations: animated takes on a component with the same props, marked with `meta.variantOf` in the registry. The first is `wave-rating`, for the web and React Native: sweeping a finger (or a pen or mouse) across the stars lifts them in a wave that crests under it, a tip shows the score, and letting go pops the chosen star; on phones each star ticks with a haptic. It keeps the rating's radio group (web) or adjustable control (React Native), its form support and its read-only image, and holds still with reduced motion.
 
 ### Changed

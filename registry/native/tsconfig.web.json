@@ -1,0 +1,10 @@
+{
+  // The tests that render the gallery with react-native-web in jsdom: the same
+  // settings plus the DOM library, which the items themselves must not use.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"]
+  },
+  "include": ["**/*.web.test.tsx"],
+  "exclude": ["node_modules"]
+}
