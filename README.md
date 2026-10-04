@@ -137,6 +137,10 @@ pnpm verify:fixtures    # install every item into the fixtures and build them
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add an item and the rules components follow.
 
+## Support
+
+Corsair UI is free and stays free. If it saves you time, you can [support its development](https://corsairui.vercel.app/sponsor).
+
 ## License
 
 [MIT](./LICENSE).
