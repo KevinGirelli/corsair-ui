@@ -2,6 +2,18 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
+## Unreleased
+
+The first animated variation of a component. Nothing from earlier releases changes unless you opt in.
+
+### Added
+
+- Variations: animated takes on a component with the same props, marked with `meta.variantOf` in the registry. The first is `wave-rating`: sweeping a finger (or a pen or mouse) across the stars lifts them in a wave that crests under it, a tip shows the score, and letting go pops the chosen star; on phones each star ticks with a vibration where the browser allows it. It keeps the rating's radio group, its form support and its read-only image, and holds still with reduced motion.
+
+### Changed
+
+- `rating`: a pen hovering over the stars previews them, like a mouse. The star is exported as `RatingStar` for the variations to reuse.
+
 ## 0.17.0
 
 The finishing touches of a product page: a band that sweeps the page from one side to the other, a stamp that slams down, a button that sinks like a key and a QR code that draws itself. Everything new is opt in; nothing from earlier releases changes.

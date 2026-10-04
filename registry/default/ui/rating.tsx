@@ -28,9 +28,10 @@ const defaultStarLabel = (stars: number) => `${stars} ${stars === 1 ? "star" : "
 /**
  * One star. `fill` goes from 0 to 1: the filled copy is clipped to that
  * share of the width, over an empty star. Both copies carry `data-filled`
- * so their colours can be changed from the Rating's className.
+ * so their colours can be changed from the Rating's className. Exported for
+ * the animated variants of the rating, which draw the same star.
  */
-function Star({ fill, className }: { fill: number; className?: string }) {
+function RatingStar({ fill, className }: { fill: number; className?: string }) {
   return (
     <span
       data-slot="rating-star"
@@ -84,12 +85,13 @@ interface RatingProps extends Omit<
 /**
  * Stars for giving or showing a score. Interactive, it is a radio group
  * with one radio per star: Tab reaches it, arrow keys change the score,
- * and each star is read as "3 stars"; pointing at a star previews it
- * (`data-hovered`). With `readOnly` it is a single image read as
- * "Rating: 4.5 out of 5", and fractional values fill part of a star.
+ * and each star is read as "3 stars"; pointing at a star with a mouse or a
+ * pen previews it (`data-hovered`). With `readOnly` it is a single image
+ * read as "Rating: 4.5 out of 5", and fractional values fill part of a star.
  * Filled stars use `text-warning`, empty ones `text-muted-foreground/40`;
  * restyle them with `[&_[data-filled=true]]:text-primary` on the Rating.
- * Nothing moves, so there is nothing to reduce for reduced motion.
+ * Nothing moves, so there is nothing to reduce for reduced motion. For a
+ * finger sweeping the row, with motion, use `wave-rating`: same props.
  *
  * @example
  * <Rating defaultValue={3} onValueChange={setScore} aria-label="Your rating" />
@@ -132,7 +134,7 @@ function Rating({
         {...props}
       >
         {stars.map((star) => (
-          <Star key={star} fill={Math.min(Math.max(value - (star - 1), 0), 1)} />
+          <RatingStar key={star} fill={Math.min(Math.max(value - (star - 1), 0), 1)} />
         ))}
       </div>
     );
@@ -179,14 +181,15 @@ function Rating({
             "disabled:cursor-not-allowed disabled:opacity-50"
           )}
           onPointerEnter={(event) => {
-            if (event.pointerType === "mouse" && !disabled) setHovered(star);
+            // Mice and pens can point without pressing; a finger cannot.
+            if (event.pointerType !== "touch" && !disabled) setHovered(star);
           }}
         >
-          <Star fill={star <= shown ? 1 : 0} />
+          <RatingStar fill={star <= shown ? 1 : 0} />
         </RadioGroupPrimitive.Item>
       ))}
     </RadioGroupPrimitive.Root>
   );
 }
 
-export { Rating, ratingVariants, type RatingProps, type RatingSize };
+export { Rating, RatingStar, ratingVariants, type RatingProps, type RatingSize };

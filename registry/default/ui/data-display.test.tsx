@@ -109,6 +109,17 @@ describe("Rating", () => {
     expect(document.activeElement).toBe(screen.getByRole("radio", { name: "3 stars" }));
   });
 
+  it("interactive: previews under a pen, but not under a finger", () => {
+    render(<Rating defaultValue={1} />);
+    const group = screen.getByRole("radiogroup");
+    fireEvent.pointerEnter(screen.getByRole("radio", { name: "3 stars" }), {
+      pointerType: "touch",
+    });
+    expect(group.hasAttribute("data-hovered")).toBe(false);
+    fireEvent.pointerEnter(screen.getByRole("radio", { name: "3 stars" }), { pointerType: "pen" });
+    expect(group.querySelectorAll("[data-filled=true]")).toHaveLength(3);
+  });
+
   it("interactive: previews the stars under a mouse pointer", () => {
     render(<Rating defaultValue={1} starLabel={(n) => `${n} of 5`} />);
     const group = screen.getByRole("radiogroup");

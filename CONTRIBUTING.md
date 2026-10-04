@@ -69,6 +69,16 @@ Corsair items are generic building blocks. Anything specific to one product stay
 - **Motion is optional.** Anything that animates respects `prefers-reduced-motion`. Put enter and exit animations behind `motion-safe:` (`motion-safe:data-[state=open]:animate-in`): `motion-reduce:animate-none` has lower specificity than a `data-[state=…]:` variant, so it does not stop them. Transitions can keep `motion-reduce:transition-none`. Leave animation durations at the library default, since `duration-*` sets the animation duration in Tailwind 3 but not in Tailwind 4.
 - **Motion is cheap.** Animate `transform` and `opacity`. Never listen to `scroll`: use `useInView` (IntersectionObserver) for "when it shows up", and CSS scroll-driven animations for "as it scrolls", gated with `supports-[animation-timeline:view()]:` so other browsers get the finished state. The `animation` shorthand resets `animation-timeline`, so put the timeline and range in `style`, which always wins over the utility. Pointer effects write CSS variables inside `requestAnimationFrame` instead of setting state. Anything that loops pauses while off screen.
 
+## Variations
+
+A component can have animated variations: `wave-rating` is the rating whose stars rise in a wave under a sweeping finger. The base stays lean and still; each variation is a separate item that changes how the component looks and moves, never what it does.
+
+- **Name it after the effect:** `<effect>-<base>`, like `wave-rating`. Do not reuse names from other libraries.
+- **Same props as the base.** Its props type extends the base's, so swapping one for the other is a one-word change. Extra props are only about the motion (`showTip`, `haptics`).
+- **Same behaviour and accessibility.** Keyboard, screen readers, forms, controlled and uncontrolled, read-only: all as in the base. Reuse the base's parts where you can (`RatingStar`, `ratingVariants`) and list the base in `registryDependencies`.
+- **Mark it** with `"meta": { "variantOf": "<base>" }` and `"categories": ["motion"]`. The docs site lists variations on the base's page.
+- **Still optional motion.** Reduced motion keeps the variation usable and still, like the base.
+
 ## Tailwind 3 and 4
 
 Every item has to render the same in a Tailwind 3.4 project and a Tailwind 4 project, and neither compiler warns about a class it does not know. `pnpm check:tailwind` fills that gap. It flags:
@@ -94,6 +104,8 @@ When an item needs CSS variables or keyframes, declare them for both versions in
 ## Licences and releases
 
 Code adapted from another project keeps its license notice in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+
+Other libraries can inspire an item, but read their licence before you read their code. [React Bits](https://github.com/DavidHDev/react-bits) is MIT with the Commons Clause, which forbids redistributing its components, alone, in a bundle or as a ported version, and a registry is redistribution. Take the idea of an interaction from its demos, then design and write the item without opening its source, and give it a name of its own.
 
 Every merge to `main` that touches the registry is published to GitHub Pages by the "Publish registry" workflow, so `@corsair-ui/<item>` always serves `main`. Releases are git tags (`v0.2.0`) with an entry in [CHANGELOG.md](./CHANGELOG.md); consumers can install a release with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
