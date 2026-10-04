@@ -41,10 +41,11 @@ The React Native items live apart, in their own registry with its own root file 
 
 ```text
 registry/native/
-  registry.json            root of the React Native registry: includes the registries below
+  registry.json            root of the React Native registry: includes the three below
   package.json             the development harness: Expo SDK 57, Jest, Testing Library (not published)
   lib/registry.json        theme (tokens), haptics
   hooks/registry.json      use-reduced-motion
+  ui/registry.json         components, with the same names as their web counterparts
 ```
 
 It is built into `r/native/` and installed with the `@corsair-native` namespace. See [React Native items](#react-native-items).
