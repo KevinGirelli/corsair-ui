@@ -193,6 +193,51 @@
       ]
     },
     {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "Stars for giving a score, tapped or adjusted by screen readers as one control, or for showing one read-only with fractional fills.",
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["@corsair-native/theme"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install react-native-svg",
+      "files": [
+        {
+          "path": "rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "wave-rating",
+      "type": "registry:ui",
+      "title": "Wave Rating",
+      "description": "The rating, animated: a finger sweeping the stars lifts them in a wave with a haptic tick per star and a tip showing the score, and letting go pops the chosen star. Same props and accessibility as rating.",
+      "dependencies": [
+        "react-native-gesture-handler",
+        "react-native-reanimated",
+        "react-native-worklets",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/rating",
+        "@corsair-native/haptics",
+        "@corsair-native/use-reduced-motion"
+      ],
+      "categories": ["motion"],
+      "meta": {
+        "variantOf": "rating"
+      },
+      "docs": "Install the native modules for your Expo SDK first: npx expo install react-native-gesture-handler react-native-reanimated react-native-worklets react-native-svg expo-haptics. The app needs a GestureHandlerRootView at its root.",
+      "files": [
+        {
+          "path": "wave-rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",

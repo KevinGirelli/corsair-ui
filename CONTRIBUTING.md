@@ -90,6 +90,7 @@ A component can have animated variations: `wave-rating` is the rating whose star
 - **Same props as the base.** Its props type extends the base's, so swapping one for the other is a one-word change. Extra props are only about the motion (`showTip`, `haptics`).
 - **Same behaviour and accessibility.** Keyboard, screen readers, forms, controlled and uncontrolled, read-only: all as in the base. Reuse the base's parts where you can (`RatingStar`, `ratingVariants`) and list the base in `registryDependencies`.
 - **Mark it** with `"meta": { "variantOf": "<base>" }` and `"categories": ["motion"]`. The docs site lists variations on the base's page.
+- **Both platforms when it makes sense,** with the same name: `@corsair-ui/wave-rating` and `@corsair-native/wave-rating`.
 - **Still optional motion.** Reduced motion keeps the variation usable and still, like the base.
 
 ## Tailwind 3 and 4
