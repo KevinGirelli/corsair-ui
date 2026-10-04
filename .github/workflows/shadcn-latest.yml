@@ -10,8 +10,11 @@ on:
     paths:
       - registry.json
       - registry/**
+      - scripts/fixture-tools.ts
       - scripts/verify-fixtures.ts
+      - scripts/verify-native-fixtures.ts
       - tests/fixtures/**
+      - tests/native-fixtures/**
 permissions:
   contents: read
 jobs:
@@ -33,3 +36,5 @@ jobs:
           "$RUNNER_TEMP/shadcn/node_modules/.bin/shadcn" --version
       - name: Verify fixtures
         run: pnpm verify:fixtures
+      - name: Verify native fixtures
+        run: pnpm verify:native

@@ -3,6 +3,8 @@ name: Publish registry
 # Builds the registry JSON and serves it from GitHub Pages. That is what
 # `shadcn add @corsair-ui/<item>` reads:
 # https://kevingirelli.github.io/corsair-ui/r/{name}.json
+# and the React Native items, for `shadcn add @corsair-native/<item>`:
+# https://kevingirelli.github.io/corsair-ui/r/native/{name}.json
 on:
   push:
     branches: [main]
@@ -32,9 +34,10 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Registry schema
-        run: pnpm registry:validate
+        run: pnpm registry:validate && pnpm registry:native:validate
+      # The web build first: the React Native one goes into its r/native folder.
       - name: Build
-        run: pnpm registry:build
+        run: pnpm registry:build && pnpm registry:native:build
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist/registry

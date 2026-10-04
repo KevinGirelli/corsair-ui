@@ -1,5 +1,7 @@
 dist/
 pnpm-lock.yaml
+registry/native/package-lock.json
+registry/native/.expo/
 
 # Copied verbatim into temporary projects by verify:fixtures. The Tailwind
 # plugin would also try to load their configs, whose dependencies are only

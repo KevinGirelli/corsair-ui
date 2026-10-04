@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Corsair Native fixture (SDK 54)",
+    "slug": "corsair-native-fixture-sdk54",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
+    "android": {
+      "package": "dev.corsair.fixture.sdk54"
+    },
+    "ios": {
+      "bundleIdentifier": "dev.corsair.fixture.sdk54"
+    }
+  }
+}

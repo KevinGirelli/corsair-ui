@@ -60,7 +60,7 @@ No account, package or config: `@corsair-ui` is listed in the [shadcn registry d
 
 Only the components, hooks and utilities, plus the tooling that keeps them honest. There is no website or demo app here; the documentation site is a separate project that consumes this registry like any other app would.
 
-`registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair-ui` namespace points to. The namespace is listed in the [shadcn registry directory](https://ui.shadcn.com/docs/directory), so the CLI finds it without any setup. There is no server to run or package to publish.
+`registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair-ui` namespace points to. The namespace is listed in the [shadcn registry directory](https://ui.shadcn.com/docs/directory), so the CLI finds it without any setup. There is no server to run or package to publish. The React Native items have their own registry, `registry/native/registry.json`, published next to it at `https://kevingirelli.github.io/corsair-ui/r/native/{name}.json` for the `@corsair-native` namespace.
 
 ## Using an item
 
@@ -117,8 +117,13 @@ registry/default/
   components/blocks/       page sections built from the components
   hooks/                   React hooks
   lib/                     plain utilities
-scripts/                   Tailwind compatibility check and fixture runner
+registry/native/
+  registry.json            entry point of the React Native registry
+  hooks/ lib/              React Native items (lib/theme.ts holds the tokens)
+  package.json             the harness that tests them: Expo SDK 57, Jest, Testing Library
+scripts/                   Tailwind compatibility check and fixture runners
 tests/fixtures/            minimal Tailwind 3 and 4 projects items get installed into
+tests/native-fixtures/     minimal Expo SDK 54 and 57 apps the React Native items get installed into
 ```
 
 ## Development
@@ -134,6 +139,14 @@ pnpm check:tailwind     # classes must mean the same thing in Tailwind 3 and 4
 pnpm registry:validate  # registry.json and every item match the shadcn schema
 pnpm registry:build     # the JSON that gets published, in dist/registry/r
 pnpm verify:fixtures    # install every item into the fixtures and build them
+
+# React Native
+pnpm native:install     # the harness's dependencies (npm, in registry/native)
+pnpm native:test        # Jest with jest-expo and React Native Testing Library
+pnpm native:typecheck
+pnpm registry:native:validate
+pnpm registry:native:build   # into dist/registry/r/native
+pnpm verify:native      # install every item into Expo SDK 54 and 57 apps, typecheck, bundle for Android and web
 ```
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add an item and the rules components follow.

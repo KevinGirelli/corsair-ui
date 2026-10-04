@@ -45,6 +45,10 @@ updates:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
 
+  # Not listed on purpose: registry/native and tests/native-fixtures. Their
+  # React Native packages have to match one Expo SDK, so they move together
+  # when the SDK does (`npx expo install --fix`), never one by one.
+
   - package-ecosystem: github-actions
     directory: /
     schedule:

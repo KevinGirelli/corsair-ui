@@ -2,7 +2,7 @@
  * Fails when registry code uses a class that only works, or looks different,
  * in one of the Tailwind majors we support. See scripts/tailwind-compat/rules.ts.
  *
- *   pnpm check:tailwind            scans registry/
+ *   pnpm check:tailwind            scans registry/default (React Native items have no Tailwind)
  *   pnpm check:tailwind path/…     scans specific files or folders
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -22,7 +22,7 @@ function listFiles(target: string): string[] {
 }
 
 const targets = process.argv.slice(2);
-const files = (targets.length > 0 ? targets : ["registry"]).flatMap(listFiles).sort();
+const files = (targets.length > 0 ? targets : ["registry/default"]).flatMap(listFiles).sort();
 
 const findings: SourceFinding[] = files.flatMap((file) =>
   scanSource(readFileSync(file, "utf8"), path.relative(process.cwd(), file))

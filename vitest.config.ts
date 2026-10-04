@@ -11,6 +11,8 @@ export default defineConfig({
     // Registry code runs in the browser; scripts opt back into node per file.
     environment: "jsdom",
     include: ["registry/**/*.test.{ts,tsx}", "scripts/**/*.test.ts"],
+    // React Native items run on Jest with jest-expo: `pnpm native:test`.
+    exclude: ["registry/native/**", "**/node_modules/**"],
     setupFiles: ["./vitest.setup.ts"],
     restoreMocks: true,
     server: {

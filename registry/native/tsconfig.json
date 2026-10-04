@@ -1,0 +1,19 @@
+{
+  // Type checks the React Native items against Expo SDK 57. No DOM library on
+  // purpose: `document`, `window.matchMedia` and friends do not exist in an
+  // app, so using one fails here instead of on someone's phone.
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "types": ["jest"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@/registry/native/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  // The react-native-web tests drive a DOM; tsconfig.web.json checks them.
+  "exclude": ["node_modules", "**/*.web.test.tsx"]
+}
