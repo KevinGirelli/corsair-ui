@@ -13,19 +13,11 @@
  *   pnpm verify:fixtures --keep           keep the temporary copies for inspection
  *   SHADCN_BIN=… pnpm verify:fixtures     with another shadcn CLI
  */
-import { spawn } from "node:child_process";
-import {
-  cpSync,
-  existsSync,
-  mkdtempSync,
-  readdirSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
-import { createServer, type Server } from "node:http";
+import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+
+import { run, serveRegistry, useLocalRegistry } from "./fixture-tools.ts";
 
 const ROOT = process.cwd();
 const REGISTRY_OUTPUT = path.join(ROOT, "dist", "r");
@@ -142,64 +134,6 @@ const args = process.argv.slice(2);
 const keep = args.includes("--keep");
 const requested = args.filter((arg) => !arg.startsWith("--"));
 
-/**
- * Async on purpose: the registry server lives in this process, and a
- * synchronous spawn would block it while the CLI waits for a response.
- */
-function run(command: string, commandArgs: string[], cwd: string) {
-  console.log(`  $ ${[command, ...commandArgs].join(" ")}`);
-
-  return new Promise<void>((resolve, reject) => {
-    const child = spawn(command, commandArgs, { cwd, stdio: "inherit" });
-    child.on("error", reject);
-    child.on("exit", (code) => {
-      if (code === 0) resolve();
-      else reject(new Error(`\`${command} ${commandArgs.join(" ")}\` exited with ${code}`));
-    });
-  });
-}
-
-/**
- * Serves the freshly built registry over HTTP so the CLI installs exactly what
- * is on disk, including changes that are not pushed to GitHub yet.
- */
-function serveRegistry(): Promise<{ server: Server; baseUrl: string }> {
-  const server = createServer((request, response) => {
-    const pathname = new URL(request.url ?? "/", "http://localhost").pathname;
-    const name = path.basename(decodeURIComponent(pathname));
-    const file = path.join(REGISTRY_OUTPUT, name);
-
-    if (!pathname.startsWith("/r/") || !name.endsWith(".json") || !existsSync(file)) {
-      response.writeHead(404).end();
-      return;
-    }
-
-    response.writeHead(200, { "content-type": "application/json" });
-    response.end(readFileSync(file));
-  });
-
-  return new Promise((resolve) => {
-    server.listen(0, "127.0.0.1", () => {
-      const address = server.address();
-      const port = typeof address === "object" && address ? address.port : 0;
-      resolve({ server, baseUrl: `http://127.0.0.1:${port}/r` });
-    });
-  });
-}
-
-/**
- * Points the namespace at the local server in the fixture's components.json,
- * the same one-line setup a consumer does with the published URL. Items and
- * the items they depend on (`@corsair-ui/utils`) then all come from this build,
- * so a new item is tested together with what it needs before it merges.
- */
-function useLocalRegistry(workdir: string, baseUrl: string) {
-  const file = path.join(workdir, "components.json");
-  const config = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
-  config.registries = { [NAMESPACE]: `${baseUrl}/{name}.json` };
-  writeFileSync(file, `${JSON.stringify(config, null, 2)}\n`);
-}
-
 /** A class name as it appears in a compiled selector: `bg-destructive/15` → `.bg-destructive\/15`. */
 function selectorFor(className: string) {
   return `.${className.replace(/[^\w-]/g, (char) => `\\${char}`)}`;
@@ -244,7 +178,8 @@ async function verifyFixture(fixture: string, items: string[], baseUrl: string) 
   });
 
   try {
-    useLocalRegistry(workdir, baseUrl);
+    // `@corsair-ui/utils` and the other items an item needs come from this build too.
+    useLocalRegistry(workdir, NAMESPACE, baseUrl);
     await run("npm", ["install", "--no-audit", "--no-fund", "--loglevel=error"], workdir);
     await run(SHADCN, ["add", ...items, "--yes", "--overwrite"], workdir);
     await run("npm", ["run", "verify"], workdir);
@@ -265,7 +200,7 @@ async function main() {
     items: { name: string }[];
   };
   const fixtures = listFixtures();
-  const { server, baseUrl } = await serveRegistry();
+  const { server, baseUrl } = await serveRegistry(REGISTRY_OUTPUT);
   const items = catalog.items.map((item) => `${NAMESPACE}/${item.name}`);
 
   console.log(`\nServing ${items.length} registry item(s) at ${baseUrl}`);

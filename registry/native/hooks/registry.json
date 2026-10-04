@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "use-reduced-motion",
+      "type": "registry:hook",
+      "title": "useReducedMotion",
+      "description": "Whether Reduce Motion is on in the device's accessibility settings, following changes while the app is open.",
+      "files": [
+        {
+          "path": "use-reduced-motion.ts",
+          "type": "registry:hook"
+        }
+      ]
+    }
+  ]
+}

@@ -37,6 +37,20 @@ registry/default/
 
 `default` is the style name. It is part of the import path the CLI understands (see below), so keep every item under it.
 
+The React Native items live apart, in their own registry with its own root file (the CLI only accepts a root named `registry.json`, so it sits in the folder):
+
+```text
+registry/native/
+  registry.json            root of the React Native registry: includes the three below
+  package.json             the development harness: Expo SDK 57, Jest, Testing Library (not published)
+  lib/registry.json        theme (tokens), haptics
+  hooks/registry.json      use-reduced-motion
+  ui/registry.json         components, with the same names as their web counterparts
+  gallery/                 an Expo app with a demo of every item (not published)
+```
+
+It is built into `r/native/` and installed with the `@corsair-native` namespace. See [React Native items](#react-native-items).
+
 ## Adding an item
 
 1. Put the source in the folder that matches what it is: `ui/` for primitives and form controls, `components/<area>/` for larger pieces, `hooks/`, or `lib/`.
@@ -69,6 +83,17 @@ Corsair items are generic building blocks. Anything specific to one product stay
 - **Motion is optional.** Anything that animates respects `prefers-reduced-motion`. Put enter and exit animations behind `motion-safe:` (`motion-safe:data-[state=open]:animate-in`): `motion-reduce:animate-none` has lower specificity than a `data-[state=…]:` variant, so it does not stop them. Transitions can keep `motion-reduce:transition-none`. Leave animation durations at the library default, since `duration-*` sets the animation duration in Tailwind 3 but not in Tailwind 4.
 - **Motion is cheap.** Animate `transform` and `opacity`. Never listen to `scroll`: use `useInView` (IntersectionObserver) for "when it shows up", and CSS scroll-driven animations for "as it scrolls", gated with `supports-[animation-timeline:view()]:` so other browsers get the finished state. The `animation` shorthand resets `animation-timeline`, so put the timeline and range in `style`, which always wins over the utility. Pointer effects write CSS variables inside `requestAnimationFrame` instead of setting state. Anything that loops pauses while off screen.
 
+## Variations
+
+A component can have animated variations: `wave-rating` is the rating whose stars rise in a wave under a sweeping finger. The base stays lean and still; each variation is a separate item that changes how the component looks and moves, never what it does.
+
+- **Name it after the effect:** `<effect>-<base>`, like `wave-rating`. Do not reuse names from other libraries.
+- **Same props as the base.** Its props type extends the base's, so swapping one for the other is a one-word change. Extra props are only about the motion (`showTip`, `haptics`).
+- **Same behaviour and accessibility.** Keyboard, screen readers, forms, controlled and uncontrolled, read-only: all as in the base. Reuse the base's parts where you can (`RatingStar`, `ratingVariants`) and list the base in `registryDependencies`.
+- **Mark it** with `"meta": { "variantOf": "<base>" }` and `"categories": ["motion"]`. The docs site lists variations on the base's page.
+- **Both platforms when it makes sense,** with the same name: `@corsair-ui/wave-rating` and `@corsair-native/wave-rating`.
+- **Still optional motion.** Reduced motion keeps the variation usable and still, like the base.
+
 ## Tailwind 3 and 4
 
 Every item has to render the same in a Tailwind 3.4 project and a Tailwind 4 project, and neither compiler warns about a class it does not know. `pnpm check:tailwind` fills that gap. It flags:
@@ -91,9 +116,36 @@ When an item needs CSS variables or keyframes, declare them for both versions in
 
 `pnpm verify:fixtures` installs everything into `tests/fixtures/tailwind-v3` and `tests/fixtures/tailwind-v4`, typechecks the result, compiles the CSS and checks that utilities built on the theme (`bg-primary`, `bg-field`, `focus-visible:ring-ring/50`…) made it into both outputs.
 
+## React Native items
+
+Corsair Native brings the components to React Native apps, built and tested for Expo. An item has the same name, parts, variants and tokens as its web counterpart, so an app and its site speak the same language, but it is written for phones: touch targets, haptics, the platform's accessibility.
+
+```bash
+pnpm native:install     # once: the harness in registry/native (npm, Expo SDK 57)
+pnpm native:test        # Jest: the items with Testing Library, and the gallery under react-native-web
+pnpm native:typecheck   # no DOM types, so a browser API fails here
+pnpm registry:native:validate
+pnpm native:preview     # the gallery's web build, into dist/registry/native-preview
+pnpm verify:native      # install every item into Expo SDK 54 and 57 apps, typecheck, bundle for Android and web
+```
+
+The harness is also an Expo app, the gallery in `registry/native/gallery/`, with a screen for every item. Run `npx expo start` in `registry/native` and open it in Expo Go to try the items on a phone. Its web build is published next to the registry, and the docs site shows each item in it, inside a phone frame. A new item needs a demo in `gallery/demos.tsx`; a test fails until it has one.
+
+- **Styles from the theme.** `StyleSheet` plus the tokens in `lib/theme.ts` through `useTheme()`; no Tailwind, no hex values in components. Opacity modifiers become `withAlpha(colors.primary, 0.2)`. Variants are maps with the web's names.
+- **Imports through `@/registry/native/...`.** The CLI rewrites them to the app's aliases, like on the web. Other items go in `registryDependencies` as `@corsair-native/<item>`; `theme` is safe to list, since the CLI skips files that already exist unless told to overwrite.
+- **Dependencies:** packages with native code (`react-native-*`, `expo-*`) are listed without a version, because the app's Expo SDK decides it (`npx expo install`); add an item `docs` line with that command. Plain JavaScript packages get a range. Web building blocks (Radix, lucide-react, cva, Tailwind) never appear. `scripts/registry-deps.test.ts` checks all of this.
+- **Expo first, two SDKs.** Every item works on Expo SDK 54 and the newest SDK, the way web items work on Tailwind 3 and 4. Use APIs both have; `verify:native` proves it.
+- **Accessible on phones.** Use `role` and `aria-*` (React Native maps them to VoiceOver and TalkBack). Touch targets reach 44 px, with `hitSlop` when the visual is smaller. Values that step (ratings, sliders) are one adjustable control with increment and decrement actions, not a row of buttons. Modals keep screen readers inside and close with the Android back button and the iOS escape gesture. Announce what appears after an action with `AccessibilityInfo`.
+- **Motion on the native thread.** Simple motion (fades, springs, loops on `transform` and `opacity`) uses React Native's `Animated` with the native driver, so the item needs nothing else. Gestures and gesture-linked motion use Gesture Handler and Reanimated; run gesture callbacks on the JavaScript thread (`.runOnJS(true)`) unless the frame rate really needs worklets. Every animated item follows `useReducedMotion()`.
+- **Haptics are an extra.** `lib/haptics.ts` wraps expo-haptics; base items do not vibrate, variations may, with a prop to turn it off.
+- **No DOM.** ESLint rejects `document`, `matchMedia` and friends in `registry/native`, and the harness typechecks without DOM types.
+- **The web too.** Expo apps also run in browsers through react-native-web, which lacks a few React Native APIs: `useAnimatedValue` (use `useState(() => new Animated.Value(x))`, which ESLint suggests), `AccessibilityInfo.announceForAccessibilityWithOptions` and `sendAccessibilityEvent` (check that they exist first). The gallery's web tests render every demo with it.
+
 ## Licences and releases
 
 Code adapted from another project keeps its license notice in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+
+Other libraries can inspire an item, but read their licence before you read their code. [React Bits](https://github.com/DavidHDev/react-bits) is MIT with the Commons Clause, which forbids redistributing its components, alone, in a bundle or as a ported version, and a registry is redistribution. Take the idea of an interaction from its demos, then design and write the item without opening its source, and give it a name of its own.
 
 Every merge to `main` that touches the registry is published to GitHub Pages by the "Publish registry" workflow, so `@corsair-ui/<item>` always serves `main`. Releases are git tags (`v0.2.0`) with an entry in [CHANGELOG.md](./CHANGELOG.md); consumers can install a release with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
@@ -101,6 +153,6 @@ Every merge to `main` that touches the registry is published to GitHub Pages by 
 
 - Branch off `main` and open a PR. `main` is protected: direct pushes and force pushes are rejected.
 - Keep a PR to one item or one change. The template asks what changed, why, and how you checked it.
-- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures. Both jobs have to pass before merging. A third workflow, "shadcn latest", runs the fixtures with the newest shadcn CLI every Monday and on PRs that touch the registry, so CLI changes show up here first.
+- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures, then the React Native harness (types, tests, schema, the gallery's web build) and the Expo fixtures. Every job has to pass before merging. A third workflow, "shadcn latest", runs both sets of fixtures with the newest shadcn CLI every Monday and on PRs that touch the registry, so CLI changes show up here first.
 - PRs are squash-merged, so write the PR title as the commit you want on `main`.
 - Dependabot opens dependency updates on Mondays; they go through the same checks.

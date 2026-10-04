@@ -67,3 +67,60 @@ jobs:
       # of each fixture, then typechecks it and compiles its CSS.
       - name: Verify fixtures
         run: pnpm verify:fixtures
+
+  native:
+    name: React Native items
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Expo SDK 57, Jest and Testing Library, from registry/native/package-lock.json.
+      - name: Install the React Native harness
+        run: pnpm native:install
+
+      - name: Types
+        run: pnpm native:typecheck
+
+      # On iOS's preset with Testing Library, and the gallery under react-native-web.
+      - name: Unit tests
+        run: pnpm native:test
+
+      - name: Registry schema
+        run: pnpm registry:native:validate
+
+      # The web build of the gallery that the docs site embeds.
+      - name: Gallery
+        run: pnpm native:preview
+        env:
+          CI: 1
+          EXPO_NO_TELEMETRY: 1
+
+  native-fixtures:
+    name: Install into Expo SDK 54 and 57 apps
+    needs: native
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Builds the React Native registry, installs every item into a copy of
+      # each Expo app, then typechecks it and bundles it for Android and the web.
+      - name: Verify native fixtures
+        run: pnpm verify:native

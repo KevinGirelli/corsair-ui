@@ -1,0 +1,294 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "text",
+      "type": "registry:ui",
+      "title": "Text",
+      "description": "Text in the theme's type scale: default, h1 to h4 (announced as headings), lead, large, small, muted and code. Inside a Button, Card or Badge it takes that container's colour.",
+      "registryDependencies": ["@corsair-native/theme"],
+      "files": [
+        {
+          "path": "text.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Triggers an action. Variants default, secondary, outline, ghost, destructive, link and raised (a face that sinks into its base while pressed); sizes sm, default, lg and three square icon sizes, all with a 44 px touch area. A loading state blocks presses.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/text"],
+      "files": [
+        {
+          "path": "button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Short status or metadata label. Solid, secondary and outline styles, plus success, warning and destructive statuses shown as a coloured dot or your own icon.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/text"],
+      "files": [
+        {
+          "path": "badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A surface that groups related content: header with title, description and an action at the top right, content and footer.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/text"],
+      "files": [
+        {
+          "path": "card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "A hairline between items or sections, horizontal or vertical, hidden from screen readers unless it means something.",
+      "registryDependencies": ["@corsair-native/theme"],
+      "files": [
+        {
+          "path": "separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A round picture of a person with initials while it loads or when it fails, in three sizes, and a group that overlaps them.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/text"],
+      "files": [
+        {
+          "path": "avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "A callout on the card surface, read as one element; default, success, warning and destructive tones colour its icon.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/text"],
+      "files": [
+        {
+          "path": "alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A single-line text field in the theme: 44 px tall, a focus ring, and an error state from aria-invalid.",
+      "registryDependencies": ["@corsair-native/theme"],
+      "files": [
+        {
+          "path": "input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "The platform's activity indicator in the theme's muted colour, announced as Loading.",
+      "registryDependencies": ["@corsair-native/theme"],
+      "files": [
+        {
+          "path": "spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "A placeholder shape that pulses on the native thread while content loads, and holds still with Reduce Motion.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/use-reduced-motion"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "A bar for a task with a known amount that springs to each value, or an indeterminate one; screen readers hear the value.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/use-reduced-motion"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "An on/off control whose thumb springs across while the track fades to the primary colour, in two sizes with a 44 px touch area.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/use-reduced-motion"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A box to tick whose mark pops in with a spring, with an indeterminate dash and an error state.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/use-reduced-motion"],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "description": "A switch between options of equal width with a thumb that springs to the active one; a radio group for screen readers that never goes empty.",
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/use-reduced-motion"
+      ],
+      "categories": ["motion"],
+      "files": [
+        {
+          "path": "segmented-control.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "Stars for giving a score, tapped or adjusted by screen readers as one control, or for showing one read-only with fractional fills.",
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["@corsair-native/theme"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install react-native-svg",
+      "files": [
+        {
+          "path": "rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "wave-rating",
+      "type": "registry:ui",
+      "title": "Wave Rating",
+      "description": "The rating, animated: a finger sweeping the stars lifts them in a wave with a haptic tick per star and a tip showing the score, and letting go pops the chosen star. Same props and accessibility as rating.",
+      "dependencies": [
+        "react-native-gesture-handler",
+        "react-native-reanimated",
+        "react-native-worklets",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/rating",
+        "@corsair-native/haptics",
+        "@corsair-native/use-reduced-motion"
+      ],
+      "categories": ["motion"],
+      "meta": {
+        "variantOf": "rating"
+      },
+      "docs": "Install the native modules for your Expo SDK first: npx expo install react-native-gesture-handler react-native-reanimated react-native-worklets react-native-svg expo-haptics. The app needs a GestureHandlerRootView at its root.",
+      "files": [
+        {
+          "path": "wave-rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Brief messages from toast() anywhere in the app, stacked at the top or bottom edge clear of the safe area: three at a time, announced to screen readers, paused while touched or in the background, and swiped away sideways or towards their edge.",
+      "dependencies": ["react-native-safe-area-context"],
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/use-reduced-motion"
+      ],
+      "categories": ["motion"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install react-native-safe-area-context. Then render <Toaster /> once, as the last child of your root view inside SafeAreaProvider.",
+      "files": [
+        {
+          "path": "toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A bottom sheet in a Modal: it springs up, follows a drag down to close, sits clear of the home indicator and the iOS keyboard, keeps screen readers inside, and closes with the back button, the escape gesture or the overlay.",
+      "dependencies": ["react-native-safe-area-context"],
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/use-reduced-motion"
+      ],
+      "categories": ["motion"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install react-native-safe-area-context",
+      "files": [
+        {
+          "path": "drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "What a screen shows when there is nothing yet: an icon, a heading, a line about what to do and actions, with or without a dashed border.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/text"],
+      "files": [
+        {
+          "path": "empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

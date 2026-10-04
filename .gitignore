@@ -4,6 +4,9 @@ node_modules/
 # built registry JSON (`pnpm registry:build`, `pnpm verify:fixtures`)
 dist/
 
+# Expo's local state in the React Native harness
+.expo/
+
 # env
 .env
 .env*.local

@@ -8,8 +8,8 @@
 <h1 align="center">Corsair UI</h1>
 
 <p align="center">
-  <strong>Open-source React components, motion effects and page blocks for shadcn/ui and Tailwind CSS.</strong><br />
-  144 accessible items you install as source code with the shadcn CLI, checked against Tailwind CSS 3.4 and 4.
+  <strong>Open-source React components, motion effects and page blocks for shadcn/ui and Tailwind CSS, and their React Native counterparts for Expo.</strong><br />
+  145 accessible web items checked against Tailwind CSS 3.4 and 4, plus 22 React Native items checked against Expo SDK 54 and 57, all installed as source code with the shadcn CLI.
 </p>
 
 <p align="center">
@@ -45,6 +45,45 @@ pnpm dlx shadcn@latest add @corsair-ui/button @corsair-ui/split-flap @corsair-ui
 
 No account, package or config: `@corsair-ui` is listed in the [shadcn registry directory](https://ui.shadcn.com/docs/directory), so the CLI finds it. Every item has a page with live examples, its API and accessibility notes at [corsairui.vercel.app/docs](https://corsairui.vercel.app/docs).
 
+### React Native (Expo)
+
+The same components for apps, with the same names, variants and colours, written for touch and checked on Expo SDK 54 and 57. In an Expo app, add a `components.json` that points the `@corsair-native` namespace at the registry and maps the aliases to your folders (with `"@/*": ["./src/*"]` in `tsconfig.json`):
+
+```json
+{
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks",
+    "utils": "@/lib/utils"
+  },
+  "registries": {
+    "@corsair-native": "https://kevingirelli.github.io/corsair-ui/r/native/{name}.json"
+  }
+}
+```
+
+Then install the native modules your Expo SDK expects, and the items:
+
+```bash
+npx expo install react-native-svg react-native-safe-area-context expo-haptics \
+  react-native-gesture-handler react-native-reanimated react-native-worklets
+pnpm dlx shadcn@latest add @corsair-native/button @corsair-native/drawer @corsair-native/wave-rating
+```
+
+Colours, radii, type and springs live in `lib/theme.ts`, copied with the first item: edit it to brand the app. Components follow the device's light or dark mode; `ThemeProvider` forces one. Items that animate with gestures need a `GestureHandlerRootView` at the root of the app, and `Toaster` and `Drawer` sit inside `SafeAreaProvider`.
+
 ## Why Corsair UI
 
 - **The code is yours.** Items land in your project as plain React and Tailwind code, like shadcn/ui: change anything, keep no dependency on this repository.
@@ -53,13 +92,15 @@ No account, package or config: `@corsair-ui` is listed in the [shadcn registry d
 - **Accessible by default.** Radix primitives for behaviour, strict `eslint-plugin-jsx-a11y`, keyboard support, and axe run on every docs page.
 - **Motion with a reason.** Only `transform` and `opacity` animate, scroll effects use CSS scroll-driven animations instead of scroll listeners, loops pause off screen, and `prefers-reduced-motion` is respected everywhere.
 - **Themes.** A theme editor and five presets with WCAG AA contrast in light and dark mode.
+- **On phones too.** Corsair Native has the same components for React Native: 44 px touch targets, haptics, screen reader patterns that iOS and Android expect, and motion on the native thread.
+- **Variations with more motion.** Some components come in an animated take with the same props, like `wave-rating`, whose stars rise in a wave under your finger. Swap one for the other by name.
 - **Ready for AI assistants.** `llms.txt`, Markdown docs for every item, and the shadcn MCP server work out of the box.
 
 ## What lives in this repository
 
-Only the components, hooks and utilities, plus the tooling that keeps them honest. There is no website or demo app here; the documentation site is a separate project that consumes this registry like any other app would.
+Only the components, hooks and utilities, plus the tooling that keeps them honest. There is no website here; the documentation site is a separate project that consumes this registry like any other app would. The one app is the React Native gallery, a screen per native item, whose web build is published with the registry for the site to show inside a phone frame.
 
-`registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair-ui` namespace points to. The namespace is listed in the [shadcn registry directory](https://ui.shadcn.com/docs/directory), so the CLI finds it without any setup. There is no server to run or package to publish.
+`registry.json` at the root describes every item. On each merge to `main`, a workflow builds it into JSON and publishes it with GitHub Pages at `https://kevingirelli.github.io/corsair-ui/r/{name}.json`, which is what the `@corsair-ui` namespace points to. The namespace is listed in the [shadcn registry directory](https://ui.shadcn.com/docs/directory), so the CLI finds it without any setup. There is no server to run or package to publish. The React Native items have their own registry, `registry/native/registry.json`, published next to it at `https://kevingirelli.github.io/corsair-ui/r/native/{name}.json` for the `@corsair-native` namespace.
 
 ## Using an item
 
@@ -100,9 +141,17 @@ Every name links to its docs page, with live examples.
 - **Backgrounds:** [aurora](https://corsairui.vercel.app/docs/aurora), [light-rays](https://corsairui.vercel.app/docs/light-rays), [warp-gradient](https://corsairui.vercel.app/docs/warp-gradient), [topography](https://corsairui.vercel.app/docs/topography), [particles](https://corsairui.vercel.app/docs/particles)
 - **Data and embeds:** [line-chart](https://corsairui.vercel.app/docs/line-chart), [bar-chart](https://corsairui.vercel.app/docs/bar-chart), [area-chart](https://corsairui.vercel.app/docs/area-chart), [donut-chart](https://corsairui.vercel.app/docs/donut-chart), [qr-code](https://corsairui.vercel.app/docs/qr-code), [tweet-card](https://corsairui.vercel.app/docs/tweet-card), [spotify-card](https://corsairui.vercel.app/docs/spotify-card) (with [`getSpotifyTrack`](https://corsairui.vercel.app/docs/spotify-track) for the server), [youtube-embed](https://corsairui.vercel.app/docs/youtube-embed), [code-block](https://corsairui.vercel.app/docs/code-block)
 - **Form layout:** [field](https://corsairui.vercel.app/docs/field) (no form library needed), [form](https://corsairui.vercel.app/docs/form) (react-hook-form)
-- **Display:** [card](https://corsairui.vercel.app/docs/card), [alert](https://corsairui.vercel.app/docs/alert), [separator](https://corsairui.vercel.app/docs/separator), [skeleton](https://corsairui.vercel.app/docs/skeleton), [avatar](https://corsairui.vercel.app/docs/avatar), [rating](https://corsairui.vercel.app/docs/rating), [stat](https://corsairui.vercel.app/docs/stat), [progress](https://corsairui.vercel.app/docs/progress), [table](https://corsairui.vercel.app/docs/table), [data-table](https://corsairui.vercel.app/docs/data-table), [timeline](https://corsairui.vercel.app/docs/timeline), [empty-state](https://corsairui.vercel.app/docs/empty-state), [kbd](https://corsairui.vercel.app/docs/kbd), [stepper](https://corsairui.vercel.app/docs/stepper)
+- **Display:** [card](https://corsairui.vercel.app/docs/card), [alert](https://corsairui.vercel.app/docs/alert), [separator](https://corsairui.vercel.app/docs/separator), [skeleton](https://corsairui.vercel.app/docs/skeleton), [avatar](https://corsairui.vercel.app/docs/avatar), [rating](https://corsairui.vercel.app/docs/rating) (and its animated variation [wave-rating](https://corsairui.vercel.app/docs/wave-rating)), [stat](https://corsairui.vercel.app/docs/stat), [progress](https://corsairui.vercel.app/docs/progress), [table](https://corsairui.vercel.app/docs/table), [data-table](https://corsairui.vercel.app/docs/data-table), [timeline](https://corsairui.vercel.app/docs/timeline), [empty-state](https://corsairui.vercel.app/docs/empty-state), [kbd](https://corsairui.vercel.app/docs/kbd), [stepper](https://corsairui.vercel.app/docs/stepper)
 - **Blocks:** [hero](https://corsairui.vercel.app/docs/hero), [feature-grid](https://corsairui.vercel.app/docs/feature-grid), [stats](https://corsairui.vercel.app/docs/stats), [logo-cloud](https://corsairui.vercel.app/docs/logo-cloud), [pricing](https://corsairui.vercel.app/docs/pricing), [testimonials](https://corsairui.vercel.app/docs/testimonials), [faq](https://corsairui.vercel.app/docs/faq), [cta](https://corsairui.vercel.app/docs/cta), [contact-form](https://corsairui.vercel.app/docs/contact-form), [newsletter](https://corsairui.vercel.app/docs/newsletter), [site-footer](https://corsairui.vercel.app/docs/site-footer), [login-form](https://corsairui.vercel.app/docs/login-form), [signup-form](https://corsairui.vercel.app/docs/signup-form), [not-found](https://corsairui.vercel.app/docs/not-found), [dashboard](https://corsairui.vercel.app/docs/dashboard), [settings](https://corsairui.vercel.app/docs/settings)
 - **Foundations:** [theme](https://corsairui.vercel.app/docs/theme) (plus the presets [theme-blue](https://corsairui.vercel.app/docs/theme-blue), [theme-violet](https://corsairui.vercel.app/docs/theme-violet), [theme-rose](https://corsairui.vercel.app/docs/theme-rose), [theme-emerald](https://corsairui.vercel.app/docs/theme-emerald) and [theme-amber](https://corsairui.vercel.app/docs/theme-amber)), [utils](https://corsairui.vercel.app/docs/utils) (`cn`), [use-media-query](https://corsairui.vercel.app/docs/use-media-query), [use-in-view](https://corsairui.vercel.app/docs/use-in-view), [use-entrance](https://corsairui.vercel.app/docs/use-entrance), [use-scroll-spy](https://corsairui.vercel.app/docs/use-scroll-spy)
+
+React Native, as `@corsair-native/<item>` ([docs](https://corsairui.vercel.app/native)):
+
+- **Foundations:** theme (colours, radii, type, fonts, shadows and springs, with `useTheme()` and `withAlpha()`), haptics, use-reduced-motion
+- **Actions and text:** text, button (with `raised`), badge, spinner
+- **Form controls:** input, checkbox, switch, segmented-control, rating, wave-rating
+- **Display:** card, alert, avatar, separator, skeleton, progress, empty-state
+- **Overlays:** drawer (a bottom sheet), toast
 
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
 
@@ -116,8 +165,14 @@ registry/default/
   components/blocks/       page sections built from the components
   hooks/                   React hooks
   lib/                     plain utilities
-scripts/                   Tailwind compatibility check and fixture runner
+registry/native/
+  registry.json            entry point of the React Native registry
+  ui/ hooks/ lib/          React Native items (lib/theme.ts holds the tokens)
+  package.json             the harness that tests them: Expo SDK 57, Jest, Testing Library
+  gallery/                 an Expo app with a demo of every item, for phones and the docs
+scripts/                   Tailwind compatibility check and fixture runners
 tests/fixtures/            minimal Tailwind 3 and 4 projects items get installed into
+tests/native-fixtures/     minimal Expo SDK 54 and 57 apps the React Native items get installed into
 ```
 
 ## Development
@@ -133,9 +188,24 @@ pnpm check:tailwind     # classes must mean the same thing in Tailwind 3 and 4
 pnpm registry:validate  # registry.json and every item match the shadcn schema
 pnpm registry:build     # the JSON that gets published, in dist/registry/r
 pnpm verify:fixtures    # install every item into the fixtures and build them
+
+# React Native
+pnpm native:install     # the harness's dependencies (npm, in registry/native)
+pnpm native:test        # Jest: the items with Testing Library, the gallery under react-native-web
+pnpm native:typecheck
+pnpm registry:native:validate
+pnpm registry:native:build   # into dist/registry/r/native
+pnpm native:preview     # the gallery's web build, into dist/registry/native-preview
+pnpm verify:native      # install every item into Expo SDK 54 and 57 apps, typecheck, bundle for Android and web
 ```
 
+To try the React Native items on a phone, run `npx expo start` in `registry/native` and open the gallery in Expo Go.
+
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add an item and the rules components follow.
+
+## Support
+
+Corsair UI is free and stays free. If it saves you time, you can [support its development](https://corsairui.vercel.app/sponsor).
 
 ## License
 

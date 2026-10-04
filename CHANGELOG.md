@@ -2,7 +2,28 @@
 
 `@corsair-ui/<item>` serves what is on `main`. Each release is also a git tag; install an item from one with `KevinGirelli/corsair-ui/<item>#v0.2.0`.
 
-## 0.17.0
+## Unreleased
+
+Corsair goes to phones: a React Native registry with the components an app needs every day, and the first animated variation of a component, on both platforms. Nothing from earlier releases changes unless you opt in.
+
+### Added
+
+- Corsair Native, a second registry for React Native apps, installed with the shadcn CLI as `@corsair-native/<item>` from `https://kevingirelli.github.io/corsair-ui/r/native/{name}.json`. Items have the names, parts, variants and colours of their web counterparts, are styled with `StyleSheet` and theme tokens (no Tailwind), and are installed into Expo SDK 54 and 57 apps, typechecked and bundled for Android and the web on every change. Packages with native code are listed without a version, so `npx expo install` picks the one your SDK expects. Each item:
+  - `theme`: the web theme's colours for light and dark mode, radii from one value, type sizes, font families per weight (custom fonts in React Native ignore `fontWeight`), shadows as `boxShadow` and springs for Animated and Reanimated. `useTheme()` follows the device, `ThemeProvider` forces a scheme, and `withAlpha()` stands in for opacity modifiers.
+  - `haptics`: `haptic("selection" | "light" | "success" …)` on expo-haptics, fire-and-forget and silent on the web, with `setHapticsEnabled()` for an app-wide setting.
+  - `use-reduced-motion`: the device's Reduce Motion setting, followed live.
+  - `text` (headings announced as such; containers pass their label colour to it), `button` (every web variant including `raised`, sizes with a 44 px touch area, `loading`), `badge`, `card`, `separator`, `avatar` (with `AvatarGroup`), `alert`, `input`, `empty-state` and `spinner`.
+  - `skeleton`, `progress`, `switch`, `checkbox` and `segmented-control`, animated on the native thread and still with Reduce Motion.
+  - `rating`: tapped, or adjusted by screen readers as one control, the way iOS and Android expect; read-only with fractional fills.
+  - `toast`: `toast()` from anywhere and a `Toaster` at the top or bottom edge, clear of the safe area; three at a time, announced once, paused while touched or in the background, swiped away.
+  - `drawer`: a bottom sheet in a Modal that springs up, follows a drag down to close, rises above the iOS keyboard, keeps screen readers inside, and closes with the back button, the escape gesture or the overlay.
+  - Every item also runs in Expo's web target, on react-native-web; the toasts become a live region there.
+- A gallery app with a screen for every React Native item: `npx expo start` in `registry/native` to try them on a phone. Its web build is published at `https://kevingirelli.github.io/corsair-ui/native-preview/`, where the docs site embeds one item at a time with `?item=<name>`.
+- Variations: animated takes on a component with the same props, marked with `meta.variantOf` in the registry. The first is `wave-rating`, for the web and React Native: sweeping a finger (or a pen or mouse) across the stars lifts them in a wave that crests under it, a tip shows the score, and letting go pops the chosen star; on phones each star ticks with a haptic. It keeps the rating's radio group (web) or adjustable control (React Native), its form support and its read-only image, and holds still with reduced motion.
+
+### Changed
+
+- `rating`: a pen hovering over the stars previews them, like a mouse. The star is exported as `RatingStar` for the variations to reuse.
 
 The finishing touches of a product page: a band that sweeps the page from one side to the other, a stamp that slams down, a button that sinks like a key and a QR code that draws itself. Everything new is opt in; nothing from earlier releases changes.
 

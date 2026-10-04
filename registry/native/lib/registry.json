@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:lib",
+      "title": "Theme",
+      "description": "Colours for light and dark mode with the names and values of the web theme, plus radii, type sizes, font families, shadows and motion springs. useTheme() follows the device; ThemeProvider forces a scheme; withAlpha() is the native take on opacity modifiers.",
+      "files": [
+        {
+          "path": "theme.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "haptics",
+      "type": "registry:lib",
+      "title": "Haptics",
+      "description": "haptic(\"selection\" | \"light\" | \"success\" …): a fire-and-forget vibration through expo-haptics that never throws and does nothing on the web, plus setHapticsEnabled() for an app-wide setting.",
+      "dependencies": ["expo-haptics"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install expo-haptics",
+      "files": [
+        {
+          "path": "haptics.ts",
+          "type": "registry:lib"
+        }
+      ]
+    }
+  ]
+}

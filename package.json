@@ -19,7 +19,14 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check:tailwind": "node scripts/check-tailwind-compat.ts",
-    "verify:fixtures": "node scripts/verify-fixtures.ts"
+    "verify:fixtures": "node scripts/verify-fixtures.ts",
+    "native:install": "npm ci --prefix registry/native --no-audit --no-fund",
+    "native:test": "npm test --prefix registry/native",
+    "native:typecheck": "npm run typecheck --prefix registry/native",
+    "registry:native:validate": "shadcn registry validate ./registry/native/registry.json",
+    "registry:native:build": "shadcn build ./registry/native/registry.json --output dist/registry/r/native",
+    "native:preview": "npm run preview:export --prefix registry/native",
+    "verify:native": "node scripts/verify-native-fixtures.ts"
   },
   "devDependencies": {
     "@daypicker/react": "10.0.1",
