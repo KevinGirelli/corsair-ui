@@ -193,6 +193,46 @@
       ]
     },
     {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Brief messages from toast() anywhere in the app, stacked at the top or bottom edge clear of the safe area: three at a time, announced to screen readers, paused while touched or in the background, and swiped away sideways or towards their edge.",
+      "dependencies": ["react-native-safe-area-context"],
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/use-reduced-motion"
+      ],
+      "categories": ["motion"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install react-native-safe-area-context. Then render <Toaster /> once, as the last child of your root view inside SafeAreaProvider.",
+      "files": [
+        {
+          "path": "toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A bottom sheet in a Modal: it springs up, follows a drag down to close, sits clear of the home indicator and the iOS keyboard, keeps screen readers inside, and closes with the back button, the escape gesture or the overlay.",
+      "dependencies": ["react-native-safe-area-context"],
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/use-reduced-motion"
+      ],
+      "categories": ["motion"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install react-native-safe-area-context",
+      "files": [
+        {
+          "path": "drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "empty-state",
       "type": "registry:ui",
       "title": "Empty State",

@@ -9,7 +9,7 @@
 
 <p align="center">
   <strong>Open-source React components, motion effects and page blocks for shadcn/ui and Tailwind CSS, and their React Native counterparts for Expo.</strong><br />
-  145 accessible web items checked against Tailwind CSS 3.4 and 4, plus 18 React Native items checked against Expo SDK 54 and 57, all installed as source code with the shadcn CLI.
+  145 accessible web items checked against Tailwind CSS 3.4 and 4, plus 20 React Native items checked against Expo SDK 54 and 57, all installed as source code with the shadcn CLI.
 </p>
 
 <p align="center">
@@ -77,11 +77,11 @@ The same components for apps, with the same names, variants and colours, written
 Then install the native modules your Expo SDK expects, and the items:
 
 ```bash
-npx expo install expo-haptics
-pnpm dlx shadcn@latest add @corsair-native/button @corsair-native/card @corsair-native/switch
+npx expo install react-native-safe-area-context expo-haptics
+pnpm dlx shadcn@latest add @corsair-native/button @corsair-native/card @corsair-native/drawer
 ```
 
-Colours, radii, type and springs live in `lib/theme.ts`, copied with the first item: edit it to brand the app. Components follow the device's light or dark mode; `ThemeProvider` forces one.
+Colours, radii, type and springs live in `lib/theme.ts`, copied with the first item: edit it to brand the app. Components follow the device's light or dark mode; `ThemeProvider` forces one. `Toaster` and `Drawer` sit inside `SafeAreaProvider`.
 
 ## Why Corsair UI
 
@@ -150,6 +150,7 @@ React Native, as `@corsair-native/<item>` ([docs](https://corsairui.vercel.app/n
 - **Actions and text:** text, button (with `raised`), badge, spinner
 - **Form controls:** input, checkbox, switch, segmented-control
 - **Display:** card, alert, avatar, separator, skeleton, progress, empty-state
+- **Overlays:** drawer (a bottom sheet), toast
 
 See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
 
