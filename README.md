@@ -9,7 +9,7 @@
 
 <p align="center">
   <strong>Open-source React components, motion effects and page blocks for shadcn/ui and Tailwind CSS, and their React Native counterparts for Expo.</strong><br />
-  145 accessible web items checked against Tailwind CSS 3.4 and 4, plus 20 React Native items checked against Expo SDK 54 and 57, all installed as source code with the shadcn CLI.
+  145 accessible web items checked against Tailwind CSS 3.4 and 4, plus 22 React Native items checked against Expo SDK 54 and 57, all installed as source code with the shadcn CLI.
 </p>
 
 <p align="center">
@@ -77,11 +77,12 @@ The same components for apps, with the same names, variants and colours, written
 Then install the native modules your Expo SDK expects, and the items:
 
 ```bash
-npx expo install react-native-safe-area-context expo-haptics
-pnpm dlx shadcn@latest add @corsair-native/button @corsair-native/card @corsair-native/drawer
+npx expo install react-native-svg react-native-safe-area-context expo-haptics \
+  react-native-gesture-handler react-native-reanimated react-native-worklets
+pnpm dlx shadcn@latest add @corsair-native/button @corsair-native/drawer @corsair-native/wave-rating
 ```
 
-Colours, radii, type and springs live in `lib/theme.ts`, copied with the first item: edit it to brand the app. Components follow the device's light or dark mode; `ThemeProvider` forces one. `Toaster` and `Drawer` sit inside `SafeAreaProvider`.
+Colours, radii, type and springs live in `lib/theme.ts`, copied with the first item: edit it to brand the app. Components follow the device's light or dark mode; `ThemeProvider` forces one. Items that animate with gestures need a `GestureHandlerRootView` at the root of the app, and `Toaster` and `Drawer` sit inside `SafeAreaProvider`.
 
 ## Why Corsair UI
 
@@ -148,7 +149,7 @@ React Native, as `@corsair-native/<item>` ([docs](https://corsairui.vercel.app/n
 
 - **Foundations:** theme (colours, radii, type, fonts, shadows and springs, with `useTheme()` and `withAlpha()`), haptics, use-reduced-motion
 - **Actions and text:** text, button (with `raised`), badge, spinner
-- **Form controls:** input, checkbox, switch, segmented-control
+- **Form controls:** input, checkbox, switch, segmented-control, rating, wave-rating
 - **Display:** card, alert, avatar, separator, skeleton, progress, empty-state
 - **Overlays:** drawer (a bottom sheet), toast
 

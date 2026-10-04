@@ -14,9 +14,10 @@ Corsair goes to phones: a React Native registry, and the first animated variatio
   - `use-reduced-motion`: the device's Reduce Motion setting, followed live.
   - `text` (headings announced as such; containers pass their label colour to it), `button` (every web variant including `raised`, sizes with a 44 px touch area, `loading`), `badge`, `card`, `separator`, `avatar` (with `AvatarGroup`), `alert`, `input`, `empty-state` and `spinner`.
   - `skeleton`, `progress`, `switch`, `checkbox` and `segmented-control`, animated on the native thread and still with Reduce Motion.
+  - `rating`: tapped, or adjusted by screen readers as one control, the way iOS and Android expect; read-only with fractional fills.
   - `toast`: `toast()` from anywhere and a `Toaster` at the top or bottom edge, clear of the safe area; three at a time, announced once, paused while touched or in the background, swiped away.
   - `drawer`: a bottom sheet in a Modal that springs up, follows a drag down to close, rises above the iOS keyboard, keeps screen readers inside, and closes with the back button, the escape gesture or the overlay.
-- Variations: animated takes on a component with the same props, marked with `meta.variantOf` in the registry. The first is `wave-rating`: sweeping a finger (or a pen or mouse) across the stars lifts them in a wave that crests under it, a tip shows the score, and letting go pops the chosen star; on phones each star ticks with a vibration where the browser allows it. It keeps the rating's radio group, its form support and its read-only image, and holds still with reduced motion.
+- Variations: animated takes on a component with the same props, marked with `meta.variantOf` in the registry. The first is `wave-rating`, for the web and React Native: sweeping a finger (or a pen or mouse) across the stars lifts them in a wave that crests under it, a tip shows the score, and letting go pops the chosen star; on phones each star ticks with a haptic. It keeps the rating's radio group (web) or adjustable control (React Native), its form support and its read-only image, and holds still with reduced motion.
 
 ### Changed
 
