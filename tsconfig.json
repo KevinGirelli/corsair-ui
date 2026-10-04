@@ -19,5 +19,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["registry", "scripts", "test-utils", "vitest.config.ts", "vitest.setup.ts"]
+  "include": ["registry", "scripts", "test-utils", "vitest.config.ts", "vitest.setup.ts"],
+  // React Native items have their own config, types and dependencies there.
+  "exclude": ["registry/native"]
 }

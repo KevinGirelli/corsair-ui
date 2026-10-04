@@ -37,6 +37,18 @@ registry/default/
 
 `default` is the style name. It is part of the import path the CLI understands (see below), so keep every item under it.
 
+The React Native items live apart, in their own registry with its own root file (the CLI only accepts a root named `registry.json`, so it sits in the folder):
+
+```text
+registry/native/
+  registry.json            root of the React Native registry: includes the registries below
+  package.json             the development harness: Expo SDK 57, Jest, Testing Library (not published)
+  lib/registry.json        theme (tokens), haptics
+  hooks/registry.json      use-reduced-motion
+```
+
+It is built into `r/native/` and installed with the `@corsair-native` namespace. See [React Native items](#react-native-items).
+
 ## Adding an item
 
 1. Put the source in the folder that matches what it is: `ui/` for primitives and form controls, `components/<area>/` for larger pieces, `hooks/`, or `lib/`.
@@ -101,6 +113,30 @@ When an item needs CSS variables or keyframes, declare them for both versions in
 
 `pnpm verify:fixtures` installs everything into `tests/fixtures/tailwind-v3` and `tests/fixtures/tailwind-v4`, typechecks the result, compiles the CSS and checks that utilities built on the theme (`bg-primary`, `bg-field`, `focus-visible:ring-ring/50`…) made it into both outputs.
 
+## React Native items
+
+Corsair Native brings the components to React Native apps, built and tested for Expo. An item has the same name, parts, variants and tokens as its web counterpart, so an app and its site speak the same language, but it is written for phones: touch targets, haptics, the platform's accessibility.
+
+```bash
+pnpm native:install     # once: the harness in registry/native (npm, Expo SDK 57)
+pnpm native:test        # Jest with jest-expo and React Native Testing Library
+pnpm native:typecheck   # no DOM types, so a browser API fails here
+pnpm registry:native:validate
+pnpm verify:native      # install every item into Expo SDK 54 and 57 apps, typecheck, bundle for Android and web
+```
+
+To try items on a phone, run the fixtures with `pnpm verify:native --keep` and `npx expo start` inside the copy it leaves, or install them into an Expo app of your own from a local build.
+
+- **Styles from the theme.** `StyleSheet` plus the tokens in `lib/theme.ts` through `useTheme()`; no Tailwind, no hex values in components. Opacity modifiers become `withAlpha(colors.primary, 0.2)`. Variants are maps with the web's names.
+- **Imports through `@/registry/native/...`.** The CLI rewrites them to the app's aliases, like on the web. Other items go in `registryDependencies` as `@corsair-native/<item>`; `theme` is safe to list, since the CLI skips files that already exist unless told to overwrite.
+- **Dependencies:** packages with native code (`react-native-*`, `expo-*`) are listed without a version, because the app's Expo SDK decides it (`npx expo install`); add an item `docs` line with that command. Plain JavaScript packages get a range. Web building blocks (Radix, lucide-react, cva, Tailwind) never appear. `scripts/registry-deps.test.ts` checks all of this.
+- **Expo first, two SDKs.** Every item works on Expo SDK 54 and the newest SDK, the way web items work on Tailwind 3 and 4. Use APIs both have; `verify:native` proves it.
+- **Accessible on phones.** Use `role` and `aria-*` (React Native maps them to VoiceOver and TalkBack). Touch targets reach 44 px, with `hitSlop` when the visual is smaller. Values that step (ratings, sliders) are one adjustable control with increment and decrement actions, not a row of buttons. Modals keep screen readers inside and close with the Android back button and the iOS escape gesture. Announce what appears after an action with `AccessibilityInfo`.
+- **Motion on the native thread.** Simple motion (fades, springs, loops on `transform` and `opacity`) uses React Native's `Animated` with the native driver, so the item needs nothing else. Gestures and gesture-linked motion use Gesture Handler and Reanimated; run gesture callbacks on the JavaScript thread (`.runOnJS(true)`) unless the frame rate really needs worklets. Every animated item follows `useReducedMotion()`.
+- **Haptics are an extra.** `lib/haptics.ts` wraps expo-haptics; base items do not vibrate, variations may, with a prop to turn it off.
+- **No DOM.** ESLint rejects `document`, `matchMedia` and friends in `registry/native`, and the harness typechecks without DOM types.
+- **The web too.** Expo apps also run in browsers through react-native-web, which lacks a few React Native APIs: `useAnimatedValue` (use `useState(() => new Animated.Value(x))`, which ESLint suggests), `AccessibilityInfo.announceForAccessibilityWithOptions` and `sendAccessibilityEvent` (check that they exist first).
+
 ## Licences and releases
 
 Code adapted from another project keeps its license notice in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
@@ -113,6 +149,6 @@ Every merge to `main` that touches the registry is published to GitHub Pages by 
 
 - Branch off `main` and open a PR. `main` is protected: direct pushes and force pushes are rejected.
 - Keep a PR to one item or one change. The template asks what changed, why, and how you checked it.
-- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures. Both jobs have to pass before merging. A third workflow, "shadcn latest", runs the fixtures with the newest shadcn CLI every Monday and on PRs that touch the registry, so CLI changes show up here first.
+- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures, then the React Native harness (types, tests, schema) and the Expo fixtures. Every job has to pass before merging. A third workflow, "shadcn latest", runs both sets of fixtures with the newest shadcn CLI every Monday and on PRs that touch the registry, so CLI changes show up here first.
 - PRs are squash-merged, so write the PR title as the commit you want on `main`.
 - Dependabot opens dependency updates on Mondays; they go through the same checks.

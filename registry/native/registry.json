@@ -1,0 +1,6 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "corsair-native",
+  "homepage": "https://corsairui.vercel.app/native",
+  "include": ["lib/registry.json", "hooks/registry.json"]
+}

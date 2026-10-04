@@ -4,10 +4,14 @@
 
 ## Unreleased
 
-The first animated variation of a component. Nothing from earlier releases changes unless you opt in.
+Corsair goes to phones: a React Native registry, and the first animated variation of a component. Nothing from earlier releases changes unless you opt in.
 
 ### Added
 
+- Corsair Native, a second registry for React Native apps, installed with the shadcn CLI as `@corsair-native/<item>` from `https://kevingirelli.github.io/corsair-ui/r/native/{name}.json`. Items have the names, parts, variants and colours of their web counterparts, are styled with `StyleSheet` and theme tokens (no Tailwind), and are installed into Expo SDK 54 and 57 apps, typechecked and bundled for Android and the web on every change. Packages with native code are listed without a version, so `npx expo install` picks the one your SDK expects. Each item:
+  - `theme`: the web theme's colours for light and dark mode, radii from one value, type sizes, font families per weight (custom fonts in React Native ignore `fontWeight`), shadows as `boxShadow` and springs for Animated and Reanimated. `useTheme()` follows the device, `ThemeProvider` forces a scheme, and `withAlpha()` stands in for opacity modifiers.
+  - `haptics`: `haptic("selection" | "light" | "success" …)` on expo-haptics, fire-and-forget and silent on the web, with `setHapticsEnabled()` for an app-wide setting.
+  - `use-reduced-motion`: the device's Reduce Motion setting, followed live.
 - Variations: animated takes on a component with the same props, marked with `meta.variantOf` in the registry. The first is `wave-rating`: sweeping a finger (or a pen or mouse) across the stars lifts them in a wave that crests under it, a tip shows the score, and letting go pops the chosen star; on phones each star ticks with a vibration where the browser allows it. It keeps the rating's radio group, its form support and its read-only image, and holds still with reduced motion.
 
 ### Changed
