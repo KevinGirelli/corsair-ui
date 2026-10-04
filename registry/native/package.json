@@ -1,10 +1,13 @@
 {
   "name": "corsair-native-dev",
   "private": true,
-  "description": "Development harness for the React Native items in this folder: unit tests and type checks against Expo SDK 57, with the packages of Expo's web target. Nothing here is published to npm; the registry ships only the files each item lists.",
+  "description": "Development harness for the React Native items in this folder: unit tests and type checks against Expo SDK 57, and a gallery app that shows every item. Nothing here is published to npm; the registry ships only the files each item lists.",
+  "main": "gallery/index.ts",
   "scripts": {
+    "start": "expo start",
     "test": "jest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.web.json",
+    "preview:export": "expo export --platform web --output-dir ../../dist/registry/native-preview"
   },
   "dependencies": {
     "@expo/metro-runtime": "57.0.16",

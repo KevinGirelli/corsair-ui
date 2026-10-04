@@ -25,6 +25,7 @@
     "native:typecheck": "npm run typecheck --prefix registry/native",
     "registry:native:validate": "shadcn registry validate ./registry/native/registry.json",
     "registry:native:build": "shadcn build ./registry/native/registry.json --output dist/registry/r/native",
+    "native:preview": "npm run preview:export --prefix registry/native",
     "verify:native": "node scripts/verify-native-fixtures.ts"
   },
   "devDependencies": {

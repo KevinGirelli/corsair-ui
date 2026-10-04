@@ -90,11 +90,19 @@ jobs:
       - name: Types
         run: pnpm native:typecheck
 
+      # On iOS's preset with Testing Library, and the gallery under react-native-web.
       - name: Unit tests
         run: pnpm native:test
 
       - name: Registry schema
         run: pnpm registry:native:validate
+
+      # The web build of the gallery that the docs site embeds.
+      - name: Gallery
+        run: pnpm native:preview
+        env:
+          CI: 1
+          EXPO_NO_TELEMETRY: 1
 
   native-fixtures:
     name: Install into Expo SDK 54 and 57 apps

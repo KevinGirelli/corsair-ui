@@ -38,6 +38,14 @@ jobs:
       # The web build first: the React Native one goes into its r/native folder.
       - name: Build
         run: pnpm registry:build && pnpm registry:native:build
+      # The gallery the docs site embeds for each React Native item:
+      # https://kevingirelli.github.io/corsair-ui/native-preview/?item=button
+      - name: Gallery
+        run: pnpm native:install && pnpm native:preview
+        env:
+          CI: 1
+          EXPO_NO_TELEMETRY: 1
+          NATIVE_PREVIEW_BASE_URL: /corsair-ui/native-preview
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist/registry

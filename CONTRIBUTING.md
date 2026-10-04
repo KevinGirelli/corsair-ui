@@ -46,6 +46,7 @@ registry/native/
   lib/registry.json        theme (tokens), haptics
   hooks/registry.json      use-reduced-motion
   ui/registry.json         components, with the same names as their web counterparts
+  gallery/                 an Expo app with a demo of every item (not published)
 ```
 
 It is built into `r/native/` and installed with the `@corsair-native` namespace. See [React Native items](#react-native-items).
@@ -121,13 +122,14 @@ Corsair Native brings the components to React Native apps, built and tested for 
 
 ```bash
 pnpm native:install     # once: the harness in registry/native (npm, Expo SDK 57)
-pnpm native:test        # Jest with jest-expo and React Native Testing Library
+pnpm native:test        # Jest: the items with Testing Library, and the gallery under react-native-web
 pnpm native:typecheck   # no DOM types, so a browser API fails here
 pnpm registry:native:validate
+pnpm native:preview     # the gallery's web build, into dist/registry/native-preview
 pnpm verify:native      # install every item into Expo SDK 54 and 57 apps, typecheck, bundle for Android and web
 ```
 
-To try items on a phone, run the fixtures with `pnpm verify:native --keep` and `npx expo start` inside the copy it leaves, or install them into an Expo app of your own from a local build.
+The harness is also an Expo app, the gallery in `registry/native/gallery/`, with a screen for every item. Run `npx expo start` in `registry/native` and open it in Expo Go to try the items on a phone. Its web build is published next to the registry, and the docs site shows each item in it, inside a phone frame. A new item needs a demo in `gallery/demos.tsx`; a test fails until it has one.
 
 - **Styles from the theme.** `StyleSheet` plus the tokens in `lib/theme.ts` through `useTheme()`; no Tailwind, no hex values in components. Opacity modifiers become `withAlpha(colors.primary, 0.2)`. Variants are maps with the web's names.
 - **Imports through `@/registry/native/...`.** The CLI rewrites them to the app's aliases, like on the web. Other items go in `registryDependencies` as `@corsair-native/<item>`; `theme` is safe to list, since the CLI skips files that already exist unless told to overwrite.
@@ -137,7 +139,7 @@ To try items on a phone, run the fixtures with `pnpm verify:native --keep` and `
 - **Motion on the native thread.** Simple motion (fades, springs, loops on `transform` and `opacity`) uses React Native's `Animated` with the native driver, so the item needs nothing else. Gestures and gesture-linked motion use Gesture Handler and Reanimated; run gesture callbacks on the JavaScript thread (`.runOnJS(true)`) unless the frame rate really needs worklets. Every animated item follows `useReducedMotion()`.
 - **Haptics are an extra.** `lib/haptics.ts` wraps expo-haptics; base items do not vibrate, variations may, with a prop to turn it off.
 - **No DOM.** ESLint rejects `document`, `matchMedia` and friends in `registry/native`, and the harness typechecks without DOM types.
-- **The web too.** Expo apps also run in browsers through react-native-web, which lacks a few React Native APIs: `useAnimatedValue` (use `useState(() => new Animated.Value(x))`, which ESLint suggests), `AccessibilityInfo.announceForAccessibilityWithOptions` and `sendAccessibilityEvent` (check that they exist first).
+- **The web too.** Expo apps also run in browsers through react-native-web, which lacks a few React Native APIs: `useAnimatedValue` (use `useState(() => new Animated.Value(x))`, which ESLint suggests), `AccessibilityInfo.announceForAccessibilityWithOptions` and `sendAccessibilityEvent` (check that they exist first). The gallery's web tests render every demo with it.
 
 ## Licences and releases
 
@@ -151,6 +153,6 @@ Every merge to `main` that touches the registry is published to GitHub Pages by 
 
 - Branch off `main` and open a PR. `main` is protected: direct pushes and force pushes are rejected.
 - Keep a PR to one item or one change. The template asks what changed, why, and how you checked it.
-- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures, then the React Native harness (types, tests, schema) and the Expo fixtures. Every job has to pass before merging. A third workflow, "shadcn latest", runs both sets of fixtures with the newest shadcn CLI every Monday and on PRs that touch the registry, so CLI changes show up here first.
+- CI runs formatting, lint, types, tests, the registry schema, the Tailwind check and the fixtures, then the React Native harness (types, tests, schema, the gallery's web build) and the Expo fixtures. Every job has to pass before merging. A third workflow, "shadcn latest", runs both sets of fixtures with the newest shadcn CLI every Monday and on PRs that touch the registry, so CLI changes show up here first.
 - PRs are squash-merged, so write the PR title as the commit you want on `main`.
 - Dependabot opens dependency updates on Mondays; they go through the same checks.
