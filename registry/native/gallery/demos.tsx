@@ -1,10 +1,21 @@
 import { useState, type ComponentType, type ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
+import { Text as RNText, StyleSheet, View } from "react-native";
 
 import { useReducedMotion } from "@/registry/native/hooks/use-reduced-motion";
 import { haptic, type HapticKind } from "@/registry/native/lib/haptics";
+import {
+  fullStorySize,
+  STORY_SAFE_AREA,
+  STORY_SIZE,
+  useStoryUnit,
+} from "@/registry/native/lib/story";
 import { useTheme, withAlpha, type Colors } from "@/registry/native/lib/theme";
 import { Alert, AlertDescription, AlertTitle } from "@/registry/native/ui/alert";
+import {
+  AvailabilityStory,
+  availabilityStoryAlt,
+  type AvailabilityStoryProps,
+} from "@/registry/native/ui/availability-story";
 import { Avatar, AvatarFallback, AvatarGroup } from "@/registry/native/ui/avatar";
 import { Badge } from "@/registry/native/ui/badge";
 import { Button } from "@/registry/native/ui/button";
@@ -42,6 +53,7 @@ import { SegmentedControl, SegmentedControlItem } from "@/registry/native/ui/seg
 import { Separator } from "@/registry/native/ui/separator";
 import { Skeleton } from "@/registry/native/ui/skeleton";
 import { Spinner } from "@/registry/native/ui/spinner";
+import { StoryFrame } from "@/registry/native/ui/story-frame";
 import { Switch } from "@/registry/native/ui/switch";
 import { Text } from "@/registry/native/ui/text";
 import { toast } from "@/registry/native/ui/toast";
@@ -781,9 +793,152 @@ function DrawerDemo() {
   );
 }
 
+const DAY_STORY: AvailabilityStoryProps = {
+  title: "Free today",
+  subtitle: "Friday, October 10",
+  brand: { name: "North Court" },
+  slots: [
+    { label: "07h" },
+    { label: "08h", status: "taken" },
+    { label: "12h" },
+    { label: "17h", status: "taken" },
+    { label: "18h", status: "few" },
+    { label: "19h" },
+    { label: "20h", status: "taken" },
+    { label: "21h" },
+    { label: "22h", status: "few" },
+  ],
+  statusLabels: { open: "free", few: "last spots", taken: "booked" },
+  cta: "Book through the link",
+  linkHint: "Tap the link sticker",
+};
+
+const WEEK_STORY: AvailabilityStoryProps = {
+  layout: "week",
+  title: "This week",
+  subtitle: "Evenings, from 6 pm",
+  brand: { name: "North Court" },
+  days: [
+    { label: "Mon", slots: [{ label: "18h" }, { label: "21h", status: "few" }] },
+    { label: "Tue", slots: [{ label: "19h" }, { label: "20h" }, { label: "22h" }] },
+    { label: "Wed", slots: [] },
+    { label: "Thu", slots: [{ label: "18h", status: "few" }] },
+    { label: "Fri", slots: [{ label: "20h" }, { label: "21h" }] },
+    {
+      label: "Sat",
+      slots: [{ label: "09h" }, { label: "10h" }, { label: "16h" }, { label: "17h" }],
+    },
+    { label: "Sun", slots: [{ label: "10h" }] },
+  ],
+  emptyLabel: "Full",
+  cta: "Book through the link",
+};
+
+const SPOTLIGHT_STORY: AvailabilityStoryProps = {
+  layout: "spotlight",
+  title: "Last spot tonight",
+  brand: { name: "North Court" },
+  slot: { label: "21h", note: "$40 · 90 min" },
+  caption: "Someone cancelled. First to book takes it.",
+  cta: "Book through the link",
+  linkHint: "Tap the link sticker",
+  colors: { background: "#1d1b4b", accent: "#facc15", accentForeground: "#1d1b4b" },
+};
+
+const STORIES = { day: DAY_STORY, week: WEEK_STORY, spotlight: SPOTLIGHT_STORY };
+
+/** A template of your own: any view sized with useStoryUnit() can be shared. */
+function CustomStory() {
+  const px = useStoryUnit();
+  const { colors, font } = useTheme();
+  return (
+    <View
+      style={{
+        width: px(STORY_SIZE.width),
+        height: px(STORY_SIZE.height),
+        paddingTop: px(STORY_SAFE_AREA.top),
+        paddingHorizontal: px(STORY_SAFE_AREA.side + 8),
+        backgroundColor: colors.primary,
+        gap: px(32),
+      }}
+    >
+      <RNText
+        allowFontScaling={false}
+        style={[
+          font("bold"),
+          { color: colors.primaryForeground, fontSize: px(120), lineHeight: px(132) },
+        ]}
+      >
+        Game night
+      </RNText>
+      <RNText
+        allowFontScaling={false}
+        style={[
+          font("regular"),
+          { color: colors.primaryForeground, fontSize: px(56), lineHeight: px(68), opacity: 0.7 },
+        ]}
+      >
+        Thursday, 8 pm. Bring a friend.
+      </RNText>
+    </View>
+  );
+}
+
+function StoryDemo() {
+  const full = fullStorySize();
+  return (
+    <Section title="Your own template">
+      <StoryFrame alt="Game night. Thursday, 8 pm. Bring a friend." defaultShowSafeArea>
+        <CustomStory />
+      </StoryFrame>
+      <Text variant="muted">
+        {`Written in story px with useStoryUnit(). On this screen the story is laid out at ${Math.round(full.width)} × ${Math.round(full.height)} dp, which is ${STORY_SIZE.width} × ${STORY_SIZE.height} pixels.`}
+      </Text>
+    </Section>
+  );
+}
+
+function StoryFrameDemo() {
+  return (
+    <Section title="Share, copy the link, check the safe area">
+      <StoryFrame
+        alt={availabilityStoryAlt(DAY_STORY)}
+        link="https://example.com/book?via=story"
+        onShare={(result) => {
+          if (result === "unavailable") toast({ title: "Sharing is not available here." });
+        }}
+      >
+        <AvailabilityStory {...DAY_STORY} />
+      </StoryFrame>
+    </Section>
+  );
+}
+
+function AvailabilityStoryDemo() {
+  const [layout, setLayout] = useState<keyof typeof STORIES>("day");
+  const story = STORIES[layout];
+  return (
+    <Section title="Day, week or spotlight">
+      <SegmentedControl
+        accessibilityLabel="Layout"
+        value={layout}
+        onValueChange={(value) => setLayout(value as keyof typeof STORIES)}
+      >
+        <SegmentedControlItem value="day">Day</SegmentedControlItem>
+        <SegmentedControlItem value="week">Week</SegmentedControlItem>
+        <SegmentedControlItem value="spotlight">Spotlight</SegmentedControlItem>
+      </SegmentedControl>
+      <StoryFrame alt={availabilityStoryAlt(story)} link="https://example.com/book?via=story">
+        <AvailabilityStory {...story} />
+      </StoryFrame>
+    </Section>
+  );
+}
+
 /** What the gallery shows for each item, by registry name. */
 const demos: Record<string, ComponentType> = {
   alert: AlertDemo,
+  "availability-story": AvailabilityStoryDemo,
   avatar: AvatarDemo,
   badge: BadgeDemo,
   button: ButtonDemo,
@@ -799,6 +954,8 @@ const demos: Record<string, ComponentType> = {
   separator: SeparatorDemo,
   skeleton: SkeletonDemo,
   spinner: SpinnerDemo,
+  story: StoryDemo,
+  "story-frame": StoryFrameDemo,
   switch: SwitchDemo,
   text: TextDemo,
   theme: ThemeDemo,
