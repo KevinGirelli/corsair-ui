@@ -2936,6 +2936,19 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "availability-story",
+      "type": "registry:ui",
+      "title": "Availability Story",
+      "description": "A story of free slots to post on Instagram: a grid for one day, a row per day for the week, or one slot in the spotlight, in your words and colours, kept inside the safe area. Renders in the browser and with next/og.",
+      "registryDependencies": ["@corsair-ui/story"],
+      "files": [
+        {
+          "path": "availability-story.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

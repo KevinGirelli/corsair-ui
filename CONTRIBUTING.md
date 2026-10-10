@@ -94,6 +94,17 @@ A component can have animated variations: `wave-rating` is the rating whose star
 - **Both platforms when it makes sense,** with the same name: `@corsair-ui/wave-rating` and `@corsair-native/wave-rating`.
 - **Still optional motion.** Reduced motion keeps the variation usable and still, like the base.
 
+## Story templates
+
+Templates like `availability-story` are images, not page components. On the web they are drawn by [Satori](https://github.com/vercel/satori), in the browser through `story` and on servers through `ImageResponse` from `next/og`, which bundles an older Satori. Write them for both:
+
+- **Inline styles and flexbox only.** No classes, no grid, no `className`. Every element with more than one child needs `display: "flex"`, and text sits in its own element.
+- **Fixed size.** Lay out at `STORY_SIZE` (1080 × 1920) in px; renderers scale the image, never the layout. Keep words, slots and calls to action inside `STORY_SAFE_AREA`; the tests check every text box against it.
+- **Boxes add up.** Use `boxSizing: "border-box"` on bordered tiles and padded full-size containers, `flexShrink: 0` on the fixed parts, and `flexGrow: 1, minHeight: 0, overflow: "hidden"` on the part that absorbs long lists. Work out how many items fit from the height left, and end the list in a "+N" item instead of letting it overflow.
+- **Positioned content above photos.** Absolutely positioned layers paint over in-flow elements, so the content column gets `position: "relative"`.
+- **Words from props, and a text alternative.** Every string is a prop with an English default, and the item exports a function that describes the story for `alt`.
+- **The native twin has the same props** (minus `fontFamily`, which the theme's `fonts` replace), sizes everything with `useStoryUnit()` in story px and sets `allowFontScaling={false}`: the story is an image, so it ignores the font size setting.
+
 ## Tailwind 3 and 4
 
 Every item has to render the same in a Tailwind 3.4 project and a Tailwind 4 project, and neither compiler warns about a class it does not know. `pnpm check:tailwind` fills that gap. It flags:
