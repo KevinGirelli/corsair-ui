@@ -2922,6 +2922,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "story-frame",
+      "type": "registry:ui",
+      "title": "Story Frame",
+      "description": "A 9:16 story preview that is the exported PNG itself, with Share (the phone's share sheet, Instagram included), Download and Copy link, and the safe area the apps draw over.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button", "@corsair-ui/story"],
+      "files": [
+        {
+          "path": "story-frame.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

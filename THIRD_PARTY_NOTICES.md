@@ -32,4 +32,8 @@ SOFTWARE.
 
 ## Dependencies
 
-Components install these packages rather than copying their code, so their own license files ship with them: [Radix Primitives](https://github.com/radix-ui/primitives) (MIT), [Lucide](https://github.com/lucide-icons/lucide) (ISC), [class-variance-authority](https://github.com/joe-bell/cva) (Apache-2.0), [react-hook-form](https://github.com/react-hook-form/react-hook-form) (MIT), [clsx](https://github.com/lukeed/clsx) (MIT) and [tailwind-merge](https://github.com/dcastil/tailwind-merge) (MIT).
+Components install these packages rather than copying their code, so their own license files ship with them: [Radix Primitives](https://github.com/radix-ui/primitives) (MIT), [Lucide](https://github.com/lucide-icons/lucide) (ISC), [class-variance-authority](https://github.com/joe-bell/cva) (Apache-2.0), [react-hook-form](https://github.com/react-hook-form/react-hook-form) (MIT), [clsx](https://github.com/lukeed/clsx) (MIT), [tailwind-merge](https://github.com/dcastil/tailwind-merge) (MIT) and [Satori](https://github.com/vercel/satori) (MPL-2.0).
+
+## Barlow
+
+The test suite renders stories with the Barlow font, kept in `test-utils/fonts` with its license (`OFL.txt`). It is not part of any item. Copyright 2017 The Barlow Project Authors ([github.com/jpt/barlow](https://github.com/jpt/barlow)), licensed under the SIL Open Font License, Version 1.1.

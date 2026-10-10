@@ -26,6 +26,20 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "story",
+      "type": "registry:lib",
+      "title": "Story",
+      "description": "Stories for Instagram, WhatsApp and TikTok from JSX: renderStoryPng() draws a 1080 × 1920 PNG in the browser with Satori, shareStory() opens the share sheet with it, plus downloadStory(), loadFont() and the safe area the apps draw over.",
+      "dependencies": ["satori@^0.47.1"],
+      "docs": "Next.js and webpack load Satori's layout engine by themselves. With Vite, call setStoryWasm() first with the URL of satori/layout.wasm (import wasm from \"satori/layout.wasm?url\").",
+      "files": [
+        {
+          "path": "story.ts",
+          "type": "registry:lib"
+        }
+      ]
     }
   ]
 }
