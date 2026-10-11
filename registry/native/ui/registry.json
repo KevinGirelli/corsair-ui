@@ -289,6 +289,40 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "story-frame",
+      "type": "registry:ui",
+      "title": "Story Frame",
+      "description": "A 9:16 story preview laid out at the exported size, with Share (the share sheet, Instagram Stories included), Copy link and the safe area the apps draw over. Sharing captures the story as a 1080 × 1920 PNG and copies the link for a link sticker.",
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/button",
+        "@corsair-native/story-export"
+      ],
+      "docs": "Install the native modules for your Expo SDK first: npx expo install react-native-view-shot expo-sharing expo-clipboard",
+      "files": [
+        {
+          "path": "story-frame.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "story",
+      "type": "registry:ui",
+      "title": "Story",
+      "description": "A 1080 × 1920 story put together from parts (header, eyebrow, title, grid of tiles, list of rows, highlight, image, call to action), laid out inside the safe area, with themes, patterns and a background photo. The same parts, props and themes as the web item, to share from a StoryFrame.",
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/story-export"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install react-native-svg",
+      "files": [
+        {
+          "path": "story.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

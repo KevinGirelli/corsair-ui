@@ -32,7 +32,7 @@ SOFTWARE.
 
 ## Dependencies
 
-Components install these packages rather than copying their code, so their own license files ship with them: [Radix Primitives](https://github.com/radix-ui/primitives) (MIT), [Lucide](https://github.com/lucide-icons/lucide) (ISC), [class-variance-authority](https://github.com/joe-bell/cva) (Apache-2.0), [react-hook-form](https://github.com/react-hook-form/react-hook-form) (MIT), [clsx](https://github.com/lukeed/clsx) (MIT), [tailwind-merge](https://github.com/dcastil/tailwind-merge) (MIT) and [Satori](https://github.com/vercel/satori) (MPL-2.0).
+Components install these packages rather than copying their code, so their own license files ship with them: [Radix Primitives](https://github.com/radix-ui/primitives) (MIT), [Lucide](https://github.com/lucide-icons/lucide) (ISC), [class-variance-authority](https://github.com/joe-bell/cva) (Apache-2.0), [react-hook-form](https://github.com/react-hook-form/react-hook-form) (MIT), [clsx](https://github.com/lukeed/clsx) (MIT), [tailwind-merge](https://github.com/dcastil/tailwind-merge) (MIT) and [Satori](https://github.com/vercel/satori) (MPL-2.0). The React Native items install [react-native-svg](https://github.com/software-mansion/react-native-svg) (MIT), [react-native-view-shot](https://github.com/gre/react-native-view-shot) (MIT) and Expo's modules (MIT) the same way.
 
 ## Barlow
 

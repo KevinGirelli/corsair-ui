@@ -26,6 +26,20 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "story-export",
+      "type": "registry:lib",
+      "title": "Story Export",
+      "description": "Stories for Instagram, WhatsApp and TikTok from views: captureStory() turns a view into a 1080 × 1920 PNG on any screen density, shareStory() opens the share sheet with it and puts a link on the clipboard, and useStoryUnit() lays templates out in the image's pixels, with the safe area the apps draw over. The same names as the web story-export item.",
+      "dependencies": ["react-native-view-shot", "expo-sharing", "expo-clipboard"],
+      "docs": "Install the native modules for your Expo SDK first: npx expo install react-native-view-shot expo-sharing expo-clipboard. For Save Image in the iOS share sheet, add NSPhotoLibraryAddUsageDescription under ios.infoPlist in app.json.",
+      "files": [
+        {
+          "path": "story-export.ts",
+          "type": "registry:lib"
+        }
+      ]
     }
   ]
 }

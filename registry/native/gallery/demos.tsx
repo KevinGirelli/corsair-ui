@@ -1,9 +1,16 @@
-import { useState, type ComponentType, type ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
+import { useMemo, useState, type ComponentType, type ReactNode } from "react";
+import { Text as RNText, StyleSheet, View } from "react-native";
 
 import { useReducedMotion } from "@/registry/native/hooks/use-reduced-motion";
 import { haptic, type HapticKind } from "@/registry/native/lib/haptics";
+import {
+  fullStorySize,
+  STORY_SAFE_AREA,
+  STORY_SIZE,
+  useStoryUnit,
+} from "@/registry/native/lib/story-export";
 import { useTheme, withAlpha, type Colors } from "@/registry/native/lib/theme";
+import { availability, longDay, TEMPLATES, type TemplateName } from "./stories";
 import { Alert, AlertDescription, AlertTitle } from "@/registry/native/ui/alert";
 import { Avatar, AvatarFallback, AvatarGroup } from "@/registry/native/ui/avatar";
 import { Badge } from "@/registry/native/ui/badge";
@@ -42,6 +49,8 @@ import { SegmentedControl, SegmentedControlItem } from "@/registry/native/ui/seg
 import { Separator } from "@/registry/native/ui/separator";
 import { Skeleton } from "@/registry/native/ui/skeleton";
 import { Spinner } from "@/registry/native/ui/spinner";
+import { storyAlt, type StoryThemeName } from "@/registry/native/ui/story";
+import { StoryFrame } from "@/registry/native/ui/story-frame";
 import { Switch } from "@/registry/native/ui/switch";
 import { Text } from "@/registry/native/ui/text";
 import { toast } from "@/registry/native/ui/toast";
@@ -781,6 +790,128 @@ function DrawerDemo() {
   );
 }
 
+/** A template of your own: any view sized with useStoryUnit() can be shared. */
+function CustomStory() {
+  const px = useStoryUnit();
+  const { colors, font } = useTheme();
+  return (
+    <View
+      style={{
+        width: px(STORY_SIZE.width),
+        height: px(STORY_SIZE.height),
+        paddingTop: px(STORY_SAFE_AREA.top),
+        paddingHorizontal: px(STORY_SAFE_AREA.side + 8),
+        backgroundColor: colors.primary,
+        gap: px(32),
+      }}
+    >
+      <RNText
+        allowFontScaling={false}
+        style={[
+          font("bold"),
+          { color: colors.primaryForeground, fontSize: px(120), lineHeight: px(132) },
+        ]}
+      >
+        Game night
+      </RNText>
+      <RNText
+        allowFontScaling={false}
+        style={[
+          font("regular"),
+          { color: colors.primaryForeground, fontSize: px(56), lineHeight: px(68), opacity: 0.7 },
+        ]}
+      >
+        Thursday, 8 pm. Bring a friend.
+      </RNText>
+    </View>
+  );
+}
+
+function StoryDemo() {
+  const full = fullStorySize();
+  return (
+    <Section title="Your own template">
+      <StoryFrame alt="Game night. Thursday, 8 pm. Bring a friend." defaultShowSafeArea>
+        <CustomStory />
+      </StoryFrame>
+      <Text variant="muted">
+        {`Written in story px with useStoryUnit(). On this screen the story is laid out at ${Math.round(full.width)} × ${Math.round(full.height)} dp, which is ${STORY_SIZE.width} × ${STORY_SIZE.height} pixels.`}
+      </Text>
+    </Section>
+  );
+}
+
+const LINK = "https://example.com/book?via=story";
+
+function StoryFrameDemo() {
+  const story = useMemo(() => availability(), []);
+  return (
+    <Section title="Share, copy the link, check the safe area">
+      <StoryFrame
+        alt={storyAlt(story)}
+        link={LINK}
+        onShare={(result) => {
+          if (result === "unavailable") toast({ title: "Sharing is not available here." });
+        }}
+      >
+        {story}
+      </StoryFrame>
+    </Section>
+  );
+}
+
+const THEMES: StoryThemeName[] = ["midnight", "paper", "ocean", "sunset", "mono"];
+
+function StoryPartsDemo() {
+  const [name, setName] = useState<TemplateName>("availability");
+  const [theme, setTheme] = useState<StoryThemeName>("ocean");
+  const story = useMemo(() => TEMPLATES[name].draw(), [name]);
+  const themed = useMemo(() => availability(theme), [theme]);
+  const long = useMemo(() => longDay(), []);
+  return (
+    <>
+      <Section title="Five stories, one set of parts">
+        <SegmentedControl
+          accessibilityLabel="Template"
+          value={name}
+          onValueChange={(value) => setName(value as TemplateName)}
+        >
+          {Object.entries(TEMPLATES).map(([value, { label }]) => (
+            <SegmentedControlItem key={value} value={value}>
+              {label}
+            </SegmentedControlItem>
+          ))}
+        </SegmentedControl>
+        <StoryFrame alt={storyAlt(story)} link={LINK}>
+          {story}
+        </StoryFrame>
+      </Section>
+      <Section title="Themes">
+        <SegmentedControl
+          accessibilityLabel="Theme"
+          value={theme}
+          onValueChange={(value) => setTheme(value as StoryThemeName)}
+        >
+          {THEMES.map((value) => (
+            <SegmentedControlItem key={value} value={value}>
+              {value}
+            </SegmentedControlItem>
+          ))}
+        </SegmentedControl>
+        <StoryFrame alt={storyAlt(themed)}>{themed}</StoryFrame>
+      </Section>
+      <Section title="Long lists and other languages">
+        <StoryFrame alt={storyAlt(long)} link={LINK}>
+          {long}
+        </StoryFrame>
+        <Text variant="muted">
+          Thirty times in Portuguese: the grid shows what fits and its last tile counts the rest.
+        </Text>
+      </Section>
+    </>
+  );
+}
+
 /** What the gallery shows for each item, by registry name. */
 const demos: Record<string, ComponentType> = {
   alert: AlertDemo,
@@ -799,6 +930,9 @@ const demos: Record<string, ComponentType> = {
   separator: SeparatorDemo,
   skeleton: SkeletonDemo,
   spinner: SpinnerDemo,
+  story: StoryPartsDemo,
+  "story-export": StoryDemo,
+  "story-frame": StoryFrameDemo,
   switch: SwitchDemo,
   text: TextDemo,
   theme: ThemeDemo,
