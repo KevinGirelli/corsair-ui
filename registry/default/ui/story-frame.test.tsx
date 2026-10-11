@@ -1,10 +1,10 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type * as StoryLib from "@/registry/default/lib/story";
+import type * as StoryLib from "@/registry/default/lib/story-export";
 import { StoryFrame, useStoryFonts } from "@/registry/default/ui/story-frame";
 
-// Satori and the canvas are tested in lib/story and in the browser; here the
+// Satori and the canvas are tested in lib/story-export and in the browser; here the
 // image is a stand-in, so the frame's own behaviour can be checked.
 const render$ = vi.hoisted(() => ({
   svg: vi.fn(async (story: unknown) => `<svg>${JSON.stringify(story)}</svg>`),
@@ -12,7 +12,7 @@ const render$ = vi.hoisted(() => ({
   download: vi.fn(),
 }));
 
-vi.mock("@/registry/default/lib/story", async (importOriginal) => {
+vi.mock("@/registry/default/lib/story-export", async (importOriginal) => {
   const actual = await importOriginal<typeof StoryLib>();
   return {
     ...actual,

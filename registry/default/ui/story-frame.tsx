@@ -14,7 +14,7 @@ import {
   svgToPng,
   type StoryFont,
   type StoryShareResult,
-} from "@/registry/default/lib/story";
+} from "@/registry/default/lib/story-export";
 import { cn } from "@/registry/default/lib/utils";
 import { Button } from "@/registry/default/ui/button";
 

@@ -2929,10 +2929,27 @@
       "title": "Story Frame",
       "description": "A 9:16 story preview that is the exported PNG itself, with Share (the phone's share sheet, Instagram included), Download and Copy link, and the safe area the apps draw over.",
       "dependencies": ["lucide-react"],
-      "registryDependencies": ["@corsair-ui/utils", "@corsair-ui/button", "@corsair-ui/story"],
+      "registryDependencies": [
+        "@corsair-ui/utils",
+        "@corsair-ui/button",
+        "@corsair-ui/story-export"
+      ],
       "files": [
         {
           "path": "story-frame.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "story",
+      "type": "registry:ui",
+      "title": "Story",
+      "description": "A 1080 × 1920 story put together from parts (header, eyebrow, title, grid of tiles, list of rows, highlight, image, call to action), laid out inside the safe area, with themes, patterns and a background photo. Drawn by Satori: render it with story-frame or renderStoryPng().",
+      "registryDependencies": ["@corsair-ui/story-export"],
+      "files": [
+        {
+          "path": "story.tsx",
           "type": "registry:ui"
         }
       ]

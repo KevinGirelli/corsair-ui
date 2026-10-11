@@ -13,7 +13,7 @@ import {
   shareStory,
   STORY_SAFE_AREA,
   STORY_SIZE,
-} from "@/registry/default/lib/story";
+} from "@/registry/default/lib/story-export";
 
 const require = createRequire(import.meta.url);
 const bold = readFileSync(path.join(process.cwd(), "test-utils", "fonts", "Barlow-Bold.ttf"));
