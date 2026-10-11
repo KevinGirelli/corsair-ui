@@ -26,6 +26,20 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "story-export",
+      "type": "registry:lib",
+      "title": "Story Export",
+      "description": "Turns stories into images for Instagram, WhatsApp and TikTok: renderStoryPng() draws JSX to a 1080 × 1920 PNG in the browser with Satori, shareStory() opens the share sheet with it, plus downloadStory(), loadFont() and the safe area the apps draw over.",
+      "dependencies": ["satori@^0.47.1"],
+      "docs": "Next.js and webpack load Satori's layout engine by themselves. With Vite, call setStoryWasm() first with the URL of satori/layout.wasm (import wasm from \"satori/layout.wasm?url\").",
+      "files": [
+        {
+          "path": "story-export.ts",
+          "type": "registry:lib"
+        }
+      ]
     }
   ]
 }
