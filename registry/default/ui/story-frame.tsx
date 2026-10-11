@@ -176,7 +176,7 @@ type StoryFrameResult = StoryShareResult | "downloaded";
 interface StoryFrameProps extends Omit<ComponentProps<"div">, "children" | "onError"> {
   /**
    * The story: an element in the subset Satori supports (inline styles,
-   * flexbox), such as `AvailabilityStory`.
+   * flexbox), such as a `Story`.
    */
   story: ReactNode;
   /** The fonts the story uses. Null or undefined while they load. */
@@ -216,9 +216,10 @@ interface StoryFrameProps extends Omit<ComponentProps<"div">, "children" | "onEr
  * `story-frame-preview`, `story-frame-safe-area` and `story-frame-actions`.
  *
  * @example
+ * const story = useMemo(() => <Story theme="midnight">…</Story>, []);
  * <StoryFrame
- *   story={<AvailabilityStory {...props} />}
- *   alt={availabilityStoryAlt(props)}
+ *   story={story}
+ *   alt={storyAlt(story)}
  *   fonts={fonts}
  *   link="https://example.com/book?via=story"
  *   fileName="free-today.png"
