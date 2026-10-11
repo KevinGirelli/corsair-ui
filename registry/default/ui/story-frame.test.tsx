@@ -165,7 +165,10 @@ describe("StoryFrame", () => {
     );
     expect((await screen.findByRole("alert")).textContent).toMatch(/could not be drawn/);
     expect(container.firstElementChild?.getAttribute("data-state")).toBe("error");
-    expect(onError).toHaveBeenCalledWith(expect.objectContaining({ message: "no layout engine" }));
+    // Reported from an effect after the alert renders, so it can land a tick later.
+    await waitFor(() =>
+      expect(onError).toHaveBeenCalledWith(expect.objectContaining({ message: "no layout engine" }))
+    );
   });
 
   it("takes labels in another language", async () => {
