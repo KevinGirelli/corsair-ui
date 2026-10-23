@@ -8,7 +8,7 @@ import { ITEMS } from "./items";
 
 describe("gallery", () => {
   it("lists every item of the registry, the theme first", () => {
-    expect(ITEMS).toHaveLength(25);
+    expect(ITEMS).toHaveLength(28);
     expect(ITEMS[0]?.name).toBe("theme");
     expect(new Set(ITEMS.map((item) => item.name)).size).toBe(ITEMS.length);
   });

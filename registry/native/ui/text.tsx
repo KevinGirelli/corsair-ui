@@ -10,7 +10,7 @@ import {
 import { useTheme, type Theme } from "@/registry/native/lib/theme";
 
 type TextVariant =
-  "default" | "h1" | "h2" | "h3" | "h4" | "lead" | "large" | "small" | "muted" | "code";
+  "default" | "h1" | "h2" | "h3" | "h4" | "lead" | "large" | "small" | "muted" | "code" | "display";
 
 /**
  * A style every Corsair `Text` inside picks up. Text in React Native does not
@@ -53,6 +53,15 @@ function variantStyle(variant: TextVariant, { colors, text, font }: Theme): Text
         fontFamily: monospace,
         color: colors.foreground,
         backgroundColor: colors.muted,
+      };
+    case "display":
+      return {
+        fontSize: 56,
+        lineHeight: 64,
+        ...font("bold"),
+        letterSpacing: -1.5,
+        fontVariant: ["tabular-nums"],
+        color: colors.foreground,
       };
     default:
       return { ...text.base, ...font("regular"), color: colors.foreground };

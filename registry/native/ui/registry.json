@@ -5,7 +5,7 @@
       "name": "text",
       "type": "registry:ui",
       "title": "Text",
-      "description": "Text in the theme's type scale: default, h1 to h4 (announced as headings), lead, large, small, muted and code. Inside a Button, Card or Badge it takes that container's colour.",
+      "description": "Text in the theme's type scale: default, h1 to h4 (announced as headings), lead, large, small, muted, code and display (a large tabular number). Inside a Button, Card or Badge it takes that container's colour.",
       "registryDependencies": ["@corsair-native/theme"],
       "files": [
         {
@@ -320,6 +320,51 @@
       "files": [
         {
           "path": "story.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dock",
+      "type": "registry:ui",
+      "title": "Dock",
+      "description": "A bottom bar of destinations with one raised centre mark. The selected label uses the theme ring. Destinations only, never actions.",
+      "dependencies": ["react-native-safe-area-context"],
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/text"],
+      "docs": "Install the native module for your Expo SDK first: npx expo install react-native-safe-area-context",
+      "files": [
+        {
+          "path": "dock.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "count-up",
+      "type": "registry:ui",
+      "title": "Count Up",
+      "description": "A number that counts up to a value. Reduce Motion and a duration of 0 show the final number immediately. Defaults to the display text style.",
+      "registryDependencies": [
+        "@corsair-native/theme",
+        "@corsair-native/text",
+        "@corsair-native/use-reduced-motion"
+      ],
+      "files": [
+        {
+          "path": "count-up.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sticker",
+      "type": "registry:ui",
+      "title": "Sticker",
+      "description": "One album tile. Earned stickers are filled cards. Locked ones are dashed and can show a progress track in the theme ring. The tile does not know what the sticker means.",
+      "registryDependencies": ["@corsair-native/theme", "@corsair-native/text"],
+      "files": [
+        {
+          "path": "sticker.tsx",
           "type": "registry:ui"
         }
       ]
