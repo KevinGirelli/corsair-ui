@@ -52,6 +52,9 @@ import { Spinner } from "@/registry/native/ui/spinner";
 import { storyAlt, type StoryThemeName } from "@/registry/native/ui/story";
 import { StoryFrame } from "@/registry/native/ui/story-frame";
 import { Switch } from "@/registry/native/ui/switch";
+import { CountUp } from "@/registry/native/ui/count-up";
+import { Dock, DockItem, DockMark } from "@/registry/native/ui/dock";
+import { Sticker } from "@/registry/native/ui/sticker";
 import { Text } from "@/registry/native/ui/text";
 import { toast } from "@/registry/native/ui/toast";
 import { WaveRating } from "@/registry/native/ui/wave-rating";
@@ -225,6 +228,7 @@ function TextDemo() {
         <Text variant="small">Small text</Text>
         <Text variant="muted">Muted text for details.</Text>
         <Text variant="code">npx expo install</Text>
+        <Text variant="display">128</Text>
       </Section>
     </>
   );
@@ -912,6 +916,36 @@ function StoryPartsDemo() {
   );
 }
 
+function DockDemo() {
+  const [value, setValue] = useState("home");
+  return (
+    <Dock value={value} onValueChange={setValue}>
+      <DockItem value="home" label="Home" />
+      <DockMark value="play" label="Play">
+        <Text>★</Text>
+      </DockMark>
+      <DockItem value="you" label="You" />
+    </Dock>
+  );
+}
+
+function CountUpDemo() {
+  return <CountUp value={1280} duration={0} />;
+}
+
+function StickerDemo() {
+  return (
+    <View style={styles.row}>
+      <View style={styles.grow}>
+        <Sticker index={1} title="First" detail="Earned" earned />
+      </View>
+      <View style={styles.grow}>
+        <Sticker index={2} title="Week" detail="3 of 7" progress={3 / 7} />
+      </View>
+    </View>
+  );
+}
+
 /** What the gallery shows for each item, by registry name. */
 const demos: Record<string, ComponentType> = {
   alert: AlertDemo,
@@ -920,6 +954,8 @@ const demos: Record<string, ComponentType> = {
   button: ButtonDemo,
   card: CardDemo,
   checkbox: CheckboxDemo,
+  "count-up": CountUpDemo,
+  dock: DockDemo,
   drawer: DrawerDemo,
   "empty-state": EmptyStateDemo,
   haptics: HapticsDemo,
@@ -930,6 +966,7 @@ const demos: Record<string, ComponentType> = {
   separator: SeparatorDemo,
   skeleton: SkeletonDemo,
   spinner: SpinnerDemo,
+  sticker: StickerDemo,
   story: StoryPartsDemo,
   "story-export": StoryDemo,
   "story-frame": StoryFrameDemo,

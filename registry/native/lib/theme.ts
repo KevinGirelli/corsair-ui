@@ -185,9 +185,16 @@ const themes: Record<ColorScheme, Theme> = {
 
 const ThemeContext = createContext<ColorScheme | null>(null);
 
+const RingContext = createContext<string | undefined>(undefined);
+
 interface ThemeProviderProps {
   /** Forces light or dark below it. Left out, it follows the parent provider or the device. */
   scheme?: ColorScheme;
+  /**
+   * Replaces `colors.ring` for everything under this provider. Left out, the
+   * theme's own ring is kept, including a ring set by a parent provider.
+   */
+  ring?: string;
   children?: ReactNode;
 }
 
@@ -195,16 +202,24 @@ interface ThemeProviderProps {
  * Optional: without it, components follow the device's light or dark mode.
  * Wrap the app (or one screen) to force a scheme, e.g. from a setting.
  */
-function ThemeProvider({ scheme, children }: ThemeProviderProps) {
-  const parent = useContext(ThemeContext);
-  return createElement(ThemeContext.Provider, { value: scheme ?? parent }, children);
+function ThemeProvider({ scheme, ring, children }: ThemeProviderProps) {
+  const parentScheme = useContext(ThemeContext);
+  const parentRing = useContext(RingContext);
+  return createElement(
+    ThemeContext.Provider,
+    { value: scheme ?? parentScheme },
+    createElement(RingContext.Provider, { value: ring ?? parentRing }, children)
+  );
 }
 
 /** The current theme: colours for the active scheme, plus radii, type, shadows and motion. */
 function useTheme(): Theme {
   const forced = useContext(ThemeContext);
   const device = useColorScheme();
-  return themes[forced ?? (device === "dark" ? "dark" : "light")];
+  const theme = themes[forced ?? (device === "dark" ? "dark" : "light")];
+  const ring = useContext(RingContext);
+  if (!ring || ring === theme.colors.ring) return theme;
+  return { ...theme, colors: { ...theme.colors, ring } };
 }
 
 /**
