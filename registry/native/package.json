@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "57.0.16",
-    "expo": "57.0.26",
+    "expo": "58.0.22",
     "expo-clipboard": "57.0.2",
     "expo-haptics": "57.0.3",
     "expo-sharing": "57.0.22",
